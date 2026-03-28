@@ -8,7 +8,7 @@ applyTo: '**/*.vue'
 ## 基礎結構
 
 - 一律使用 `<script setup lang="ts">`，禁止 Options API 和 `defineComponent`
-- 區塊順序：`<script setup>` → `<template>` → `<style scoped>`
+- 區塊順序：`<template>` → `<script setup>` → `<style scoped>`
 - 每個檔案只包含一個元件
 
 ```vue

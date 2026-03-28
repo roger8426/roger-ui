@@ -15,7 +15,7 @@ src/
 │   └── {component-name}/     # kebab-case 目錄名
 │       ├── {ComponentName}.vue
 │       ├── {ComponentName}.stories.ts
-│       └── types.ts          # （可選）複雜型別定義
+│       └── types.ts          # 複雜型別定義
 ├── composables/              # 公開的 composable（需在 index.ts 導出）
 │   └── use{Name}.ts
 └── index.ts                  # 唯一公開入口

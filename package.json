@@ -3,6 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./styles": "./dist/assets/styles/main.css"
+  },
   "scripts": {
     "build": "storybook build",
     "test:unit": "vitest",
