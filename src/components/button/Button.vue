@@ -1,8 +1,9 @@
 <template>
   <button
     type="button"
-    class="inline-flex cursor-pointer items-center justify-center rounded-full font-bold transition-colors"
-    :class="[sizeClasses, variantClasses, { 'cursor-not-allowed opacity-50': disabled }]"
+    class="inline-flex cursor-pointer items-center justify-center rounded-full font-bold transition-all hover:brightness-90"
+    :class="[sizeClasses, { 'cursor-not-allowed opacity-50': disabled }]"
+    :style="colorStyle"
     :disabled="disabled"
     @click="emit('press')"
   >
@@ -12,12 +13,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-
 import type { ButtonProps } from './types'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
-  variant: 'primary',
   size: 'md',
+  outline: false,
   disabled: false,
 })
 
@@ -34,11 +34,18 @@ const sizeClasses = computed(
     })[props.size],
 )
 
-const variantClasses = computed(
-  () =>
-    ({
-      primary: 'bg-primary text-white hover:bg-primary-hover',
-      secondary: 'bg-transparent text-text ring-1 ring-inset ring-border hover:bg-surface',
-    })[props.variant],
-)
+const colorStyle = computed(() => {
+  if (props.outline) {
+    return {
+      backgroundColor: props.color ?? 'transparent',
+      color: props.textColor ?? 'var(--color-primary)',
+      border: `1px solid ${props.borderColor ?? 'var(--color-primary)'}`,
+    }
+  }
+  return {
+    backgroundColor: props.color ?? 'var(--color-primary)',
+    color: props.textColor ?? 'white',
+    border: props.borderColor ? `1px solid ${props.borderColor}` : 'none',
+  }
+})
 </script>

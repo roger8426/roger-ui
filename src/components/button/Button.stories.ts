@@ -8,13 +8,15 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    variant: { control: 'select', options: ['primary', 'secondary'] },
+    color: { control: 'color' },
+    textColor: { control: 'color' },
+    borderColor: { control: 'color' },
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    outline: { control: 'boolean' },
     disabled: { control: 'boolean' },
   },
   args: {
     label: 'Button',
-    variant: 'primary',
     size: 'md',
     disabled: false,
   },
@@ -23,12 +25,25 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {
-  args: { variant: 'primary' },
+export const Default: Story = {}
+
+export const CustomColor: Story = {
+  args: {
+    color: 'oklch(58% 0.22 15)',
+    textColor: 'oklch(98% 0.01 255)',
+  },
 }
 
-export const Secondary: Story = {
-  args: { variant: 'secondary' },
+export const Outlined: Story = {
+  args: {
+    color: 'transparent',
+    textColor: 'var(--color-primary)',
+    borderColor: 'var(--color-primary)',
+  },
+}
+
+export const Outline: Story = {
+  args: { outline: true },
 }
 
 export const Large: Story = {
