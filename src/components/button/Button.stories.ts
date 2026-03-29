@@ -29,16 +29,16 @@ export const Default: Story = {}
 
 export const CustomColor: Story = {
   args: {
-    color: 'oklch(58% 0.22 15)',
-    textColor: 'oklch(98% 0.01 255)',
+    color: '#d0391e',
+    textColor: '#f8f9ff',
   },
 }
 
 export const Outlined: Story = {
   args: {
-    color: 'transparent',
-    textColor: 'var(--color-primary)',
-    borderColor: 'var(--color-primary)',
+    color: '#ffffff00',
+    textColor: '#3b5bdb',
+    borderColor: '#3b5bdb',
   },
 }
 

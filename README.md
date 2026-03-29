@@ -95,17 +95,16 @@ background: var(--color-surface);
 |------|------|
 | `press` | 按鈕被點擊時觸發 |
 
-## 設計 Token
+## 元件預設顏色
 
-| Token | 預設值 | 用途 |
-|-------|--------|------|
-| `--color-primary` | `oklch(55% 0.2 250)` | 主色 |
-| `--color-primary-hover` | `oklch(50% 0.2 250)` | 主色 hover 狀態 |
-| `--color-surface` | `oklch(98% 0.01 250)` | 頁面底色 |
-| `--color-text` | `oklch(20% 0.02 250)` | 主要文字色 |
-| `--color-border` | `oklch(80% 0.01 250)` | 邊框色 |
+Button 元件的內建預設色（當未傳入 `color`／`textColor`／`borderColor` 時）：
 
-所有 token 支援 dark mode（透過 `prefers-color-scheme: dark` 自動切換）。
+| 使用情境 | 顏色 | 色碼 |
+|----------|------|------|
+| 一般模式背景 | 中藍 | `#3b5bdb` |
+| 一般模式文字 | 白 | `#ffffff` |
+| Outline 模式邊框與文字 | 中藍 | `#3b5bdb` |
+| Outline 模式背景 | 全透明 | `#ffffff00` |
 
 ## 專案結構
 

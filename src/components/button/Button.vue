@@ -37,14 +37,14 @@ const sizeClasses = computed(
 const colorStyle = computed(() => {
   if (props.outline) {
     return {
-      backgroundColor: props.color ?? 'transparent',
-      color: props.textColor ?? 'var(--color-primary)',
-      border: `1px solid ${props.borderColor ?? 'var(--color-primary)'}`,
+      backgroundColor: props.color ?? '#ffffff00',
+      color: props.textColor ?? '#3b5bdb',
+      border: `1px solid ${props.borderColor ?? '#3b5bdb'}`,
     }
   }
   return {
-    backgroundColor: props.color ?? 'var(--color-primary)',
-    color: props.textColor ?? 'white',
+    backgroundColor: props.color ?? '#3b5bdb',
+    color: props.textColor ?? '#ffffff',
     border: props.borderColor ? `1px solid ${props.borderColor}` : 'none',
   }
 })
