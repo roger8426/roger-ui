@@ -5,9 +5,8 @@
     :class="[sizeClasses, { 'cursor-not-allowed opacity-50': disabled }]"
     :style="colorStyle"
     :disabled="disabled"
-    @click="emit('press')"
   >
-    {{ label }}
+    <slot />
   </button>
 </template>
 
@@ -20,10 +19,6 @@ const props = withDefaults(defineProps<ButtonProps>(), {
   outline: false,
   disabled: false,
 })
-
-const emit = defineEmits<{
-  press: []
-}>()
 
 const sizeClasses = computed(
   () =>

@@ -16,10 +16,14 @@ const meta = {
     disabled: { control: 'boolean' },
   },
   args: {
-    label: 'Button',
     size: 'md',
     disabled: false,
   },
+  render: (args) => ({
+    components: { Button },
+    setup: () => ({ args }),
+    template: '<Button v-bind="args">Button</Button>',
+  }),
 } satisfies Meta<typeof Button>
 
 export default meta
@@ -59,7 +63,11 @@ export const Disabled: Story = {
 }
 
 export const Interaction: Story = {
-  args: { label: 'Click me' },
+  render: (args) => ({
+    components: { Button },
+    setup: () => ({ args }),
+    template: '<Button v-bind="args">Click me</Button>',
+  }),
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const button = canvas.getByRole('button', { name: 'Click me' })
