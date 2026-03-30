@@ -74,11 +74,11 @@ export const Loading: Story = {
 ## play() Function
 
 - **所有有互動行為的元件必須有至少一個帶 `play()` 的 story**
-- 使用 `@storybook/test` 的 `userEvent` 和 `expect`，不使用 Testing Library 直接引入
+- 使用 `storybook/test` 的 `userEvent` 和 `expect`，不使用 Testing Library 直接引入
 - 測試斷言需涵蓋：DOM 狀態、a11y 角色、事件觸發
 
 ```ts
-import { expect, userEvent, within } from '@storybook/test'
+import { expect, userEvent, within } from 'storybook/test'
 
 export const Interaction: Story = {
   play: async ({ canvasElement }) => {

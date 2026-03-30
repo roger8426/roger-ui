@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="inline-flex cursor-pointer items-center justify-center rounded-full font-bold transition-all hover:brightness-90"
+    class="inline-flex cursor-pointer items-center justify-center rounded-full font-bold transition-all hover:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
     :class="[sizeClasses, { 'cursor-not-allowed opacity-50': disabled }]"
     :style="colorStyle"
     :disabled="disabled"
@@ -32,14 +32,16 @@ const sizeClasses = computed(
 const colorStyle = computed(() => {
   if (props.outline) {
     return {
-      backgroundColor: props.color ?? '#ffffff00',
-      color: props.textColor ?? '#3b5bdb',
-      border: `1px solid ${props.borderColor ?? '#3b5bdb'}`,
+      '--btn-color': props.borderColor ?? props.color ?? 'var(--color-default)',
+      backgroundColor: props.color ?? 'transparent',
+      color: props.textColor ?? 'var(--color-default)',
+      border: `1px solid ${props.borderColor ?? 'var(--color-default)'}`,
     }
   }
   return {
-    backgroundColor: props.color ?? '#3b5bdb',
-    color: props.textColor ?? '#ffffff',
+    '--btn-color': props.color ?? 'var(--color-default)',
+    backgroundColor: props.color ?? 'var(--color-default)',
+    color: props.textColor ?? 'var(--color-default-foreground)',
     border: props.borderColor ? `1px solid ${props.borderColor}` : 'none',
   }
 })

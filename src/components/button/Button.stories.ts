@@ -8,12 +8,31 @@ const meta = {
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    color: { control: 'color' },
-    textColor: { control: 'color' },
-    borderColor: { control: 'color' },
-    size: { control: 'select', options: ['sm', 'md', 'lg'] },
-    outline: { control: 'boolean' },
-    disabled: { control: 'boolean' },
+    color: {
+      description: '背景顏色（任意 CSS 色彩值，預設使用 --color-default token）',
+      control: 'color',
+    },
+    textColor: {
+      description: '文字顏色（任意 CSS 色彩值，預設使用 --color-default-foreground token）',
+      control: 'color',
+    },
+    borderColor: {
+      description: '邊框顏色（任意 CSS 色彩值，未設定則無邊框）',
+      control: 'color',
+    },
+    size: {
+      description: '按鈕尺寸',
+      control: 'select',
+      options: ['sm', 'md', 'lg'],
+    },
+    outline: {
+      description: '是否為 outline 模式（透明背景、主色邊框與文字）',
+      control: 'boolean',
+    },
+    disabled: {
+      description: '是否停用按鈕',
+      control: 'boolean',
+    },
     default: {
       description: 'Button 的文字內容（default slot）',
       control: 'text',

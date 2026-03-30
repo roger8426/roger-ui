@@ -1,1 +1,7 @@
 @import 'tailwindcss';
+
+@theme {
+  /* 展示用預設色，僅供元件 fallback 色彩使用 */
+  --color-default: oklch(55% 0.2 264);
+  --color-default-foreground: oklch(98% 0.01 264);
+}
