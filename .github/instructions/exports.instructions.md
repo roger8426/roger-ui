@@ -21,23 +21,25 @@ export { default as Button } from './components/button/Button.vue'
 export { default as Input } from './components/input/Input.vue'
 
 // 型別（必須用 export type）
-export type { ButtonProps } from './components/button/Button.vue'
-export type { InputProps } from './components/input/Input.vue'
+export type { ButtonProps } from './components/button/types'
+export type { InputProps } from './components/input/types'
 ```
 
 ## Props 型別導出
 
-- 每個元件的 Props interface 必須從元件檔案 `export`，並在 `index.ts` 用 `export type` 重新導出
+- 本專案採用**型別與元件分離**的管理模式，Props interface 定義在 `types.ts`，由 `index.ts` 直接從 `types.ts` 導出
 - 型別命名規則：`{ComponentName}Props`
 
 ```ts
-// Button.vue
+// types.ts
 export interface ButtonProps {
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'primary' | 'secondary' | 'ghost'
   disabled?: boolean
   loading?: boolean
 }
+
+// index.ts（直接從 types.ts 導出）
+export type { ButtonProps } from './components/button/types'
 ```
 
 ## 禁止事項

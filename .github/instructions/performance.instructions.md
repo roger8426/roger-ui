@@ -39,7 +39,7 @@ const Modal = defineAsyncComponent(() => import('./Modal.vue'))
 - 禁止在 `v-for` 內使用 `v-if`（先用 `computed` 過濾）
 - `v-for` 必須提供穩定的 `:key`，禁止使用 index 作為 key（除非列表不會重排）
 
-```vue
+```html
 <!-- 錯誤 -->
 <li v-for="(item, i) in list" :key="i">
 
@@ -55,11 +55,11 @@ const Modal = defineAsyncComponent(() => import('./Modal.vue'))
 
 ```ts
 // 錯誤：Tailwind 無法靜態分析
-const cls = `text-${color}-500`
+const cls = `bg-${color}-500`
 
-// 正確：完整 class name
-const colorMap = { red: 'text-red-500', blue: 'text-blue-500' }
-const cls = colorMap[color]
+// 正確：完整 class name（使用語意 token class，不使用 Tailwind 預設顏色）
+const variantMap = { primary: 'bg-primary', danger: 'bg-danger' }
+const cls = variantMap[variant]
 ```
 
 ## Storybook Build 效能

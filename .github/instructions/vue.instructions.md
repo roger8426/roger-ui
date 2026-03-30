@@ -29,20 +29,19 @@ applyTo: '**/*.vue'
 
 - 使用 `withDefaults(defineProps<Props>(), {...})` 定義，必須提供完整 TypeScript 型別
 - boolean props 使用形容詞，不加 `is` 前綴：`disabled`、`loading`、`readonly`（除非語意不清）
-- 提供 `size`、`variant` 等枚舉型 prop 時，使用 union type 而非 enum
+- 提供 `size` 等枚舉型 prop 時，使用 union type 而非 enum
+- 顏色樣式由使用者自行控制（如傳入任意 CSS 色彩字串），不強制使用 `variant` prop
 - 所有 props 必須有預設值或標記為 optional（`?`）
 
 ```ts
 interface Props {
   size?: 'sm' | 'md' | 'lg'
-  variant?: 'primary' | 'secondary' | 'ghost'
   disabled?: boolean
   loading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
-  variant: 'primary',
   disabled: false,
   loading: false,
 })

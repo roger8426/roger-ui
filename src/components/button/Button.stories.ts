@@ -14,6 +14,10 @@ const meta = {
     size: { control: 'select', options: ['sm', 'md', 'lg'] },
     outline: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    default: {
+      description: 'Button 的文字內容（default slot）',
+      control: 'text',
+    },
   },
   args: {
     size: 'md',
@@ -35,14 +39,6 @@ export const CustomColor: Story = {
   args: {
     color: '#d0391e',
     textColor: '#f8f9ff',
-  },
-}
-
-export const Outlined: Story = {
-  args: {
-    color: '#ffffff00',
-    textColor: '#3b5bdb',
-    borderColor: '#3b5bdb',
   },
 }
 
@@ -71,6 +67,13 @@ export const Interaction: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const button = canvas.getByRole('button', { name: 'Click me' })
+
+    await expect(button).toBeVisible()
+    await expect(button).not.toBeDisabled()
+
+    await userEvent.tab()
+    await expect(button).toHaveFocus()
+
     await userEvent.click(button)
     await expect(button).toBeVisible()
   },
