@@ -1,5 +1,5 @@
 export interface ButtonProps {
-  /** 背景顏色（任意 CSS 色彩值，預設使用 --color-primary token） */
+  /** 背景顏色（任意 CSS 色彩值，預設使用 --color-default token） */
   color?: string
   /** 文字顏色（任意 CSS 色彩值，預設白色） */
   textColor?: string
