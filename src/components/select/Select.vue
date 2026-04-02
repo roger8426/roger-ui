@@ -146,8 +146,6 @@ const props = withDefaults(defineProps<SelectProps>(), {
 const emit = defineEmits<{
   'update:modelValue': [value: string | number | null]
   change: [value: string | number | null, option: SelectOption | null]
-  focus: [event: FocusEvent]
-  blur: [event: FocusEvent]
 }>()
 
 const rootEl = ref<HTMLElement | null>(null)
