@@ -1,40 +1,46 @@
 # Button
 
-通用按鈕元件，支援自訂顏色、尺寸、outline 模式與停用狀態。
+通用按鈕元件，支援自訂顏色、尺寸、圓角、outline 模式與停用狀態。
 
 ## 使用範例
 
 ```vue
-<Button label="送出" />
-<Button label="取消" outline />
-<Button label="刪除" color="oklch(58% 0.22 15)" textColor="white" />
-<Button label="大按鈕" size="lg" />
-<Button label="停用" disabled />
+<Button>送出</Button>
+<Button outline>取消</Button>
+<Button bgColor="oklch(58% 0.22 15)" textColor="white">刪除</Button>
+<Button size="lg">大按鈕</Button>
+<Button :radius="8">輕圓角</Button>
+<Button :radius="0">方形</Button>
+<Button disabled>停用</Button>
 ```
 
 ## Props
 
 | Prop | 型別 | 預設值 | 說明 |
 |------|------|--------|------|
-| `label` | `string` | — | 按鈕文字（必填） |
+| `type` | `'button' \| 'submit' \| 'reset'` | `'button'` | HTML type 屬性 |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 尺寸 |
-| `outline` | `boolean` | `false` | Outline 模式（透明背景、主色邊框與文字） |
-| `color` | `string` | `var(--color-primary)` | 背景顏色（任意 CSS 色彩值） |
-| `textColor` | `string` | `white` | 文字顏色（任意 CSS 色彩值） |
-| `borderColor` | `string` | — | 邊框顏色（未設定則無邊框） |
+| `radius` | `number \| 'full'` | `'full'` | 圓角半徑（px 數值或 `'full'` 表示完整圓形） |
+| `outline` | `boolean` | `false` | Outline 模式（邊框樣式，預設透明背景） |
+| `bgColor` | `string` | — | 背景顏色（任意 CSS 色彩值）；outline 模式忽略此值，固定為透明 |
+| `textColor` | `string` | — | 文字顏色（任意 CSS 色彩值） |
+| `borderColor` | `string` | — | 邊框顏色（任意 CSS 色彩值） |
+| `loading` | `boolean` | `false` | 載入中狀態（自動鎖定互動、顯示 spinner） |
 | `disabled` | `boolean` | `false` | 是否停用 |
 
-## Emits
+## Slots
 
-| 事件 | 說明 |
+| Slot | 說明 |
 |------|------|
-| `press` | 按鈕被點擊時觸發 |
+| `default` | 按鈕內容 |
 
 ## 預設顏色
 
-| 使用情境 | 色碼 |
-|----------|------|
+| 使用情境 | 預設值 |
+|----------|--------|
 | 一般模式背景 | `var(--color-default)` |
-| 一般模式文字 | `white` |
-| Outline 模式邊框與文字 | `var(--color-default)` |
-| Outline 模式背景 | 全透明 |
+| 一般模式文字 | `var(--color-default-foreground)` |
+| 一般模式邊框 | 無 |
+| Outline 模式背景 | 透明 |
+| Outline 模式文字 | `var(--color-default)` |
+| Outline 模式邊框 | `var(--color-default)` |

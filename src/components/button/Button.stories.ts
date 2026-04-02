@@ -2,14 +2,21 @@ import { expect, userEvent, within } from 'storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import Button from './Button.vue'
+import Icon from '../icon/Icon.vue'
 
 const meta = {
   title: 'UI/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {
-    color: {
-      description: '背景顏色（任意 CSS 色彩值，預設使用 --color-default token）',
+    type: {
+      description: '按鈕的 HTML type 屬性',
+      control: 'select',
+      options: ['button', 'submit', 'reset'],
+    },
+    bgColor: {
+      description:
+        '背景顏色（任意 CSS 色彩值，預設使用 --color-default token；outline 模式忽略此值，固定為透明）',
       control: 'color',
     },
     textColor: {
@@ -25,8 +32,16 @@ const meta = {
       control: 'select',
       options: ['sm', 'md', 'lg'],
     },
+    radius: {
+      description: '圓角半徑（px 數值，或 \'full\' 表示完整圓形），預設 \'full\'',
+      control: 'text',
+    },
     outline: {
       description: '是否為 outline 模式（透明背景、主色邊框與文字）',
+      control: 'boolean',
+    },
+    loading: {
+      description: '是否顯示載入中狀態（自動鎖定互動、顯示 spinner）',
       control: 'boolean',
     },
     disabled: {
@@ -56,7 +71,7 @@ export const Default: Story = {}
 
 export const CustomColor: Story = {
   args: {
-    color: '#d0391e',
+    bgColor: '#d0391e',
     textColor: '#f8f9ff',
   },
 }
@@ -65,16 +80,62 @@ export const Outline: Story = {
   args: { outline: true },
 }
 
-export const Large: Story = {
-  args: { size: 'lg' },
+export const CustomRadius: Story = {
+  render: (args) => ({
+    components: { Button },
+    setup: () => ({ args }),
+    template: `
+      <div style="display:flex; align-items:center; gap:12px;">
+        <Button v-bind="args" :radius="0">Square</Button>
+        <Button v-bind="args" :radius="8">Rounded</Button>
+        <Button v-bind="args" radius="full">Full</Button>
+      </div>
+    `,
+  }),
 }
 
-export const Small: Story = {
-  args: { size: 'sm' },
+export const Sizes: Story = {
+  render: (args) => ({
+    components: { Button },
+    setup: () => ({ args }),
+    template: `
+      <div style="display:flex; align-items:center; gap:12px;">
+        <Button v-bind="args" size="sm">Small</Button>
+        <Button v-bind="args" size="md">Medium</Button>
+        <Button v-bind="args" size="lg">Large</Button>
+      </div>
+    `,
+  }),
+}
+
+export const Loading: Story = {
+  args: { loading: true },
 }
 
 export const Disabled: Story = {
   args: { disabled: true },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const button = canvas.getByRole('button')
+
+    await expect(button).toBeVisible()
+    await expect(button).toBeDisabled()
+    await userEvent.click(button)
+    await expect(button).toBeDisabled()
+  },
+}
+
+export const WithIcon: Story = {
+  render: (args) => ({
+    components: { Button, Icon },
+    setup: () => ({ args }),
+    template: `
+      <Button v-bind="args">
+        <Icon name="close" :size="16" class="mr-1" />
+        Close
+      </Button>
+    `,
+  }),
 }
 
 export const Interaction: Story = {

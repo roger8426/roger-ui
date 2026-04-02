@@ -1,46 +1,72 @@
 <template>
   <button
-    type="button"
-    class="inline-flex cursor-pointer items-center justify-center rounded-full font-bold transition-all hover:brightness-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
-    :class="[sizeClasses, { 'cursor-not-allowed opacity-50': disabled }]"
+    :type="type"
+    class="inline-flex items-center justify-center py-2 font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
+    :class="[
+      sizeClasses,
+      disabled || loading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:brightness-80',
+    ]"
     :style="colorStyle"
-    :disabled="disabled"
+    :disabled="disabled || loading"
+    :aria-busy="loading ? 'true' : undefined"
   >
+    <span
+      v-if="loading"
+      class="mr-2 h-4 w-4 shrink-0 animate-spin rounded-full border-2 border-current border-t-transparent"
+      aria-hidden="true"
+    />
     <slot />
   </button>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import type { ButtonProps } from './types'
 
 const props = withDefaults(defineProps<ButtonProps>(), {
+  type: 'button',
   size: 'md',
+  radius: 'full',
   outline: false,
+  loading: false,
   disabled: false,
 })
+
+if (import.meta.env.DEV) {
+  watchEffect(() => {
+    if (props.bgColor !== undefined && props.outline) {
+      console.warn('[RogerUI/Button] `bgColor` 在 `outline` 模式下會被忽略。')
+    }
+  })
+}
 
 const sizeClasses = computed(
   () =>
     ({
-      sm: 'h-8 px-3 text-sm',
-      md: 'h-10 px-4 text-base',
-      lg: 'h-12 px-6 text-lg',
+      sm: 'px-3 text-sm',
+      md: 'px-4 text-base',
+      lg: 'px-5 text-lg',
     })[props.size],
+)
+
+const borderRadius = computed(() =>
+  props.radius === 'full' ? '9999px' : `${props.radius}px`,
 )
 
 const colorStyle = computed(() => {
   if (props.outline) {
     return {
-      '--btn-color': props.borderColor ?? props.color ?? 'var(--color-default)',
-      backgroundColor: props.color ?? 'transparent',
+      '--btn-color': props.borderColor ?? 'var(--color-default)',
+      borderRadius: borderRadius.value,
+      backgroundColor: 'transparent',
       color: props.textColor ?? 'var(--color-default)',
       border: `1px solid ${props.borderColor ?? 'var(--color-default)'}`,
     }
   }
   return {
-    '--btn-color': props.color ?? 'var(--color-default)',
-    backgroundColor: props.color ?? 'var(--color-default)',
+    '--btn-color': props.bgColor ?? 'var(--color-default)',
+    borderRadius: borderRadius.value,
+    backgroundColor: props.bgColor ?? 'var(--color-default)',
     color: props.textColor ?? 'var(--color-default-foreground)',
     border: props.borderColor ? `1px solid ${props.borderColor}` : 'none',
   }
