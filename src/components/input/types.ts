@@ -13,7 +13,7 @@ export interface InputProps {
   disabled?: boolean
   /** 是否唯讀 */
   readonly?: boolean
-  /** 是否為錯誤狀態（固定使用 --color-error 警告色） */
+  /** 是否為錯誤狀態（固定使用 --rui-color-error 警告色） */
   error?: boolean
   /** 錯誤訊息文字（傳入時自動啟用 error 狀態） */
   errorMsg?: string

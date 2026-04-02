@@ -46,6 +46,6 @@ export interface SelectProps {
   borderColor?: string
   /** 文字顏色（任意 CSS 色彩值，預設繼承） */
   color?: string
-  /** 下拉面板背景顏色（任意 CSS 色彩值，預設使用 --color-select-bg token） */
+  /** 下拉面板背景顏色（任意 CSS 色彩值，預設使用 --rui-color-select-bg token） */
   dropdownBg?: string
 }

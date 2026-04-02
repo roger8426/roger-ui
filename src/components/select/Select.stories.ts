@@ -94,7 +94,7 @@ const meta = {
       table: { category: 'Appearance' },
     },
     dropdownBg: {
-      description: '下拉面板背景顏色（任意 CSS 色彩值，預設使用 --color-select-bg token）',
+      description: '下拉面板背景顏色（任意 CSS 色彩値，預設使用 --rui-color-select-bg token）',
       control: 'color',
       table: { category: 'Appearance' },
     },

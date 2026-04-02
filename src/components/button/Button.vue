@@ -2,10 +2,7 @@
   <button
     :type="type"
     class="inline-flex items-center justify-center py-2 font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
-    :class="[
-      sizeClasses,
-      disabled || loading ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:brightness-80',
-    ]"
+    :class="[sizeClasses, interactionClasses]"
     :style="colorStyle"
     :disabled="disabled || loading"
     :aria-busy="loading ? 'true' : undefined"
@@ -40,6 +37,12 @@ if (import.meta.env.DEV) {
   })
 }
 
+const interactionClasses = computed(() =>
+  props.disabled || props.loading
+    ? 'cursor-not-allowed opacity-50'
+    : 'cursor-pointer hover:brightness-80',
+)
+
 const sizeClasses = computed(
   () =>
     ({
@@ -56,18 +59,18 @@ const borderRadius = computed(() =>
 const colorStyle = computed(() => {
   if (props.outline) {
     return {
-      '--btn-color': props.borderColor ?? 'var(--color-default)',
+      '--btn-color': props.borderColor ?? 'var(--rui-color-default)',
       borderRadius: borderRadius.value,
       backgroundColor: 'transparent',
-      color: props.textColor ?? 'var(--color-default)',
-      border: `1px solid ${props.borderColor ?? 'var(--color-default)'}`,
+      color: props.textColor ?? 'var(--rui-color-default)',
+      border: `1px solid ${props.borderColor ?? 'var(--rui-color-default)'}`,
     }
   }
   return {
-    '--btn-color': props.bgColor ?? 'var(--color-default)',
+    '--btn-color': props.bgColor ?? 'var(--rui-color-default)',
     borderRadius: borderRadius.value,
-    backgroundColor: props.bgColor ?? 'var(--color-default)',
-    color: props.textColor ?? 'var(--color-default-foreground)',
+    backgroundColor: props.bgColor ?? 'var(--rui-color-default)',
+    color: props.textColor ?? 'var(--rui-color-default-foreground)',
     border: props.borderColor ? `1px solid ${props.borderColor}` : 'none',
   }
 })

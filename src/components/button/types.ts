@@ -1,9 +1,9 @@
 export interface ButtonProps {
   /** 按鈕的 HTML type 屬性 */
   type?: 'button' | 'submit' | 'reset'
-  /** 背景顏色（任意 CSS 色彩值，預設使用 --color-default token；outline 模式忽略此值，固定為透明） */
+  /** 背景顏色（任意 CSS 色彩値，預設使用 --rui-color-default token；outline 模式忽略此値，固定為透明） */
   bgColor?: string
-  /** 文字顏色（任意 CSS 色彩值，預設白色） */
+  /** 文字顏色（任意 CSS 色彩值；一般模式預設 --rui-color-default-foreground，outline 模式預設 --rui-color-default） */
   textColor?: string
   /** 邊框顏色（任意 CSS 色彩值，未設定則無邊框） */
   borderColor?: string

@@ -21,9 +21,9 @@
 | `error` | `boolean` | `false` | 是否為錯誤狀態 |
 | `errorMsg` | `string` | `''` | 錯誤訊息（傳入時自動啟用 error 狀態） |
 | `border` | `boolean` | `true` | 是否顯示邊框 |
-| `borderColor` | `string` | — | 邊框顏色（任意 CSS 色彩值，預設使用 `--color-default` token） |
+| `borderColor` | `string` | — | 邀框顏色（任意 CSS 色彩値，預設使用 `--rui-color-default` token） |
 | `color` | `string` | — | 文字顏色（任意 CSS 色彩值，預設繼承） |
-| `dropdownBg` | `string` | — | 下拉面板背景顏色（任意 CSS 色彩值，預設使用 `--color-select-bg` token） |
+| `dropdownBg` | `string` | — | 下拉面板背景顏色（任意 CSS 色彩値，預設使用 `--rui-color-select-bg` token） |
 | `id` | `string` | — | trigger 的 id，用於關聯外部 `<label>` |
 
 ## Emits

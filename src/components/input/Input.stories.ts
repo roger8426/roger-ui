@@ -226,7 +226,7 @@ export const FormValidation: Story = {
           placeholder="必填欄位"
           @blur="validate"
         />
-        <span v-if="hasError" style="font-size: 0.75rem; color: var(--color-error)">
+        <span v-if="hasError" style="font-size: 0.75rem; color: var(--rui-color-error)">
           此欄位為必填
         </span>
       </div>

@@ -202,9 +202,9 @@ const navigableOptions = computed(() => {
 
 const wrapperVars = computed(
   (): Record<string, string> => ({
-    '--select-active-border': props.borderColor ?? 'var(--color-default)',
-    '--select-dropdown-bg': props.dropdownBg ?? 'var(--color-select-bg)',
-    ...(isOpen.value ? { 'z-index': 'var(--z-dropdown)' } : {}),
+    '--select-active-border': props.borderColor ?? 'var(--rui-color-default)',
+    '--select-dropdown-bg': props.dropdownBg ?? 'var(--rui-color-select-bg)',
+    ...(isOpen.value ? { 'z-index': 'var(--rui-z-dropdown)' } : {}),
   }),
 )
 
@@ -229,11 +229,11 @@ const sizeInputClasses = computed(
 const wrapperStateClasses = computed(() => {
   if (props.disabled) {
     const borderClass = props.border ? 'border-(--select-active-border)' : 'border-transparent'
-    return `cursor-not-allowed opacity-60 ${borderClass} bg-(--color-disabled-bg)`
+    return `cursor-not-allowed opacity-60 ${borderClass} bg-(--rui-color-disabled-bg)`
   }
   if (errorActive.value) {
-    const borderClass = props.border ? 'border-(--color-error)' : 'border-transparent'
-    return `${borderClass} focus-within:ring-1 focus-within:ring-(--color-error)`
+    const borderClass = props.border ? 'border-(--rui-color-error)' : 'border-transparent'
+    return `${borderClass} focus-within:ring-1 focus-within:ring-(--rui-color-error)`
   }
   if (props.border) {
     return 'border-(--select-active-border) focus-within:ring-1 focus-within:ring-(--select-active-border)'
@@ -247,9 +247,9 @@ function getOptionClasses(opt: SelectOption): string {
   if (opt.disabled) return 'cursor-not-allowed opacity-40'
   const isFocused = navigableOptions.value.indexOf(opt) === focusedIndex.value
   const isSelected = opt.value === props.modelValue
-  if (isSelected) return 'bg-(--color-select-selected) font-medium'
-  if (isFocused) return 'bg-(--color-select-hover)'
-  return 'hover:bg-(--color-select-hover)'
+  if (isSelected) return 'bg-(--rui-color-select-selected) font-medium'
+  if (isFocused) return 'bg-(--rui-color-select-hover)'
+  return 'hover:bg-(--rui-color-select-hover)'
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────

@@ -70,7 +70,7 @@ const errorId = `${useId()}-error`
 
 const wrapperVars = computed(
   (): Record<string, string> => ({
-    '--input-active-border': props.borderColor ?? 'var(--color-default)',
+    '--input-active-border': props.borderColor ?? 'var(--rui-color-default)',
   }),
 )
 
@@ -104,15 +104,15 @@ const slotSpacingClasses = computed(() => ({
 const wrapperStateClasses = computed(() => {
   if (props.disabled) {
     const borderClass = props.border ? 'border-(--input-active-border)' : 'border-transparent'
-    return `cursor-not-allowed opacity-60 ${borderClass} bg-disabled-bg`
+    return `cursor-not-allowed opacity-60 ${borderClass} bg-(--rui-color-disabled-bg)`
   }
   if (errorActive.value) {
-    const borderClass = props.border ? 'border-(--color-error)' : 'border-transparent'
-    return `${borderClass} focus-within:ring-1 focus-within:ring-(--color-error)`
+    const borderClass = props.border ? 'border-(--rui-color-error)' : 'border-transparent'
+    return `${borderClass} focus-within:ring-1 focus-within:ring-(--rui-color-error)`
   }
   if (props.readonly) {
     const borderClass = props.border ? 'border-(--input-active-border)' : 'border-transparent'
-    return `${borderClass} bg-disabled-bg`
+    return `${borderClass} bg-(--rui-color-disabled-bg)`
   }
   if (props.border) {
     return 'border-(--input-active-border) focus-within:ring-1 focus-within:ring-(--input-active-border)'
