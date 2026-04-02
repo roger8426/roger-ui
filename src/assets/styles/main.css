@@ -6,4 +6,14 @@
   --color-default-foreground: oklch(98% 0.01 264);
   --color-error: oklch(55% 0.22 25);
   --color-disabled-bg: oklch(95% 0.005 264);
+
+  /* Select 元件 */
+  --color-select-bg: oklch(100% 0 0);
+  --color-select-hover: oklch(96% 0.005 264);
+  --color-select-selected: oklch(93% 0.015 264);
+
+  /* Z-index 層級 */
+  --z-dropdown: 100;
+  --z-modal: 200;
+  --z-toast: 300;
 }
