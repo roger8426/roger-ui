@@ -9,3 +9,6 @@ export type { SelectProps, SelectOption, SelectOptionGroup, SelectItem } from '.
 
 export { default as Icon } from './components/icon/Icon.vue'
 export type { IconProps } from './components/icon/types'
+
+export { default as TextArea } from './components/textarea/TextArea.vue'
+export type { TextAreaProps } from './components/textarea/types'
