@@ -38,7 +38,9 @@
         <slot name="suffix" />
       </span>
     </div>
-    <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-error">{{ errorMsg }}</span>
+    <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-error">{{
+      errorMsg
+    }}</span>
   </div>
 </template>
 
@@ -103,21 +105,30 @@ const slotSpacingClasses = computed(() => ({
 
 const wrapperStateClasses = computed(() => {
   if (props.disabled) {
-    const borderClass = props.border ? 'border-(--input-active-border)' : 'border-transparent'
-    return `cursor-not-allowed opacity-60 ${borderClass} bg-(--rui-color-disabled-bg)`
+    return [
+      'cursor-not-allowed opacity-60 bg-(--rui-color-disabled-bg)',
+      props.border ? 'border-(--input-active-border)' : 'border-transparent',
+    ]
   }
   if (errorActive.value) {
-    const borderClass = props.border ? 'border-(--rui-color-error)' : 'border-transparent'
-    return `${borderClass} focus-within:ring-1 focus-within:ring-(--rui-color-error)`
+    return [
+      'focus-within:ring-1 focus-within:ring-(--rui-color-error)',
+      props.border ? 'border-(--rui-color-error)' : 'border-transparent',
+    ]
   }
   if (props.readonly) {
-    const borderClass = props.border ? 'border-(--input-active-border)' : 'border-transparent'
-    return `${borderClass} bg-(--rui-color-disabled-bg)`
+    return [
+      'bg-(--rui-color-disabled-bg)',
+      props.border ? 'border-(--input-active-border)' : 'border-transparent',
+    ]
   }
   if (props.border) {
-    return 'border-(--input-active-border) focus-within:ring-1 focus-within:ring-(--input-active-border)'
+    return [
+      'border-(--input-active-border)',
+      'focus-within:ring-1 focus-within:ring-(--input-active-border)',
+    ]
   }
-  return 'border-transparent'
+  return ['border-transparent']
 })
 
 function onInput(event: Event) {
