@@ -1,4 +1,5 @@
 import { expect, userEvent, within } from 'storybook/test'
+import { useArgs } from 'storybook/preview-api'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import Button from './Button.vue'
@@ -57,11 +58,16 @@ const meta = {
     size: 'md',
     disabled: false,
   },
-  render: (args) => ({
-    components: { Button },
-    setup: () => ({ args }),
-    template: '<Button v-bind="args">Button</Button>',
-  }),
+  render: () => {
+    const [args] = useArgs()
+    return {
+      components: { Button },
+      setup() {
+        return { args }
+      },
+      template: '<Button v-bind="args">Button</Button>',
+    }
+  },
 } satisfies Meta<typeof Button>
 
 export default meta
@@ -81,31 +87,41 @@ export const Outline: Story = {
 }
 
 export const CustomRadius: Story = {
-  render: (args) => ({
-    components: { Button },
-    setup: () => ({ args }),
-    template: `
-      <div style="display:flex; align-items:center; gap:12px;">
-        <Button v-bind="args" :radius="0">Square</Button>
-        <Button v-bind="args" :radius="8">Rounded</Button>
-        <Button v-bind="args" radius="full">Full</Button>
-      </div>
-    `,
-  }),
+  render: () => {
+    const [args] = useArgs()
+    return {
+      components: { Button },
+      setup() {
+        return { args }
+      },
+      template: `
+        <div style="display:flex; align-items:center; gap:12px;">
+          <Button v-bind="args" :radius="0">Square</Button>
+          <Button v-bind="args" :radius="8">Rounded</Button>
+          <Button v-bind="args" radius="full">Full</Button>
+        </div>
+      `,
+    }
+  },
 }
 
 export const Sizes: Story = {
-  render: (args) => ({
-    components: { Button },
-    setup: () => ({ args }),
-    template: `
-      <div style="display:flex; align-items:center; gap:12px;">
-        <Button v-bind="args" size="sm">Small</Button>
-        <Button v-bind="args" size="md">Medium</Button>
-        <Button v-bind="args" size="lg">Large</Button>
-      </div>
-    `,
-  }),
+  render: () => {
+    const [args] = useArgs()
+    return {
+      components: { Button },
+      setup() {
+        return { args }
+      },
+      template: `
+        <div style="display:flex; align-items:center; gap:12px;">
+          <Button v-bind="args" size="sm">Small</Button>
+          <Button v-bind="args" size="md">Medium</Button>
+          <Button v-bind="args" size="lg">Large</Button>
+        </div>
+      `,
+    }
+  },
 }
 
 export const Loading: Story = {
@@ -126,24 +142,34 @@ export const Disabled: Story = {
 }
 
 export const WithIcon: Story = {
-  render: (args) => ({
-    components: { Button, Icon },
-    setup: () => ({ args }),
-    template: `
-      <Button v-bind="args">
-        <Icon name="close" :size="16" class="mr-1" />
-        Close
-      </Button>
-    `,
-  }),
+  render: () => {
+    const [args] = useArgs()
+    return {
+      components: { Button, Icon },
+      setup() {
+        return { args }
+      },
+      template: `
+        <Button v-bind="args">
+          <Icon name="close" :size="16" class="mr-1" />
+          Close
+        </Button>
+      `,
+    }
+  },
 }
 
 export const Interaction: Story = {
-  render: (args) => ({
-    components: { Button },
-    setup: () => ({ args }),
-    template: '<Button v-bind="args">Click me</Button>',
-  }),
+  render: () => {
+    const [args] = useArgs()
+    return {
+      components: { Button },
+      setup() {
+        return { args }
+      },
+      template: '<Button v-bind="args">Click me</Button>',
+    }
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const button = canvas.getByRole('button', { name: 'Click me' })

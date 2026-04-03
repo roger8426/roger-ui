@@ -1,4 +1,5 @@
 import { expect, userEvent, within } from 'storybook/test'
+import { useArgs } from 'storybook/preview-api'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 
@@ -109,14 +110,16 @@ const meta = {
     error: false,
     border: true,
   },
-  render: (args) => ({
-    components: { Select },
-    setup() {
-      const value = ref(args.modelValue ?? null)
-      return { args, value }
-    },
-    template: '<Select v-bind="args" v-model="value" style="width: 240px" />',
-  }),
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Select },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+    }
+  },
 } satisfies Meta<typeof Select>
 
 export default meta
@@ -176,14 +179,16 @@ export const NoBorder: Story = {
 }
 
 export const Interaction: Story = {
-  render: (args) => ({
-    components: { Select },
-    setup() {
-      const value = ref<string | number | null>(null)
-      return { args, value }
-    },
-    template: '<Select v-bind="args" v-model="value" style="width: 240px" />',
-  }),
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Select },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+    }
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
@@ -215,14 +220,16 @@ export const Interaction: Story = {
 }
 
 export const InteractionKeyboard: Story = {
-  render: (args) => ({
-    components: { Select },
-    setup() {
-      const value = ref<string | number | null>(null)
-      return { args, value }
-    },
-    template: '<Select v-bind="args" v-model="value" style="width: 240px" />',
-  }),
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Select },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+    }
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const trigger = canvas.getByRole('combobox')
@@ -245,14 +252,16 @@ export const InteractionSearchable: Story = {
   args: {
     searchable: true,
   },
-  render: (args) => ({
-    components: { Select },
-    setup() {
-      const value = ref<string | number | null>(null)
-      return { args, value }
-    },
-    template: '<Select v-bind="args" v-model="value" style="width: 240px" />',
-  }),
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Select },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+    }
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const trigger = canvas.getByRole('combobox')

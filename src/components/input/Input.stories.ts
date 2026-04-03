@@ -1,4 +1,5 @@
 import { expect, userEvent, within } from 'storybook/test'
+import { useArgs } from 'storybook/preview-api'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 
@@ -87,14 +88,16 @@ const meta = {
     error: false,
     border: true,
   },
-  render: (args) => ({
-    components: { Input },
-    setup() {
-      const value = ref(args.modelValue ?? '')
-      return { args, value }
-    },
-    template: '<Input v-bind="args" v-model="value" />',
-  }),
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Input },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: '<Input v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" />',
+    }
+  },
 } satisfies Meta<typeof Input>
 
 export default meta
