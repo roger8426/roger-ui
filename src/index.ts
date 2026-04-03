@@ -5,7 +5,12 @@ export { default as Input } from './components/input/Input.vue'
 export type { InputProps } from './components/input/types'
 
 export { default as Select } from './components/select/Select.vue'
-export type { SelectProps, SelectOption, SelectOptionGroup, SelectItem } from './components/select/types'
+export type {
+  SelectProps,
+  SelectOption,
+  SelectOptionGroup,
+  SelectItem,
+} from './components/select/types'
 
 export { default as Icon } from './components/icon/Icon.vue'
 export type { IconProps } from './components/icon/types'
@@ -15,3 +20,6 @@ export type { TextAreaProps } from './components/textarea/types'
 
 export { default as Badge } from './components/badge/Badge.vue'
 export type { BadgeProps } from './components/badge/types'
+
+export { default as Card } from './components/card/Card.vue'
+export type { CardProps } from './components/card/types'
