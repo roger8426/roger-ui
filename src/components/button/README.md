@@ -40,7 +40,7 @@
 |----------|--------|
 | 一般模式背景 | `var(--rui-color-default)` |
 | 一般模式文字 | `var(--rui-color-default-foreground)` |
-| 一般模式邀框 | 無 |
+| 一般模式邊框 | 無 |
 | Outline 模式背景 | 透明 |
 | Outline 模式文字 | `var(--rui-color-default)` |
-| Outline 模式邀框 | `var(--rui-color-default)` |
+| Outline 模式邊框 | `var(--rui-color-default)` |
