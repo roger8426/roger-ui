@@ -12,3 +12,6 @@ export type { IconProps } from './components/icon/types'
 
 export { default as TextArea } from './components/textarea/TextArea.vue'
 export type { TextAreaProps } from './components/textarea/types'
+
+export { default as Badge } from './components/badge/Badge.vue'
+export type { BadgeProps } from './components/badge/types'
