@@ -8,11 +8,13 @@
       :aria-haspopup="'listbox'"
       :aria-controls="listboxId"
       :aria-disabled="disabled || undefined"
+      :aria-activedescendant="activeDescendantId"
+      :aria-describedby="errorActive && errorMsg ? errorId : undefined"
       class="inline-flex cursor-pointer items-center justify-between rounded-md border transition-colors"
       :class="[sizeWrapperClasses, wrapperStateClasses]"
       :tabindex="disabled ? -1 : 0"
       @click="!disabled && toggle()"
-      @keydown="onTriggerKeydown"
+      @keydown="handleNavKey"
     >
       <!-- searchable: input；否則 span 顯示選中值 -->
       <template v-if="searchable && isOpen">
@@ -25,7 +27,7 @@
           :placeholder="selectedLabel ?? placeholder"
           aria-autocomplete="list"
           :aria-controls="listboxId"
-          @keydown="onSearchKeydown"
+          @keydown="handleNavKey"
           @click.stop
         />
       </template>
@@ -83,6 +85,7 @@
                 <li
                   v-for="opt in item.options"
                   :key="opt.value"
+                  :id="`${listboxId}-opt-${opt.value}`"
                   role="option"
                   :aria-selected="opt.value === modelValue"
                   :aria-disabled="opt.disabled || undefined"
@@ -102,6 +105,7 @@
           <!-- Flat option -->
           <li
             v-else
+            :id="`${listboxId}-opt-${item.value}`"
             role="option"
             :aria-selected="item.value === modelValue"
             :aria-disabled="item.disabled || undefined"
@@ -200,6 +204,12 @@ const navigableOptions = computed(() => {
   return result
 })
 
+const activeDescendantId = computed(() => {
+  if (focusedIndex.value < 0) return undefined
+  const opt = navigableOptions.value[focusedIndex.value]
+  return opt ? `${listboxId}-opt-${opt.value}` : undefined
+})
+
 const wrapperVars = computed(
   (): Record<string, string> => ({
     '--select-active-border': props.borderColor ?? 'var(--rui-color-default)',
@@ -228,17 +238,28 @@ const sizeInputClasses = computed(
 
 const wrapperStateClasses = computed(() => {
   if (props.disabled) {
-    const borderClass = props.border ? 'border-(--select-active-border)' : 'border-transparent'
-    return `cursor-not-allowed opacity-60 ${borderClass} bg-(--rui-color-disabled-bg)`
+    return [
+      'cursor-not-allowed',
+      'opacity-60',
+      'bg-(--rui-color-disabled-bg)',
+      props.border ? 'border-(--select-active-border)' : 'border-transparent',
+    ]
   }
   if (errorActive.value) {
-    const borderClass = props.border ? 'border-(--rui-color-error)' : 'border-transparent'
-    return `${borderClass} focus-within:ring-1 focus-within:ring-(--rui-color-error)`
+    return [
+      'focus-within:ring-1',
+      'focus-within:ring-(--rui-color-error)',
+      props.border ? 'border-(--rui-color-error)' : 'border-transparent',
+    ]
   }
   if (props.border) {
-    return 'border-(--select-active-border) focus-within:ring-1 focus-within:ring-(--select-active-border)'
+    return [
+      'border-(--select-active-border)',
+      'focus-within:ring-1',
+      'focus-within:ring-(--select-active-border)',
+    ]
   }
-  return 'border-transparent'
+  return ['border-transparent']
 })
 
 // ── Option class helper ───────────────────────────────────────────────────────
@@ -312,14 +333,6 @@ function handleNavKey(e: KeyboardEvent) {
   } else if (e.key === 'Escape' || e.key === 'Tab') {
     closeDropdown()
   }
-}
-
-function onTriggerKeydown(e: KeyboardEvent) {
-  handleNavKey(e)
-}
-
-function onSearchKeydown(e: KeyboardEvent) {
-  handleNavKey(e)
 }
 
 // ── Click outside ─────────────────────────────────────────────────────────────
