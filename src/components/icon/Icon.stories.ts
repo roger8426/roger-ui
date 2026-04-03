@@ -93,22 +93,25 @@ export const UnknownName: Story = {
     name: 'does-not-exist',
   },
   play: async ({ canvasElement }) => {
-    const icon = canvasElement.querySelector('.icon') as HTMLElement
+    const icon = canvasElement.querySelector('[aria-hidden="true"]')
     await expect(icon).not.toBeNull()
-    await expect(icon.querySelector('svg')).toBeNull()
+    await expect(icon?.querySelector('svg') ?? null).toBeNull()
   },
 }
 
-export const Interaction: Story = {
+export const DefaultState: Story = {
   args: {
     name: 'list',
     size: 20,
   },
   play: async ({ canvasElement }) => {
-    const icon = canvasElement.querySelector('.icon') as HTMLElement
+    const canvas = within(canvasElement)
+
+    // 未設定 ariaLabel 時，圖示應為 aria-hidden
+    const icon = canvasElement.querySelector('[aria-hidden="true"]')
     await expect(icon).not.toBeNull()
-    await expect(icon).toHaveAttribute('aria-hidden', 'true')
-    await expect(icon.querySelector('svg')).not.toBeNull()
+    await expect(canvas.queryAllByRole('img')).toHaveLength(0)
+    await expect(icon?.querySelector('svg')).not.toBeNull()
   },
 }
 
