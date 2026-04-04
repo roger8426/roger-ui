@@ -14,7 +14,6 @@ import type { IconProps } from './types'
 const props = withDefaults(defineProps<IconProps>(), {
   size: 20,
   color: undefined,
-  ariaLabel: undefined,
 })
 
 const svgModules = import.meta.glob<string>('../../assets/icons/*.svg', {
@@ -41,11 +40,7 @@ const iconStyle = computed(() => ({
   color: props.color,
 }))
 
-const ariaAttrs = computed(() =>
-  props.ariaLabel
-    ? { role: 'img' as const, 'aria-label': props.ariaLabel }
-    : { 'aria-hidden': true as const },
-)
+const ariaAttrs = computed(() => ({ 'aria-hidden': true as const }))
 </script>
 
 <style scoped>

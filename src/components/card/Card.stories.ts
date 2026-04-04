@@ -1,6 +1,7 @@
-import { expect, within } from 'storybook/test'
+import { expect, userEvent, within } from 'storybook/test'
 import { useArgs } from 'storybook/preview-api'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { ref } from 'vue'
 
 import Card from './Card.vue'
 
@@ -154,7 +155,7 @@ export const WithCover: Story = {
         <Card v-bind="args" style="width: 280px">
           <template #cover>
             <div style="height: 140px; background: oklch(90% 0.02 264); display: flex; align-items: center; justify-content: center;">
-              <span style="color: oklch(55% 0.1 264); font-size: 12px;">封面圖片區域</span>
+              <span style="color: oklch(38% 0.07 264); font-size: 12px;">封面圖片區域</span>
             </div>
           </template>
           <p style="font-weight: 600; color: oklch(20% 0.01 264); margin-bottom: 4px">卡片標題</p>
@@ -168,20 +169,28 @@ export const WithCover: Story = {
 export const Hoverable: Story = {
   render: () => ({
     components: { Card },
+    setup() {
+      const raisedClicks = ref(0)
+      const plainClicks = ref(0)
+
+      return { raisedClicks, plainClicks }
+    },
     template: `
       <div style="display: flex; gap: 24px; flex-wrap: wrap; padding: 24px;">
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
-          <Card hoverable style="width: 220px">
+          <Card hoverable style="width: 220px" @click="raisedClicks += 1">
             <p style="font-size: 13px; font-weight: 600; color: oklch(20% 0.01 264); margin-bottom: 4px">有陰影</p>
             <p style="font-size: 12px; color: oklch(40% 0.01 264)">hover 時陰影增強 + 上浮</p>
           </Card>
+          <span style="font-size: 11px; color: oklch(55% 0.005 264)">有陰影點擊次數：{{ raisedClicks }}</span>
           <span style="font-size: 11px; color: oklch(55% 0.005 264)">shadow: md（預設）</span>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
-          <Card hoverable shadow="none" style="width: 220px">
+          <Card hoverable shadow="none" style="width: 220px" @click="plainClicks += 1">
             <p style="font-size: 13px; font-weight: 600; color: oklch(20% 0.01 264); margin-bottom: 4px">無陰影</p>
             <p style="font-size: 12px; color: oklch(40% 0.01 264)">hover 時僅位移，無陰影增強</p>
           </Card>
+          <span style="font-size: 11px; color: oklch(55% 0.005 264)">無陰影點擊次數：{{ plainClicks }}</span>
           <span style="font-size: 11px; color: oklch(55% 0.005 264)">shadow: none</span>
         </div>
       </div>
@@ -190,9 +199,20 @@ export const Hoverable: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
     const cards = canvas.getAllByRole('button')
+
     await expect(cards).toHaveLength(2)
     await expect(cards[0]).toHaveAttribute('tabindex', '0')
     await expect(cards[1]).toHaveAttribute('tabindex', '0')
+
+    await userEvent.tab()
+    await expect(cards[0]).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
+    await expect(canvas.getByText('有陰影點擊次數：1')).toBeVisible()
+
+    await userEvent.tab()
+    await expect(cards[1]).toHaveFocus()
+    await userEvent.keyboard('{Space}')
+    await expect(canvas.getByText('無陰影點擊次數：1')).toBeVisible()
   },
 }
 

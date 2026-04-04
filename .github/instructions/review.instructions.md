@@ -7,7 +7,7 @@ description: 'Use when reviewing code, conducting PR review, auditing a componen
 ## 元件 API 審查
 
 - [ ] Props 是否有完整 TypeScript 型別（無 `any`、無隱式 `unknown`）
-- [ ] 新增 prop 是否有預設值（不能讓現有使用者必須更新）
+- [ ] 新增的非必填 prop 是否有明確預設值（不能讓現有使用者必須更新）
 - [ ] 移除或重新命名 prop 是否標記 `@deprecated`
 - [ ] Emits 是否有明確的 payload 型別定義
 - [ ] `defineExpose` 僅在必要時使用，且方法有型別
@@ -42,6 +42,7 @@ description: 'Use when reviewing code, conducting PR review, auditing a componen
 - [ ] 鍵盤操作能在 story 中正確觸發
 - [ ] a11y 規則無 violations（可在 Storybook Test UI 檢視）
 - [ ] 新增 story 覆蓋所有 variant 和重要狀態
+- [ ] 若某元件為父元件內部附屬封裝，其主要狀態與互動是否已在父元件 story 中被覆蓋
 
 ## A11y 審查
 

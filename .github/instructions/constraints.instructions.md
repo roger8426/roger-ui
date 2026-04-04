@@ -17,7 +17,7 @@ applyTo: '**'
 
 - 禁止 `any` 型別（包含隱式）
 - 禁止 Options API 和 `defineComponent`
-- 禁止 default export 元件
+- 禁止在**公開導出層**使用 default export 元件；Vue SFC 檔案可維持框架預設輸出，但 `src/index.ts` 對外只能提供 named export
 - 禁止 barrel `index.ts`（除 `src/index.ts` 唯一入口）
 - 禁止 `export * from`
 - 禁止 `@apply` 在 `<style scoped>`
@@ -26,9 +26,9 @@ applyTo: '**'
 
 ## 元件開發約束
 
-- 每個元件必須有對應的 `.stories.ts` 檔案才算完成
+- 每個公開元件必須有對應的 `.stories.ts` 檔案才算完成；僅作為父元件內部封裝的附屬子元件可由父元件 story 一併覆蓋
 - 有互動行為的元件必須有帶 `play()` 的 story
-- 新增 prop 必須有預設值
+- 所有非必填 prop 必須有明確預設值，不能只靠 TypeScript optional (`?`) 取代 runtime 預設值
 - 公開 API（props/emits/expose）的異動視為 breaking change
 
 ## 測試約束

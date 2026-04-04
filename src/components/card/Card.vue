@@ -49,7 +49,7 @@ const cardRef = ref<HTMLDivElement | null>(null)
 
 function handleKeyActivate(event: KeyboardEvent) {
   if (!props.hoverable) return
-  if (event.key === 'Enter' || event.key === ' ') {
+  if (event.key === 'Enter' || event.key === ' ' || event.key === 'Space' || event.code === 'Space') {
     event.preventDefault()
     cardRef.value?.click()
   }

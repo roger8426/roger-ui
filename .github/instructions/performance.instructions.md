@@ -17,10 +17,10 @@ import { debounce } from 'lodash-es'
 import _ from 'lodash'
 ```
 
-- 大型或非首屏元件使用 `defineAsyncComponent` 懶載入
+- 大型或非首屏元件可在**應用層或 Story** 使用 `defineAsyncComponent` 懶載入；不要把公開 library entry 的同步 named export 改成 async component 包裝
 
 ```ts
-// 在 index.ts 或 story 中
+// 在應用層或 story 中
 const Modal = defineAsyncComponent(() => import('./Modal.vue'))
 ```
 
@@ -49,7 +49,7 @@ const Modal = defineAsyncComponent(() => import('./Modal.vue'))
 
 ## Tailwind & CSS 效能
 
-- 不使用 `@apply`（每次使用都會增加 CSS 輸出，相等 class 應在 template 複用）
+- 不使用 `@apply`（主因是降低樣式抽象層、維持 template 與 token 關係可讀，不是為了避免重複 CSS 輸出）
 - 元件的 Tailwind class 在 build 時由使用者端 scan 生成，本套件不包含預編譯的 utility CSS
 - 動態 class 的字串必須是完整 class name，不可使用字樣拼接（Tailwind 無法靜態分析）
 

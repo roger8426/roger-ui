@@ -43,10 +43,10 @@ Copilot 在生成、修改、解釋、審查程式碼時，必須優先遵守以
 
 ## 元件開發約束
 
-1. 每個元件必須有對應的 `.stories.ts` 檔案才算完成。
+1. 每個公開元件必須有對應的 `.stories.ts` 檔案才算完成；僅作為父元件內部封裝的附屬子元件可由父元件 story 一併覆蓋。
 2. 有互動行為的元件必須有帶 `play()` 的 story。
-3. 新增 prop 必須有預設值。
-4. 禁止 default export 元件。
+3. 所有非必填 prop 必須有明確預設值，不能只靠 optional (`?`) 取代 runtime 預設值。
+4. 禁止在公開導出層使用 default export 元件；Vue SFC 可維持框架預設輸出，但 `src/index.ts` 對外只能提供 named export。
 5. 禁止 `@apply` 在 `<style scoped>`。
 6. 禁止直接使用 Tailwind 預設顏色 class（如 `text-blue-500`）。
 7. 禁止動態拼接 Tailwind class 字串（如 `` `bg-${color}-500` ``）。

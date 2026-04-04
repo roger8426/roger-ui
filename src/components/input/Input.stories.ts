@@ -151,7 +151,7 @@ export const WithSuffix: Story = {
     template: `
       <Input placeholder="輸入網址">
         <template #suffix>
-          <span style="font-size: 0.75rem; opacity: 0.5">.com</span>
+          <span style="font-size: 0.75rem; color: var(--rui-color-text-muted)">.com</span>
         </template>
       </Input>
     `,

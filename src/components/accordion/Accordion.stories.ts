@@ -152,7 +152,7 @@ export const CustomTitle: Story = {
               <span style="display: flex; align-items: center; gap: 8px;">
                 <span style="font-size: 16px;">⚡</span>
                 <span>自訂 Title Slot</span>
-                <span style="margin-left: auto; font-size: 12px; color: var(--rui-color-default); background: oklch(93% 0.015 264); padding: 2px 6px; border-radius: 4px;">NEW</span>
+                <span style="margin-left: auto; font-size: 12px; color: oklch(35% 0.08 264); background: oklch(89% 0.015 264); padding: 2px 6px; border-radius: 4px;">NEW</span>
               </span>
             </template>
             透過 <code>#title</code> slot 可以完全自訂 header 的內容。
@@ -198,18 +198,22 @@ export const Interaction: Story = {
     expect(buttons[0]).toHaveAttribute('aria-expanded', 'false')
     expect(buttons[1]).toHaveAttribute('aria-expanded', 'false')
 
-    // 點擊第一個 header，應展開
-    await userEvent.click(buttons[0]!)
+    // 鍵盤可聚焦第一個 header，按 Enter 應展開
+    await userEvent.tab()
+    await expect(buttons[0]).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
     expect(buttons[0]).toHaveAttribute('aria-expanded', 'true')
     expect(buttons[1]).toHaveAttribute('aria-expanded', 'false')
 
-    // 點擊第二個 header，第一個收合、第二個展開（單選模式）
-    await userEvent.click(buttons[1]!)
+    // Tab 到第二個 header，按 Enter 應切換到第二項
+    await userEvent.tab()
+    await expect(buttons[1]).toHaveFocus()
+    await userEvent.keyboard('{Enter}')
     expect(buttons[0]).toHaveAttribute('aria-expanded', 'false')
     expect(buttons[1]).toHaveAttribute('aria-expanded', 'true')
 
-    // 再次點擊第二個 header，應收合（collapsible: true）
-    await userEvent.click(buttons[1]!)
+    // 再按 Enter，應收合（collapsible: true）
+    await userEvent.keyboard('{Enter}')
     expect(buttons[1]).toHaveAttribute('aria-expanded', 'false')
   },
 }

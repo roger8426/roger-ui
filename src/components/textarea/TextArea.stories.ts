@@ -192,20 +192,27 @@ export const Interaction: Story = {
     await expect(textarea).not.toBeDisabled()
 
     // 輸入前的初始高度
-    const initialHeight = (textarea as HTMLTextAreaElement).offsetHeight
+    const initialHeight = Number.parseFloat((textarea as HTMLTextAreaElement).style.height || '0')
 
     // Tab 鍵盤導航能聚焦
     await userEvent.tab()
     await expect(textarea).toHaveFocus()
 
     // 輸入多行文字，驗證 auto-resize 撐高
-    await userEvent.type(textarea, '第一行\n第二行\n第三行\n第四行')
-    await expect(textarea).toHaveValue('第一行\n第二行\n第三行\n第四行')
+    await userEvent.type(
+      textarea,
+      '第一行\n第二行\n第三行\n第四行\n第五行\n第六行\n第七行\n第八行',
+    )
+    await expect(textarea).toHaveValue(
+      '第一行\n第二行\n第三行\n第四行\n第五行\n第六行\n第七行\n第八行',
+    )
 
-    const expandedHeight = (textarea as HTMLTextAreaElement).offsetHeight
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()))
+
+    const expandedHeight = Number.parseFloat((textarea as HTMLTextAreaElement).style.height || '0')
     await expect(expandedHeight).toBeGreaterThan(initialHeight)
 
-    // 清除後高度縮回
+    // 清除後仍可正常編輯
     await userEvent.clear(textarea)
     await expect(textarea).toHaveValue('')
 

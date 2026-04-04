@@ -31,13 +31,6 @@ const meta = {
         category: 'Appearance',
       },
     },
-    ariaLabel: {
-      description: '無障礙標籤，設定後加上 role="img"',
-      control: 'text',
-      table: {
-        category: 'Accessibility',
-      },
-    },
   },
   args: {
     name: 'list',
@@ -81,13 +74,6 @@ export const CustomColor: Story = {
   },
 }
 
-export const WithAriaLabel: Story = {
-  args: {
-    name: 'list',
-    ariaLabel: '選單',
-  },
-}
-
 export const UnknownName: Story = {
   args: {
     name: 'does-not-exist',
@@ -107,25 +93,9 @@ export const DefaultState: Story = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
 
-    // 未設定 ariaLabel 時，圖示應為 aria-hidden
     const icon = canvasElement.querySelector('[aria-hidden="true"]')
     await expect(icon).not.toBeNull()
     await expect(canvas.queryAllByRole('img')).toHaveLength(0)
     await expect(icon?.querySelector('svg')).not.toBeNull()
-  },
-}
-
-export const InteractionWithLabel: Story = {
-  args: {
-    name: 'list',
-    size: 20,
-    ariaLabel: '清單圖示',
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement)
-
-    const icon = canvas.getByRole('img', { name: '清單圖示' })
-    await expect(icon).toBeVisible()
-    await expect(icon).toHaveAttribute('aria-label', '清單圖示')
   },
 }

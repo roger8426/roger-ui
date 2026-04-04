@@ -7,7 +7,8 @@ applyTo: '**/*.stories.{ts,tsx}'
 
 ## 檔案結構
 
-- 每個元件對應一個 `ComponentName.stories.ts` 檔案，與元件並置
+- 每個公開元件對應一個 `ComponentName.stories.ts` 檔案，與元件並置
+- 僅作為父元件內部封裝的附屬子元件可不建立獨立 story，但必須在父元件 story 中覆蓋其主要狀態與互動
 - 必須有 `default export`（meta）和至少一個 `export const`（story）
 - 使用 `satisfies Meta<typeof Component>` 而非直接型別標註
 

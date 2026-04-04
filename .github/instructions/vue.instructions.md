@@ -30,8 +30,8 @@ applyTo: '**/*.vue'
 - 使用 `withDefaults(defineProps<Props>(), {...})` 定義，必須提供完整 TypeScript 型別
 - boolean props 使用形容詞，不加 `is` 前綴：`disabled`、`loading`、`readonly`（除非語意不清）
 - 提供 `size` 等枚舉型 prop 時，使用 union type 而非 enum
-- 顏色樣式由使用者自行控制（如傳入任意 CSS 色彩字串），不強制使用 `variant` prop
-- 所有 props 必須有預設值或標記為 optional（`?`）
+- 顏色樣式可由使用者透過 prop 傳入任意 CSS 色彩字串控制；若元件同時提供 design token 預設值，文件需清楚標示預設行為
+- 所有非必填 props 都必須在 `withDefaults` 中提供明確預設值；optional (`?`) 只代表呼叫端可省略，不能取代 runtime 預設值
 
 ```ts
 interface Props {
@@ -101,4 +101,4 @@ defineExpose({
 
 - 移除 prop 前先標記為棄用（在 TypeScript 型別加上 `@deprecated` JSDoc）
 - 不在 patch/minor 版本中做 breaking change
-- 新增 prop 必須提供預設值，確保現有使用者不受影響
+- 新增的非必填 prop 必須提供預設值，確保現有使用者不受影響

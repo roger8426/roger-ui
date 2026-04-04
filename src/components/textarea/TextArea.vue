@@ -17,6 +17,7 @@
         :readonly="readonly"
         :maxlength="maxlength"
         :value="modelValue"
+        :aria-label="textareaAriaLabel"
         :aria-invalid="errorActive || undefined"
         :aria-describedby="errorActive && errorMsg ? errorId : undefined"
         @input="onInput"
@@ -26,7 +27,7 @@
       />
       <span
         v-if="showCount"
-        class="self-end px-1 pb-1 text-xs opacity-50"
+        class="self-end px-1 pb-1 text-xs text-(--rui-color-text-muted)"
         aria-hidden="true"
       >
         {{ charCountDisplay }}
@@ -69,6 +70,8 @@ const errorId = `textarea-error-${useId()}`
 // ─── 狀態 ─────────────────────────────────────────────────────────────────────
 
 const errorActive = computed(() => props.error || !!props.errorMsg)
+
+const textareaAriaLabel = computed(() => props.placeholder || '文字輸入區')
 
 const charCount = computed(() => props.modelValue.length)
 

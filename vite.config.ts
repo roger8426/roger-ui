@@ -20,6 +20,7 @@ export default defineConfig({
     rollupOptions: {
       external: ['vue'],
       output: {
+        banner: "import './index.css';",
         globals: {
           vue: 'Vue',
         },

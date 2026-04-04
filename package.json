@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -11,7 +14,10 @@
     "./styles": "./dist/assets/styles/main.css"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "run-s build:lib build:types build:styles",
+    "build:lib": "vite build",
+    "build:types": "vue-tsc -p tsconfig.build.json",
+    "build:styles": "mkdir -p dist/assets/styles && cp src/assets/styles/main.css dist/assets/styles/main.css",
     "test:unit": "vitest",
     "type-check": "vue-tsc --build",
     "lint": "run-s lint:*",

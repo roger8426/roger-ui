@@ -7,9 +7,10 @@ applyTo: 'src/index.ts'
 
 ## 基本原則
 
-- **所有元件只使用 named export**，禁止 default export 元件
+- **所有元件在公開 API 層只使用 named export**，禁止在 `src/index.ts` 直接對外做 default export
 - 使用者應能透過 `import { Button } from 'roger-ui'` 直接使用
 - `src/index.ts` 是唯一的公開入口，內部路徑不應被使用者直接引用
+- Vue SFC 檔案可維持框架預設輸出，再由 `src/index.ts` 重新導出為 named export
 
 ## 元件導出
 
@@ -29,6 +30,7 @@ export type { InputProps } from './components/input/types'
 
 - 本專案採用**型別與元件分離**的管理模式，Props interface 定義在 `types.ts`，由 `index.ts` 直接從 `types.ts` 導出
 - 型別命名規則：`{ComponentName}Props`
+- 在 `.vue` 內可使用 `import type { ButtonProps as Props } from './types'` 之類的別名簡化，不影響公開型別命名
 
 ```ts
 // types.ts
@@ -48,6 +50,7 @@ export type { ButtonProps } from './components/button/types'
 - 禁止從 `src/index.ts` 以外路徑導出任何內容給使用者
 - 禁止導出元件的內部 composables（除非明確設計為公開 API）
 - 禁止在 `src/index.ts` 使用 `export * from`（隱式導出，難以追蹤公開 API 範圍）
+- 禁止在 `src/index.ts` 使用 `export default ...` 對外暴露單一預設出口
 
 ## CSS 導出
 

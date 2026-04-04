@@ -272,7 +272,7 @@ export const InteractionSearchable: Story = {
     await expect(listbox).toBeVisible()
 
     // 輸入搜尋字詞過濾
-    const searchInput = canvas.getByRole('combobox')
+    const searchInput = canvas.getByRole('textbox')
     await userEvent.type(searchInput, '日')
 
     // 只應出現「日本」

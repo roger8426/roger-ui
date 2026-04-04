@@ -9,6 +9,7 @@
       :aria-controls="listboxId"
       :aria-disabled="disabled || undefined"
       :aria-activedescendant="activeDescendantId"
+      :aria-label="controlAriaLabel"
       :aria-describedby="errorActive && errorMsg ? errorId : undefined"
       class="inline-flex cursor-pointer items-center justify-between rounded-md border transition-colors"
       :class="[sizeWrapperClasses, wrapperStateClasses]"
@@ -25,6 +26,7 @@
           :class="sizeInputClasses"
           :style="color ? { color } : undefined"
           :placeholder="selectedLabel ?? placeholder"
+          :aria-label="controlAriaLabel"
           aria-autocomplete="list"
           :aria-controls="listboxId"
           @keydown="handleNavKey"
@@ -34,7 +36,7 @@
       <template v-else>
         <span
           class="min-w-0 flex-1 truncate"
-          :class="[sizeInputClasses, selectedLabel ? '' : 'opacity-50']"
+          :class="[sizeInputClasses, selectedLabel ? '' : 'text-(--rui-color-text-muted)']"
           :style="color && selectedLabel ? { color } : undefined"
         >
           {{ selectedLabel ?? placeholder }}
@@ -69,7 +71,9 @@
       class="absolute left-0 top-full mt-1 max-h-60 w-full overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
     >
       <template v-if="!filteredOptions.length">
-        <li class="px-3 py-2 text-sm opacity-50" role="presentation">無符合選項</li>
+        <li class="px-3 py-2 text-sm text-(--rui-color-text-muted)" role="presentation">
+          無符合選項
+        </li>
       </template>
       <template v-else>
         <template v-for="item in filteredOptions" :key="isGroup(item) ? item.group : item.value">
@@ -77,7 +81,7 @@
           <template v-if="isGroup(item)">
             <li role="presentation">
               <span
-                class="block px-3 py-1 text-xs font-semibold uppercase tracking-wider opacity-50"
+                class="block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-(--rui-color-text-muted)"
               >
                 {{ item.group }}
               </span>
@@ -123,7 +127,11 @@
     </ul>
 
     <!-- Error message -->
-    <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-error">
+    <span
+      v-if="errorActive && errorMsg"
+      :id="errorId"
+      class="text-xs text-(--rui-color-error)"
+    >
       {{ errorMsg }}
     </span>
   </div>
@@ -164,6 +172,8 @@ const focusedIndex = ref(-1)
 // ── Computed ──────────────────────────────────────────────────────────────────
 
 const errorActive = computed(() => props.error || !!props.errorMsg)
+
+const controlAriaLabel = computed(() => props.placeholder || '請選擇項目')
 
 const selectedLabel = computed(() => {
   for (const item of props.options) {

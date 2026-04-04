@@ -5,6 +5,4 @@ export interface IconProps {
   size?: number
   /** 圖示顏色（任意 CSS 色彩值），未設定則繼承父元素 currentColor */
   color?: string
-  /** 無障礙標籤，設定後會加上 role="img"，未設定則為 aria-hidden */
-  ariaLabel?: string
 }

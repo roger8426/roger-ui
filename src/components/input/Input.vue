@@ -23,6 +23,7 @@
         :id="id"
         :disabled="disabled"
         :readonly="readonly"
+        :aria-label="inputAriaLabel"
         :aria-invalid="errorActive || undefined"
         :aria-describedby="errorActive && errorMsg ? errorId : undefined"
         @input="onInput"
@@ -38,7 +39,11 @@
         <slot name="suffix" />
       </span>
     </div>
-    <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-error">{{
+    <span
+      v-if="errorActive && errorMsg"
+      :id="errorId"
+      class="text-xs text-(--rui-color-error)"
+    >{{
       errorMsg
     }}</span>
   </div>
@@ -77,6 +82,8 @@ const wrapperVars = computed(
 )
 
 const inputColorStyle = computed(() => (props.color ? { color: props.color } : undefined))
+
+const inputAriaLabel = computed(() => props.placeholder || '輸入欄位')
 
 const errorActive = computed(() => props.error || !!props.errorMsg)
 
