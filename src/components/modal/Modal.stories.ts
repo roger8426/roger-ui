@@ -271,26 +271,21 @@ export const ConfirmDialog: Story = {
 
 // ── InteractionOpenClose（play: open → backdrop close）──────────
 export const InteractionOpenClose: Story = {
-  render: () => {
-    const [args, updateArgs] = useArgs()
-    return {
-      components: { Modal, Button },
-      setup() {
-        return { args, updateArgs }
-      },
-      template: `
-        <div>
-          <Button data-testid="trigger" @click="updateArgs({ modelValue: true })">開啟 Modal</Button>
-          <Modal
-            v-bind="args"
-            @update:modelValue="updateArgs({ modelValue: $event })"
-          >
-            <p>開啟 Modal 後應顯示 dialog。</p>
-          </Modal>
-        </div>
-      `,
-    }
-  },
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const open = ref(false)
+      return { open }
+    },
+    template: `
+      <div>
+        <Button data-testid="trigger" @click="open = true">開啟 Modal</Button>
+        <Modal v-model="open" title="對話框標題">
+          <p>開啟 Modal 後應顯示 dialog。</p>
+        </Modal>
+      </div>
+    `,
+  }),
   args: { modelValue: false },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -307,26 +302,21 @@ export const InteractionOpenClose: Story = {
 
 // ── InteractionEscape（play: open → Escape close）────────────────
 export const InteractionEscape: Story = {
-  render: () => {
-    const [args, updateArgs] = useArgs()
-    return {
-      components: { Modal, Button },
-      setup() {
-        return { args, updateArgs }
-      },
-      template: `
-        <div>
-          <Button data-testid="trigger" @click="updateArgs({ modelValue: true })">開啟 Modal</Button>
-          <Modal
-            v-bind="args"
-            @update:modelValue="updateArgs({ modelValue: $event })"
-          >
-            <p>按 Escape 應關閉此 Modal。</p>
-          </Modal>
-        </div>
-      `,
-    }
-  },
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const open = ref(false)
+      return { open }
+    },
+    template: `
+      <div>
+        <Button data-testid="trigger" @click="open = true">開啟 Modal</Button>
+        <Modal v-model="open">
+          <p>按 Escape 應關閉此 Modal。</p>
+        </Modal>
+      </div>
+    `,
+  }),
   args: { modelValue: false },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -350,29 +340,24 @@ export const InteractionEscape: Story = {
 
 // ── InteractionKeyboardFocus（play: Tab trap + focus restore）────
 export const InteractionKeyboardFocus: Story = {
-  render: () => {
-    const [args, updateArgs] = useArgs()
-    return {
-      components: { Modal, Button },
-      setup() {
-        return { args, updateArgs }
-      },
-      template: `
-        <div>
-          <Button data-testid="trigger" @click="updateArgs({ modelValue: true })">開啟 Modal</Button>
-          <Modal
-            v-bind="args"
-            @update:modelValue="updateArgs({ modelValue: $event })"
-          >
-            <p>Modal 內有兩個可聚焦元素：關閉按鈕與送出按鈕。</p>
-            <template #footer>
-              <Button data-testid="submit">送出</Button>
-            </template>
-          </Modal>
-        </div>
-      `,
-    }
-  },
+  render: () => ({
+    components: { Modal, Button },
+    setup() {
+      const open = ref(false)
+      return { open }
+    },
+    template: `
+      <div>
+        <Button data-testid="trigger" @click="open = true">開啟 Modal</Button>
+        <Modal v-model="open" title="\u7126\u9ede\u6e2c\u8a66">
+          <p>Modal 內有兩個可聚焦元素：關閉按鈕與送出按鈕。</p>
+          <template #footer>
+            <Button data-testid="submit">送出</Button>
+          </template>
+        </Modal>
+      </div>
+    `,
+  }),
   args: { modelValue: false, title: '焦點測試' },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
@@ -382,21 +367,23 @@ export const InteractionKeyboardFocus: Story = {
     await userEvent.click(trigger)
 
     // dialog 及其內部元素均被 Teleport 至 body；等 onAfterEnter 執行並將焦點移入
+    await waitFor(() =>
+      expect(body.getByRole('button', { name: '\u95dc\u9589' })).toHaveFocus(),
+    )
     const closeButton = body.getByRole('button', { name: '\u95dc\u9589' })
-    await waitFor(() => expect(closeButton).toHaveFocus())
 
     // Tab → 移到 submit
     await userEvent.tab()
     const submit = body.getByTestId('submit')
-    await expect(submit).toHaveFocus()
+    await waitFor(() => expect(submit).toHaveFocus())
 
     // Tab → 循環回到關閉按鈕（focus trap）
     await userEvent.tab()
-    await expect(closeButton).toHaveFocus()
+    await waitFor(() => expect(closeButton).toHaveFocus())
 
     // 關閉後焦點回到 trigger
     await userEvent.keyboard('{Escape}')
     await waitFor(() => expect(body.queryByRole('dialog')).toBeNull())
-    await expect(trigger).toHaveFocus()
+    await waitFor(() => expect(trigger).toHaveFocus())
   },
 }
