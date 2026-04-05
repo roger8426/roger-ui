@@ -25,8 +25,24 @@
   --rui-color-accordion-header-hover: oklch(94% 0.01 264);
   --rui-color-accordion-content-text: oklch(35% 0.02 264);
 
+  /* Modal 元件 */
+  --rui-color-modal-backdrop: oklch(0% 0 0 / 0.5);
+  --rui-color-modal-bg: oklch(100% 0 0);
+  --rui-color-modal-text: oklch(15% 0.02 264);
+  --rui-color-modal-border: oklch(90% 0.005 264);
+  --rui-shadow-modal: 0 8px 16px oklch(0% 0 0 / 0.12), 0 24px 48px oklch(0% 0 0 / 0.1);
+  --rui-radius-modal: 12px;
+
   /* Z-index 層級 */
   --rui-z-dropdown: 100;
   --rui-z-modal: 200;
   --rui-z-toast: 300;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --rui-color-modal-bg: oklch(18% 0.01 264);
+    --rui-color-modal-text: oklch(92% 0.01 264);
+    --rui-color-modal-border: oklch(30% 0.01 264);
+  }
 }

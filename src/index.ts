@@ -29,3 +29,6 @@ export type { CardProps } from './components/card/types'
 export { default as Accordion } from './components/accordion/Accordion.vue'
 export { default as AccordionItem } from './components/accordion/AccordionItem.vue'
 export type { AccordionProps, AccordionItemProps } from './components/accordion/types'
+
+export { default as Modal } from './components/modal/Modal.vue'
+export type { ModalProps } from './components/modal/types'

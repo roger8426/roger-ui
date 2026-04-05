@@ -100,5 +100,3 @@ src/
 ## CI/CD
 
 GitHub Actions 的第一階段 CI 已實作完成，會在 push 與 pull request 時自動執行型別檢查、lint、Storybook browser tests、library build 與 Storybook build。
-
-維運與後續 GitHub Pages / npm 發佈規劃請見 [docs/ci-cd.md](docs/ci-cd.md)。

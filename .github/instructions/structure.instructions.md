@@ -16,7 +16,7 @@ src/
 │       ├── {ComponentName}.vue
 │       ├── {ComponentName}.stories.ts
 │       └── types.ts          # 複雜型別定義
-├── composables/              # 公開的 composable（需在 index.ts 導出）
+├── composables/              # 專案內部共用 composable
 │   └── use{Name}.ts
 └── index.ts                  # 唯一公開入口
 ```
@@ -53,9 +53,9 @@ src/
 
 ## Composables
 
-- 公開 composable 放在 `src/composables/`，必須在 `src/index.ts` 導出
-- 元件私有邏輯的 composable 可放在元件目錄內，**不導出**
-- composable 檔名和函式名一致：`useFloating.ts` 導出 `useFloating`
+- `src/composables/` 存放**跨元件共用**的 composable
+- 若邏輯只在單一元件內使用，直接內聯於該元件的 `<script setup>` 即可，不必抽離
+- composable 檔名和函式名一致：`useFocusTrap.ts` 導出 `useFocusTrap`
 
 ## 禁止的結構
 
