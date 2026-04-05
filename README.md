@@ -40,10 +40,13 @@ pnpm storybook
 |------|------|
 | `pnpm storybook` | 啟動 Storybook 開發伺服器（port 6006） |
 | `pnpm build-storybook` | 建置 Storybook 靜態站台 |
+| `pnpm ci` | 執行 CI 全流程檢查（type-check、lint、test、build） |
 | `pnpm type-check` | TypeScript 型別檢查 |
 | `pnpm lint` | 執行 oxlint + ESLint（含自動修復） |
+| `pnpm lint:check` | 執行 oxlint + ESLint 檢查，不修改檔案 |
 | `pnpm format` | Prettier 格式化 |
 | `pnpm test:unit` | 執行 Storybook + Playwright 的 Vitest browser 測試 |
+| `pnpm test:unit:ci` | 以非 watch 模式執行 Storybook browser 測試 |
 
 ## 使用方式
 
@@ -93,3 +96,9 @@ src/
 
 - [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar)（請停用 Vetur）
 - [Tailwind CSS IntelliSense](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+
+## CI/CD
+
+GitHub Actions 的第一階段 CI 已實作完成，會在 push 與 pull request 時自動執行型別檢查、lint、Storybook browser tests、library build 與 Storybook build。
+
+維運與後續 GitHub Pages / npm 發佈規劃請見 [docs/ci-cd.md](docs/ci-cd.md)。
