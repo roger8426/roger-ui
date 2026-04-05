@@ -29,7 +29,7 @@
       :class="open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
     >
       <div class="overflow-hidden">
-        <div class="px-4 py-3 text-sm text-(--rui-color-accordion-content-text)">
+        <div class="px-4 py-3 text-sm text-(--rui-color-text-secondary)">
           <slot />
         </div>
       </div>
@@ -65,7 +65,7 @@ const headerClasses = computed(() => {
   if (isDisabled.value) {
     return 'cursor-not-allowed opacity-50'
   }
-  return 'hover:bg-(--rui-color-accordion-header-hover) active:brightness-95'
+  return 'hover:bg-(--rui-color-surface-hover) active:brightness-95'
 })
 
 function handleToggle(): void {

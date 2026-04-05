@@ -279,8 +279,8 @@ function getOptionClasses(opt: SelectOption): string {
   const isFocused = navigableOptions.value.indexOf(opt) === focusedIndex.value
   const isSelected = opt.value === props.modelValue
   if (isSelected) return 'bg-(--rui-color-select-selected) font-medium'
-  if (isFocused) return 'bg-(--rui-color-select-hover)'
-  return 'hover:bg-(--rui-color-select-hover)'
+  if (isFocused) return 'bg-(--rui-color-surface-hover)'
+  return 'hover:bg-(--rui-color-surface-hover)'
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────

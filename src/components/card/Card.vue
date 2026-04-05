@@ -13,7 +13,7 @@
     </div>
     <div
       v-if="slots.header"
-      class="shrink-0 border-b border-(--rui-color-card-border, oklch(90% 0.005 264))"
+      class="shrink-0 border-b border-(--rui-color-border)"
       :style="{ padding: `${padding}px` }"
     >
       <slot name="header" />
@@ -23,7 +23,7 @@
     </div>
     <div
       v-if="slots.footer"
-      class="shrink-0 border-t border-(--rui-color-card-border, oklch(90% 0.005 264))"
+      class="shrink-0 border-t border-(--rui-color-border)"
       :style="{ padding: `${padding}px` }"
     >
       <slot name="footer" />

@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import Input from './Input.vue'
 
 const meta = {
-  title: 'UI/Input',
+  title: 'Form/Input',
   component: Input,
   tags: ['autodocs'],
   argTypes: {

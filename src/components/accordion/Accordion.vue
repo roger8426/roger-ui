@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col divide-y divide-(--rui-color-accordion-border)">
+  <div class="flex flex-col divide-y divide-(--rui-color-border)">
     <slot />
   </div>
 </template>

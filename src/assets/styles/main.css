@@ -1,48 +1,61 @@
 @import 'tailwindcss';
 
 @theme {
-  /* 全域顏色設定 */
+  /* ─── 語意層：Surface ──────────────────────────────────────── */
+  --rui-color-surface: oklch(100% 0 0);
+  --rui-color-surface-raised: oklch(98% 0.004 264);
+  --rui-color-surface-hover: oklch(95% 0.008 264);
+
+  /* ─── 語意層：Text ─────────────────────────────────────────── */
+  --rui-color-text-primary: oklch(15% 0.02 264);
+  --rui-color-text-secondary: oklch(35% 0.02 264);
+  --rui-color-text-muted: oklch(45% 0.02 264);
+
+  /* ─── 語意層：Border ───────────────────────────────────────── */
+  --rui-color-border: oklch(88% 0.01 264);
+
+  /* ─── 全域顏色 ─────────────────────────────────────────── */
   --rui-color-default: oklch(55% 0.2 264);
   --rui-color-default-foreground: oklch(98% 0.01 264);
-  --rui-color-text-muted: oklch(45% 0.02 264);
   --rui-color-error: oklch(55% 0.22 25);
   --rui-color-disabled-bg: oklch(95% 0.005 264);
 
-  /* Select 元件 */
-  --rui-color-select-bg: oklch(100% 0 0);
-  --rui-color-select-hover: oklch(96% 0.005 264);
+  /* ─── Select 元件 ──────────────────────────────────────────── */
   --rui-color-select-selected: oklch(93% 0.015 264);
 
-  /* Card 元件 */
-  --rui-color-card-bg: oklch(98% 0.004 264);
+  /* ─── Card 元件 ────────────────────────────────────────────── */
   --rui-shadow-card-sm: 0 1px 2px oklch(0% 0 0 / 0.06);
   --rui-shadow-card-md: 0 1px 3px oklch(0% 0 0 / 0.08), 0 4px 12px oklch(0% 0 0 / 0.06);
   --rui-shadow-card-lg: 0 4px 8px oklch(0% 0 0 / 0.1), 0 8px 24px oklch(0% 0 0 / 0.08);
   --rui-shadow-card-hover: 0 8px 16px oklch(0% 0 0 / 0.12), 0 16px 32px oklch(0% 0 0 / 0.1);
 
-  /* Accordion 元件 */
-  --rui-color-accordion-border: oklch(88% 0.01 264);
-  --rui-color-accordion-header-hover: oklch(94% 0.01 264);
-  --rui-color-accordion-content-text: oklch(35% 0.02 264);
-
-  /* Modal 元件 */
+  /* ─── Modal 元件 ───────────────────────────────────────────── */
   --rui-color-modal-backdrop: oklch(0% 0 0 / 0.5);
-  --rui-color-modal-bg: oklch(100% 0 0);
-  --rui-color-modal-text: oklch(15% 0.02 264);
-  --rui-color-modal-border: oklch(90% 0.005 264);
   --rui-shadow-modal: 0 8px 16px oklch(0% 0 0 / 0.12), 0 24px 48px oklch(0% 0 0 / 0.1);
   --rui-radius-modal: 12px;
 
-  /* Z-index 層級 */
+  /* ─── Z-index 層級 ─────────────────────────────────────────── */
   --rui-z-dropdown: 100;
   --rui-z-modal: 200;
   --rui-z-toast: 300;
 }
 
+:root {
+  /* ─── 元件層：僅針對有 prop 可覆蓋的 token ───────────────────── */
+  --rui-color-select-bg: var(--rui-color-surface);
+  --rui-color-card-bg: var(--rui-color-surface-raised);
+  --rui-color-modal-bg: var(--rui-color-surface);
+  --rui-color-modal-text: var(--rui-color-text-primary);
+  --rui-color-modal-border: var(--rui-color-border);
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
-    --rui-color-modal-bg: oklch(18% 0.01 264);
-    --rui-color-modal-text: oklch(92% 0.01 264);
-    --rui-color-modal-border: oklch(30% 0.01 264);
+    --rui-color-surface: oklch(18% 0.01 264);
+    --rui-color-surface-raised: oklch(22% 0.01 264);
+    --rui-color-surface-hover: oklch(26% 0.01 264);
+    --rui-color-text-primary: oklch(92% 0.01 264);
+    --rui-color-text-secondary: oklch(70% 0.015 264);
+    --rui-color-border: oklch(30% 0.01 264);
   }
 }
