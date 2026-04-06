@@ -72,7 +72,7 @@ const meta = {
       },
       template: `
         <Card v-bind="args" style="width: 320px">
-          <p class="text-sm" style="color: oklch(40% 0.01 264)">這是卡片的主要內容區域。</p>
+          <p class="text-sm"">這是卡片的主要內容區域。</p>
         </Card>
       `,
     }
@@ -91,9 +91,9 @@ export const AllShadows: Story = {
       <div style="display: flex; gap: 24px; flex-wrap: wrap; padding: 24px;">
         <div v-for="level in ['none', 'sm', 'md', 'lg']" :key="level" style="display: flex; flex-direction: column; align-items: center; gap: 8px">
           <Card :shadow="level" style="width: 200px">
-            <p style="font-size: 12px; color: oklch(40% 0.01 264)">shadow: {{ level }}</p>
+            <p style="font-size: 12px;">shadow: {{ level }}</p>
           </Card>
-          <span style="font-size: 11px; color: oklch(55% 0.005 264)">{{ level }}</span>
+          <span style="font-size: 11px;">{{ level }}</span>
         </div>
       </div>
     `,
@@ -111,9 +111,9 @@ export const WithHeader: Story = {
       template: `
         <Card v-bind="args" style="width: 320px">
           <template #header>
-            <p style="font-weight: 600; color: oklch(20% 0.01 264)">卡片標題</p>
+            <p style="font-weight: 600;">卡片標題</p>
           </template>
-          <p class="text-sm" style="color: oklch(40% 0.01 264)">這是卡片的主要內容區域。</p>
+          <p class="text-sm">這是卡片的主要內容區域。</p>
         </Card>
       `,
     }
@@ -131,11 +131,11 @@ export const WithFooter: Story = {
       template: `
         <Card v-bind="args" style="width: 320px">
           <template #header>
-            <p style="font-weight: 600; color: oklch(20% 0.01 264)">卡片標題</p>
+            <p style="font-weight: 600;">卡片標題</p>
           </template>
-          <p class="text-sm" style="color: oklch(40% 0.01 264)">這是卡片的主要內容區域。</p>
+          <p class="text-sm">這是卡片的主要內容區域。</p>
           <template #footer>
-            <p class="text-xs" style="color: oklch(55% 0.005 264)">底部備註文字</p>
+            <p class="text-xs">底部備註文字</p>
           </template>
         </Card>
       `,
@@ -155,11 +155,11 @@ export const WithCover: Story = {
         <Card v-bind="args" style="width: 280px">
           <template #cover>
             <div style="height: 140px; background: oklch(90% 0.02 264); display: flex; align-items: center; justify-content: center;">
-              <span style="color: oklch(38% 0.07 264); font-size: 12px;">封面圖片區域</span>
+              <span style="font-size: 12px;">封面圖片區域</span>
             </div>
           </template>
-          <p style="font-weight: 600; color: oklch(20% 0.01 264); margin-bottom: 4px">卡片標題</p>
-          <p class="text-sm" style="color: oklch(40% 0.01 264)">卡片描述文字內容。</p>
+          <p style="font-weight: 600; margin-bottom: 4px">卡片標題</p>
+          <p class="text-sm">卡片描述文字內容。</p>
         </Card>
       `,
     }

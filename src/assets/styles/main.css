@@ -49,13 +49,11 @@
   --rui-color-modal-border: var(--rui-color-border);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --rui-color-surface: oklch(18% 0.01 264);
-    --rui-color-surface-raised: oklch(22% 0.01 264);
-    --rui-color-surface-hover: oklch(26% 0.01 264);
-    --rui-color-text-primary: oklch(92% 0.01 264);
-    --rui-color-text-secondary: oklch(70% 0.015 264);
-    --rui-color-border: oklch(30% 0.01 264);
-  }
+.dark {
+  --rui-color-surface: oklch(18% 0.01 264);
+  --rui-color-surface-raised: oklch(22% 0.01 264);
+  --rui-color-surface-hover: oklch(26% 0.01 264);
+  --rui-color-text-primary: oklch(92% 0.01 264);
+  --rui-color-text-secondary: oklch(70% 0.015 264);
+  --rui-color-border: oklch(30% 0.01 264);
 }

@@ -68,7 +68,7 @@
       v-show="isOpen"
       :id="listboxId"
       role="listbox"
-      class="absolute left-0 top-full mt-1 max-h-60 w-full overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
+      class="absolute left-0 top-full mt-1 max-h-60 w-full overflow-y-auto rounded-md py-1 shadow-md"
     >
       <template v-if="!filteredOptions.length">
         <li class="px-3 py-2 text-sm text-(--rui-color-text-muted)" role="presentation">
