@@ -34,6 +34,12 @@
   --rui-shadow-modal: 0 8px 16px oklch(0% 0 0 / 0.12), 0 24px 48px oklch(0% 0 0 / 0.1);
   --rui-radius-modal: 12px;
 
+  /* ─── Carousel 元件 ────────────────────────────────────────── */
+  --rui-carousel-nav-color: oklch(15% 0.02 264);
+  --rui-carousel-dot-color: oklch(75% 0.01 264);
+  --rui-carousel-dot-active-color: oklch(55% 0.2 264);
+  --rui-carousel-transition-duration: 300ms;
+
   /* ─── Z-index 層級 ─────────────────────────────────────────── */
   --rui-z-dropdown: 100;
   --rui-z-modal: 200;
@@ -56,4 +62,7 @@
   --rui-color-text-primary: oklch(92% 0.01 264);
   --rui-color-text-secondary: oklch(70% 0.015 264);
   --rui-color-border: oklch(30% 0.01 264);
+  --rui-carousel-nav-color: oklch(92% 0.01 264);
+  --rui-carousel-dot-color: oklch(40% 0.01 264);
+  --rui-carousel-dot-active-color: oklch(65% 0.2 264);
 }

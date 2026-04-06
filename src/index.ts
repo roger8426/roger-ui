@@ -40,3 +40,6 @@ export type {
   CheckboxGroupProps,
   CheckboxGroupSlotProps,
 } from './components/checkbox/types'
+
+export { default as Carousel } from './components/carousel/Carousel.vue'
+export type { CarouselProps, CarouselEmits } from './components/carousel/types'
