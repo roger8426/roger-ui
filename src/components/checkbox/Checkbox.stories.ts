@@ -166,8 +166,7 @@ export const Interaction: Story = {
     await userEvent.click(checkbox)
     await expect(checkbox).not.toBeChecked()
 
-    // Keyboard: Tab to focus, Space to toggle
-    await userEvent.tab()
+    // Keyboard: after click, focus is already on the checkbox; Space to toggle
     await expect(checkbox).toHaveFocus()
     await userEvent.keyboard(' ')
     await expect(checkbox).toBeChecked()
