@@ -43,3 +43,10 @@ export type {
 
 export { default as Carousel } from './components/carousel/Carousel.vue'
 export type { CarouselProps, CarouselEmits } from './components/carousel/types'
+
+export { default as VirtualList } from './components/virtual-list/VirtualList.vue'
+export type {
+  VirtualListProps,
+  VirtualListEmits,
+  VirtualListExpose,
+} from './components/virtual-list/types'
