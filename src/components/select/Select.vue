@@ -49,17 +49,7 @@
         :class="isOpen ? 'rotate-180' : 'rotate-0'"
         aria-hidden="true"
       >
-        <svg
-          class="h-4 w-4"
-          viewBox="0 0 16 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="4 6 8 10 12 6" />
-        </svg>
+        <Icon name="chevron-down" :size="16" />
       </span>
     </div>
 
@@ -139,6 +129,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, useId, watch } from 'vue'
+import Icon from '../icon/Icon.vue'
 import { isGroup } from './types'
 import type { SelectOption, SelectProps } from './types'
 

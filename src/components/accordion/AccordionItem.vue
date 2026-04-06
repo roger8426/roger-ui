@@ -14,7 +14,7 @@
         <span>{{ title }}</span>
       </slot>
       <Icon
-        name="arrow-down"
+        name="chevron-down"
         :size="16"
         class="shrink-0 transition-transform duration-300 ease-in-out"
         :class="{ 'rotate-180': open }"
