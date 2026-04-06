@@ -42,3 +42,5 @@ applyTo: '**'
 - 套件管理：`pnpm`，禁止使用 `npm` 或 `yarn`
 - Linting：oxlint（快速規則）+ ESLint（框架規則），兩者皆不可單獨停用
 - 格式化：Prettier，禁止手動調整格式規則達到 bypass 目的
+
+> TypeScript 詳細規範（型別宣告方式、禁止構造、Vue 整合慣例）詳見 `.github/instructions/typescript.instructions.md`。

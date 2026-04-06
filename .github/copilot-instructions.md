@@ -35,11 +35,9 @@ Copilot 在生成、修改、解釋、審查程式碼時，必須優先遵守以
 
 ## TypeScript 規則
 
-1. 避免 `any`。
-2. 優先使用明確的 domain type，而不是寬鬆物件結構。
-3. DTO、API response、UI model 在需要時應分層。
-4. 不要用不安全 assertion 掩蓋型別設計問題。
-5. 保留 narrowing、nullable safety 與 optional 欄位處理。
+完整 TypeScript 型別規範（interface/type/enum 使用時機、禁止事項、Vue 整合慣例、as 斷言政策等）詳見 `.github/instructions/typescript.instructions.md`。
+
+核心原則：型別安全是基本要求，除非明確允許，否則不要使用 `any`。
 
 ## 元件開發約束
 

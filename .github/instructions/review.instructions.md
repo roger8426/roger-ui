@@ -24,10 +24,16 @@ description: 'Use when reviewing code, conducting PR review, auditing a componen
 
 ## TypeScript 審查
 
-- [ ] 無 `as any` 強制轉型
-- [ ] 無 `// @ts-ignore` 或 `// @ts-expect-error`（除非附上原因說明）
-- [ ] Interface 或 type 的命名符合規範（`ComponentNameProps`）
-- [ ] 所有導出型別使用 `export type`
+> 詳細規則見 `typescript.instructions.md`，以下為審查重點快速清單。
+
+- [ ] 無 `any`（含隱式）、無 `@ts-ignore`、無 unsafe double assertion
+- [ ] `as` 斷言或 `@ts-expect-error` 若存在，是否附有說明 comment
+- [ ] 物件結構用 `interface`，命名符合 `{ComponentName}Props` / `Context` / `SlotProps`
+- [ ] 無 `enum`；選項型別用字串 union 或 `as const` 物件
+- [ ] Props 陣列型別加 `readonly`；`defineProps` 使用泛型寫法並搭配 `withDefaults`
+- [ ] provide/inject 使用 `InjectionKey<T>`；template ref 使用 `useTemplateRef<T>()`
+- [ ] 純型別引用使用 `import type`；`src/index.ts` 匯出型別使用 `export type`
+- [ ] Storybook story meta 使用 `satisfies Meta<typeof Component>`
 
 ## 樣式審查
 
