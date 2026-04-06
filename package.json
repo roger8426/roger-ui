@@ -15,6 +15,7 @@
     "./styles": "./dist/assets/styles/main.css"
   },
   "scripts": {
+    "prepare": "git config core.hooksPath .githooks",
     "build": "run-s build:lib build:types build:styles",
     "build:lib": "vite build",
     "build:types": "vue-tsc -p tsconfig.build.json",
