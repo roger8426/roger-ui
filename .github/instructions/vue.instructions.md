@@ -78,6 +78,20 @@ const emit = defineEmits<{
 <slot :item="item" :index="index" />
 ```
 
+## 圖示使用
+
+- 禁止在 `<template>` 內直接撰寫 inline `<svg>`
+- 所有圖示一律以 `.svg` 檔存放於 `src/assets/icons/`，並透過 `Icon` 元件引用
+- 新增圖示時先確認 `src/assets/icons/` 內是否已有同功能圖示，避免重複
+
+```vue
+<!-- 禁止 -->
+<svg viewBox="0 0 16 16">...</svg>
+
+<!-- 正確 -->
+<Icon name="chevron-down" :size="16" aria-hidden="true" />
+```
+
 ## Expose
 
 - 預設不 expose 任何內部狀態

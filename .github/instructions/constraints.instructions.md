@@ -23,6 +23,7 @@ applyTo: '**'
 - 禁止 `@apply` 在 `<style scoped>`
 - 禁止直接使用 Tailwind 預設顏色 class（如 `text-blue-500`）
 - 禁止動態拼接 Tailwind class 字串（如 `` `bg-${color}-500` ``）
+- 禁止在元件 template 內直接撰寫 inline `<svg>`；所有圖示一律以 `.svg` 檔存放於 `src/assets/icons/`，並透過 `Icon` 元件引用
 
 ## 元件開發約束
 

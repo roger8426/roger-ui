@@ -50,6 +50,7 @@ Copilot 在生成、修改、解釋、審查程式碼時，必須優先遵守以
 5. 禁止 `@apply` 在 `<style scoped>`。
 6. 禁止直接使用 Tailwind 預設顏色 class（如 `text-blue-500`）。
 7. 禁止動態拼接 Tailwind class 字串（如 `` `bg-${color}-500` ``）。
+8. 禁止在元件 template 內直接撰寫 inline `<svg>`；所有圖示一律以 `.svg` 檔存放於 `src/assets/icons/`，並透過 `Icon` 元件引用。
 
 ## 預設輸出期待
 
