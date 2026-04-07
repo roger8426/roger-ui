@@ -119,3 +119,17 @@ src/
 ## CI/CD
 
 GitHub Actions 的第一階段 CI 已實作完成，會在 push 與 pull request 時自動執行型別檢查、lint、Storybook browser tests、library build 與 Storybook build。
+
+### 部署 Storybook 到 GitHub Pages
+
+專案已提供自動部署 workflow，會在 push 到 `main` 時建置並發佈 `storybook-static` 到 GitHub Pages。
+
+1. 到 GitHub repository 的 Settings → Pages。
+2. 在 Build and deployment 將 Source 設為 GitHub Actions。
+3. push 到 `main`，或手動執行 `.github/workflows/deploy-storybook.yml`。
+
+部署完成後，站台網址會是：
+
+- `https://roger8426.github.io/roger-ui/`
+
+若你是 fork 或改了 repository 名稱，網址會變成 `https://<github-username>.github.io/<repository-name>/`。
