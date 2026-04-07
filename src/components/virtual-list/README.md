@@ -122,16 +122,16 @@ function jumpToMiddle() {
 
 ## Props
 
-| Prop        | 型別                         | 必填 | 預設值       | 說明                                                                 |
-| ----------- | ---------------------------- | :--: | ------------ | -------------------------------------------------------------------- |
-| `items`     | `T[]`                        |  ✓   | —            | 資料陣列，泛型 T 由傳入值自動推導                                    |
-| `itemSize`  | `number`                     |  ✓   | —            | 每個項目在捲動軸上的固定尺寸（px）；垂直方向 = 高度，水平方向 = 寬度 |
-| `direction` | `'vertical' \| 'horizontal'` |      | `'vertical'` | 捲動方向                                                             |
-| `overscan`  | `number`                     |      | `3`          | 可視區域外預先渲染的緩衝項目數，數值越大捲動越流暢但初始渲染越多     |
+| Prop        | 型別                         | 必填 | 預設值       | 說明                                                                                             |
+| ----------- | ---------------------------- | :--: | ------------ | ------------------------------------------------------------------------------------------------ |
+| `items`     | `T[]`                        |  ✓   | —            | 資料陣列，泛型 T 由傳入值自動推導                                                                |
+| `itemSize`  | `number`                     |  ✓   | —            | 每個項目在捲動軸上的固定尺寸（px）；垂直方向 = 高度，水平方向 = 寬度                             |
+| `direction` | `'vertical' \| 'horizontal'` |      | `'vertical'` | 捲動方向                                                                                         |
+| `overscan`  | `number`                     |      | `3`          | 可視區域外預先渲染的緩衝項目數，數值越大捲動越流暢但初始渲染越多                                 |
 | `keyField`  | `keyof T`                    |      | `undefined`  | 指定產生 `:key` 的欄位名稱；未設定時物件項目會使用內部穩定 key，原始型別則依值與出現順序產生 key |
-| `threshold` | `number`                     |      | `0`          | 距離捲動末端多少 px 時觸發 `reach-end` 事件                          |
-| `loading`   | `boolean`                    |      | `false`      | 為 `true` 時抑制重複 `reach-end` emit；當 `items` 長度增加後自動重置 |
-| `ariaLabel` | `string`                     |      | `undefined`  | 整個列表的無障礙標籤（對應 `aria-label`）                            |
+| `threshold` | `number`                     |      | `0`          | 距離捲動末端多少 px 時觸發 `reach-end` 事件                                                      |
+| `loading`   | `boolean`                    |      | `false`      | 為 `true` 時抑制重複 `reach-end` emit；當 `items` 長度增加後自動重置                             |
+| `ariaLabel` | `string`                     |      | `undefined`  | 整個列表的無障礙標籤（對應 `aria-label`）                                                        |
 
 ## Emits
 

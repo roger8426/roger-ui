@@ -53,7 +53,8 @@ const meta = {
       table: { category: 'Behavior', defaultValue: { summary: '3' } },
     },
     keyField: {
-      description: '指定產生 :key 的欄位名稱；未設定時物件項目會使用內部穩定 key，原始型別則依值與出現順序產生 key',
+      description:
+        '指定產生 :key 的欄位名稱；未設定時物件項目會使用內部穩定 key，原始型別則依值與出現順序產生 key',
       control: false,
       table: { category: 'Data' },
     },

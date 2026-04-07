@@ -31,7 +31,7 @@
           />
         </span>
       </span>
-      <span v-if="$slots.default || label" class="select-none text-sm">
+      <span v-if="$slots.default || label" class="select-none text-sm text-(--checkbox-label-color)">
         <slot>{{ label }}</slot>
       </span>
     </label>
@@ -61,6 +61,7 @@ const props = withDefaults(defineProps<CheckboxProps>(), {
   error: false,
   errorMsg: '',
   color: undefined,
+  labelColor: undefined,
 })
 
 const emit = defineEmits<{
@@ -132,6 +133,9 @@ onUnmounted(() => {
 const colorStyle = computed(() => ({
   '--checkbox-color': props.color ?? 'var(--rui-color-default)',
   '--checkbox-icon-color': 'oklch(100% 0 0)',
+  '--checkbox-label-color': errorActive.value
+    ? 'var(--rui-color-error)'
+    : (props.labelColor ?? 'var(--rui-color-text-primary)'),
 }))
 
 const sizeClasses = computed(

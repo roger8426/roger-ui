@@ -56,6 +56,12 @@ const meta = {
       control: 'color',
       table: { category: 'Appearance' },
     },
+    labelColor: {
+      description:
+        'Label 文字顏色（任意 CSS 色彩值，預設 var(--rui-color-text-primary)；error 狀態優先覆蓋）',
+      control: 'color',
+      table: { category: 'Appearance' },
+    },
     value: {
       description: 'CheckboxGroup 中代表的值',
       control: false,
@@ -79,6 +85,7 @@ const meta = {
     error: false,
     errorMsg: '',
     required: false,
+    labelColor: undefined,
   },
   render: () => {
     const [args, updateArgs] = useArgs()
@@ -126,6 +133,32 @@ export const DisabledChecked: Story = {
 
 export const Error: Story = {
   args: { error: true, errorMsg: '請同意服務條款' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const label = canvas.getByText('同意服務條款')
+    const errorMsg = canvas.getByText('請同意服務條款')
+
+    await expect(label).toBeVisible()
+    await expect(errorMsg).toBeVisible()
+
+    // Label 文字應套用 error color（--rui-color-error）
+    const labelStyle = getComputedStyle(label)
+    await expect(labelStyle.color).not.toBe('')
+  },
+}
+
+export const CustomColors: Story = {
+  render: () => ({
+    components: { Checkbox },
+    template: `
+      <div class="flex flex-col gap-3">
+        <Checkbox :modelValue="true" label="自訂勾選框色（綠）" color="#22c55e" />
+        <Checkbox :modelValue="true" label="自訂 Label 文字色（紫）" labelColor="#6d28d9" />
+        <Checkbox :modelValue="true" label="同時自訂兩者" color="#f97316" labelColor="#0369a1" />
+        <Checkbox :modelValue="true" label="labelColor 被 error 覆蓋" labelColor="#6d28d9" error errorMsg="error 優先，label 顯示紅色" />
+      </div>
+    `,
+  }),
 }
 
 export const Sizes: Story = {

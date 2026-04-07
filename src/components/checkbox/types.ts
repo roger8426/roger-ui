@@ -13,6 +13,7 @@ export interface CheckboxProps {
   error?: boolean
   errorMsg?: string
   color?: string
+  labelColor?: string
 }
 
 export interface CheckboxGroupProps {
