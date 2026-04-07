@@ -46,11 +46,9 @@ type Story = StoryObj<typeof meta>
 
 - 格式：`{Category}/{ComponentName}`
 - Category 使用以下固定分類：
-  - `UI` — 基礎 UI 元件（Button、Input、Badge）
+  - `UI` — 基礎 UI 元件（Button、Badge、Icon）
   - `Form` — 表單相關元件（Checkbox、Select、DatePicker）
-  - `Layout` — 佈局元件（Card、Divider、Grid）
-  - `Feedback` — 回饋元件（Toast、Alert、Skeleton）
-  - `Navigation` — 導航元件（Tabs、Breadcrumb、Menu）
+  - `Layout` — 佈局與導航元件（Card、Accordion、Carousel、Pagination）
   - `Overlay` — 浮層元件（Modal、Drawer、Tooltip）
 
 ## Story 命名與覆蓋率

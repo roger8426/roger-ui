@@ -7,7 +7,7 @@ import Modal from './Modal.vue'
 import Button from '../button/Button.vue'
 
 const meta = {
-  title: 'UI/Modal',
+  title: 'Overlay/Modal',
   component: Modal,
   tags: ['autodocs'],
   argTypes: {

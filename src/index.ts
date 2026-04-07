@@ -50,3 +50,6 @@ export type {
   VirtualListEmits,
   VirtualListExpose,
 } from './components/virtual-list/types'
+
+export { default as Pagination } from './components/pagination/Pagination.vue'
+export type { PaginationProps, PaginationEmits } from './components/pagination/types'

@@ -36,7 +36,7 @@ src/
 | ------------------------------------------------ | ------------------------ | ---------------------------- |
 | `UI`                                             | 無業務邏輯的原子元件     | Button、Input、Badge、Icon   |
 | `Form`                                           | 具備完整 form 行為的元件 | Checkbox、Select、DatePicker |
-| `Layout` / `Feedback` / `Navigation` / `Overlay` | 功能性複合元件           | Card、Toast、Tabs、Modal     |
+| `Layout` / `Overlay`                              | 功能性複合元件           | Card、Carousel、Pagination、Modal |
 
 - 原子元件不應依賴其他元件（可依賴 composables）
 - 複合元件可依賴原子元件，但禁止跨層反向依賴

@@ -64,3 +64,11 @@ description: 'Use when reviewing code, conducting PR review, auditing a componen
 - [ ] meta 使用 `satisfies Meta<typeof Component>`
 - [ ] 有 `tags: ['autodocs']`
 - [ ] ArgTypes 有 `description` 和正確的 `control` 類型
+
+## 文檔審查
+
+- [ ] 元件目錄內必須包含 `README.md`
+- [ ] `README.md` 需包含：使用範例、Props 規格表、Emits 規格表
+- [ ] 若元件有 slot，需列出 Slot 規格表（slot 名稱、用途）
+- [ ] 若元件有 `defineExpose`，需列出 Expose 規格表（方法/屬性、型別、說明）
+- [ ] 若 prop 使用 design token 預設值，需在「預設顏色」或「備註」中標明 token 名稱
