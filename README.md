@@ -71,6 +71,7 @@ import { Button } from 'roger-ui'
 | Badge      | 徽章元件，可用於顯示計數、狀態標籤或圓點提示                                              | [查看文件](src/components/badge/README.md)      |
 | Button     | 通用按鈕，支援自訂顏色、尺寸、outline 模式與停用狀態                                      | [查看文件](src/components/button/README.md)     |
 | Carousel   | 輪播元件，支援水平滑動與淡入淡出切換，具備自動播放、循環、鍵盤導航、觸控 swipe 與受控模式 | [查看文件](src/components/carousel/README.md)   |
+| Drawer     | 抽屜元件，支援從上下左右四個方向滑出，具備受控/非受控模式、focus trap 與 scroll lock      | [查看文件](src/components/drawer/README.md)     |
 | Icon       | SVG 裝飾性圖示元件，支援自訂尺寸與顏色                                                    | [查看文件](src/components/icon/README.md)       |
 | Modal      | 對話框元件，支援受控/非受控模式、focus trap 與 scroll lock                                | [查看文件](src/components/modal/README.md)      |
 | Pagination | 分頁導航元件，支援受控模式（`v-model:currentPage`）、頁碼視窗、自訂顏色與外框樣式         | [查看文件](src/components/pagination/README.md) |
@@ -97,21 +98,18 @@ import { Button } from 'roger-ui'
 
 ```
 src/
-├── index.ts                  # 唯一公開入口
+├── index.ts
 ├── assets/
 │   └── styles/
-│       └── main.css          # Tailwind v4 設定與 design token
+│       └── main.css
 └── components/
     ├── accordion/            # Accordion + AccordionItem
     ├── badge/
     ├── button/
-    │   ├── Button.vue        # 元件實作
-    │   ├── Button.stories.ts # Storybook stories 與互動測試
-    │   ├── types.ts          # Props 型別定義
-    │   └── README.md         # 元件文件
     ├── card/
     ├── carousel/
     ├── checkbox/             # Checkbox + CheckboxGroup
+    ├── drawer/
     ├── icon/
     ├── input/
     ├── modal/
@@ -121,6 +119,15 @@ src/
     ├── textarea/
     └── virtual-list/
 ```
+
+每個元件目錄的檔案結構一致：
+
+| 檔案 | 說明 |
+|------|------|
+| `{ComponentName}.vue` | 元件實作 |
+| `{ComponentName}.stories.ts` | Storybook stories 與互動測試 |
+| `types.ts` | Props 型別定義 |
+| `README.md` | 元件文件 |
 
 ## IDE 設定
 

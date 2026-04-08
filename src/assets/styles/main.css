@@ -33,7 +33,12 @@
   --rui-color-modal-backdrop: oklch(0% 0 0 / 0.5);
   --rui-shadow-modal: 0 8px 16px oklch(0% 0 0 / 0.12), 0 24px 48px oklch(0% 0 0 / 0.1);
   --rui-radius-modal: 12px;
-
+  /* ─── Drawer 元件 ──────────────────────────────────────────────── */
+  --rui-color-drawer-backdrop: oklch(0% 0 0 / 0.5);
+  --rui-shadow-drawer-left: 4px 0 16px oklch(0% 0 0 / 0.12), 8px 0 32px oklch(0% 0 0 / 0.08);
+  --rui-shadow-drawer-right: -4px 0 16px oklch(0% 0 0 / 0.12), -8px 0 32px oklch(0% 0 0 / 0.08);
+  --rui-shadow-drawer-top: 0 4px 16px oklch(0% 0 0 / 0.12), 0 8px 32px oklch(0% 0 0 / 0.08);
+  --rui-shadow-drawer-bottom: 0 -4px 16px oklch(0% 0 0 / 0.12), 0 -8px 32px oklch(0% 0 0 / 0.08);
   /* ─── Carousel 元件 ────────────────────────────────────────── */
   --rui-carousel-nav-color: oklch(15% 0.02 264);
   --rui-carousel-dot-color: oklch(75% 0.01 264);
@@ -63,6 +68,9 @@
   --rui-color-modal-bg: var(--rui-color-surface);
   --rui-color-modal-text: var(--rui-color-text-primary);
   --rui-color-modal-border: var(--rui-color-border);
+  --rui-color-drawer-bg: var(--rui-color-surface);
+  --rui-color-drawer-text: var(--rui-color-text-primary);
+  --rui-color-drawer-border: var(--rui-color-border);
 }
 
 .dark {

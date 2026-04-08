@@ -33,6 +33,9 @@ export type { AccordionProps, AccordionItemProps } from './components/accordion/
 export { default as Modal } from './components/modal/Modal.vue'
 export type { ModalProps } from './components/modal/types'
 
+export { default as Drawer } from './components/drawer/Drawer.vue'
+export type { DrawerProps } from './components/drawer/types'
+
 export { default as Checkbox } from './components/checkbox/Checkbox.vue'
 export { default as CheckboxGroup } from './components/checkbox/CheckboxGroup.vue'
 export type {
