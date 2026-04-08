@@ -72,3 +72,4 @@ description: 'Use when reviewing code, conducting PR review, auditing a componen
 - [ ] 若元件有 slot，需列出 Slot 規格表（slot 名稱、用途）
 - [ ] 若元件有 `defineExpose`，需列出 Expose 規格表（方法/屬性、型別、說明）
 - [ ] 若 prop 使用 design token 預設值，需在「預設顏色」或「備註」中標明 token 名稱
+- [ ] 同步更新根目錄的 `README.md` 中的元件列表和文件連結
