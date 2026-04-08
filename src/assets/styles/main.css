@@ -40,10 +40,20 @@
   --rui-carousel-dot-active-color: oklch(55% 0.2 264);
   --rui-carousel-transition-duration: 300ms;
 
+  /* ─── Table 元件 ───────────────────────────────────────────── */
+  --rui-color-table-header-bg: oklch(96% 0.006 264);
+  --rui-color-table-row-hover: oklch(97% 0.006 264);
+  --rui-color-table-row-selected: oklch(94% 0.012 264);
+  --rui-color-table-border: oklch(90% 0.008 264);
+  --rui-color-table-sticky-shadow: oklch(0% 0 0 / 0.08);
+
   /* ─── Z-index 層級 ─────────────────────────────────────────── */
   --rui-z-dropdown: 100;
   --rui-z-modal: 200;
   --rui-z-toast: 300;
+  --rui-z-table-sticky-header: 10;
+  --rui-z-table-sticky-col: 9;
+  --rui-z-table-sticky-header-col: 11;
 }
 
 :root {
@@ -65,4 +75,9 @@
   --rui-carousel-nav-color: oklch(92% 0.01 264);
   --rui-carousel-dot-color: oklch(40% 0.01 264);
   --rui-carousel-dot-active-color: oklch(65% 0.2 264);
+  --rui-color-table-header-bg: oklch(22% 0.01 264);
+  --rui-color-table-row-hover: oklch(24% 0.01 264);
+  --rui-color-table-row-selected: oklch(26% 0.015 264);
+  --rui-color-table-border: oklch(28% 0.01 264);
+  --rui-color-table-sticky-shadow: oklch(0% 0 0 / 0.25);
 }

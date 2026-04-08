@@ -53,3 +53,15 @@ export type {
 
 export { default as Pagination } from './components/pagination/Pagination.vue'
 export type { PaginationProps, PaginationEmits } from './components/pagination/types'
+
+export { default as Table } from './components/table/Table.vue'
+export type {
+  TableProps,
+  TableColumnDef,
+  TableRowGroup,
+  TableDataItem,
+  TableRowKey,
+  TableSortOrder,
+  TableColumnAlign,
+  TableEmits,
+} from './components/table/types'
