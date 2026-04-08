@@ -4,14 +4,14 @@
 
 ## 技術棧
 
-| 技術 | 版本 |
-|------|------|
-| Vue | ^3.5 |
-| TypeScript | ~5.9 |
-| Tailwind CSS | ^4.2 |
-| Storybook | ^10.3 |
-| Vite | ^7.3 |
-| Vitest | ^4.0 |
+| 技術         | 版本  |
+| ------------ | ----- |
+| Vue          | ^3.5  |
+| TypeScript   | ~5.9  |
+| Tailwind CSS | ^4.2  |
+| Storybook    | ^10.3 |
+| Vite         | ^7.3  |
+| Vitest       | ^4.0  |
 
 ## 環境需求
 
@@ -36,17 +36,17 @@ pnpm storybook
 
 ## 指令
 
-| 指令 | 說明 |
-|------|------|
-| `pnpm storybook` | 啟動 Storybook 開發伺服器（port 6006） |
-| `pnpm build-storybook` | 建置 Storybook 靜態站台 |
-| `pnpm ci` | 執行 CI 全流程檢查（type-check、lint、test、build） |
-| `pnpm type-check` | TypeScript 型別檢查 |
-| `pnpm lint` | 執行 oxlint + ESLint（含自動修復） |
-| `pnpm lint:check` | 執行 oxlint + ESLint 檢查，不修改檔案 |
-| `pnpm format` | Prettier 格式化 |
-| `pnpm test:unit` | 執行 Storybook + Playwright 的 Vitest browser 測試 |
-| `pnpm test:unit:ci` | 以非 watch 模式執行 Storybook browser 測試 |
+| 指令                   | 說明                                                |
+| ---------------------- | --------------------------------------------------- |
+| `pnpm storybook`       | 啟動 Storybook 開發伺服器（port 6006）              |
+| `pnpm build-storybook` | 建置 Storybook 靜態站台                             |
+| `pnpm ci`              | 執行 CI 全流程檢查（type-check、lint、test、build） |
+| `pnpm type-check`      | TypeScript 型別檢查                                 |
+| `pnpm lint`            | 執行 oxlint + ESLint（含自動修復）                  |
+| `pnpm lint:check`      | 執行 oxlint + ESLint 檢查，不修改檔案               |
+| `pnpm format`          | Prettier 格式化                                     |
+| `pnpm test:unit`       | 執行 Storybook + Playwright 的 Vitest browser 測試  |
+| `pnpm test:unit:ci`    | 以非 watch 模式執行 Storybook browser 測試          |
 
 ## 使用方式
 
@@ -66,27 +66,32 @@ import { Button } from 'roger-ui'
 
 ### UI
 
-| 元件 | 說明 | 文件 |
-|------|------|------|
-| Badge | 徽章元件，可用於顯示計數、狀態標籤或圓點提示 | [查看文件](src/components/badge/README.md) |
-| Button | 通用按鈕，支援自訂顏色、尺寸、outline 模式與停用狀態 | [查看文件](src/components/button/README.md) |
-| Icon | SVG 裝飾性圖示元件，支援自訂尺寸與顏色 | [查看文件](src/components/icon/README.md) |
-| Modal | 對話框元件，支援受控/非受控模式、focus trap 與 scroll lock | [查看文件](src/components/modal/README.md) |
+| 元件       | 說明                                                                                      | 文件                                            |
+| ---------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| Badge      | 徽章元件，可用於顯示計數、狀態標籤或圓點提示                                              | [查看文件](src/components/badge/README.md)      |
+| Button     | 通用按鈕，支援自訂顏色、尺寸、outline 模式與停用狀態                                      | [查看文件](src/components/button/README.md)     |
+| Carousel   | 輪播元件，支援水平滑動與淡入淡出切換，具備自動播放、循環、鍵盤導航、觸控 swipe 與受控模式 | [查看文件](src/components/carousel/README.md)   |
+| Icon       | SVG 裝飾性圖示元件，支援自訂尺寸與顏色                                                    | [查看文件](src/components/icon/README.md)       |
+| Modal      | 對話框元件，支援受控/非受控模式、focus trap 與 scroll lock                                | [查看文件](src/components/modal/README.md)      |
+| Pagination | 分頁導航元件，支援受控模式（`v-model:currentPage`）、頁碼視窗、自訂顏色與外框樣式         | [查看文件](src/components/pagination/README.md) |
+| Table      | 通用資料表格，支援排序、多選、固定表頭、凍結欄位、分組資料與自訂 cell / header 渲染       | [查看文件](src/components/table/README.md)      |
 
 ### Form
 
-| 元件 | 說明 | 文件 |
-|------|------|------|
-| Input | 文字輸入框，支援多種 type、錯誤狀態與前後綴插槽 | [查看文件](src/components/input/README.md) |
-| Select | 下拉選單，支援單選、可搜尋、分組選項與鍵盤導航 | [查看文件](src/components/select/README.md) |
-| TextArea | 多行文字輸入，支援自動高度調整、字元計數與錯誤狀態 | [查看文件](src/components/textarea/README.md) |
+| 元件                     | 說明                                                                                    | 文件                                          |
+| ------------------------ | --------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Checkbox / CheckboxGroup | 勾選框元件，支援獨立使用與群組模式，具備半選（indeterminate）、尺寸、錯誤狀態與自訂顏色 | [查看文件](src/components/checkbox/README.md) |
+| Input                    | 文字輸入框，支援多種 type、錯誤狀態與前後綴插槽                                         | [查看文件](src/components/input/README.md)    |
+| Select                   | 下拉選單，支援單選、可搜尋、分組選項與鍵盤導航                                          | [查看文件](src/components/select/README.md)   |
+| TextArea                 | 多行文字輸入，支援自動高度調整、字元計數與錯誤狀態                                      | [查看文件](src/components/textarea/README.md) |
 
 ### Layout
 
-| 元件 | 說明 | 文件 |
-|------|------|------|
-| Accordion | 可摺疊的手風琴元件，支援受控/非受控模式、多選展開與禁止收合設定 | [查看文件](src/components/accordion/README.md) |
-| Card | 通用卡片容器，支援封面、header、footer 插槽與 hover 效果 | [查看文件](src/components/card/README.md) |
+| 元件                      | 說明                                                                            | 文件                                              |
+| ------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Accordion / AccordionItem | 可摺疊的手風琴元件，支援受控/非受控模式、多選展開與禁止收合設定                 | [查看文件](src/components/accordion/README.md)    |
+| Card                      | 通用卡片容器，支援封面、header、footer 插槽與 hover 效果                        | [查看文件](src/components/card/README.md)         |
+| VirtualList               | 虛擬滾動列表，僅渲染可視範圍項目，適合萬筆以上資料，支援垂直/水平方向與無限捲動 | [查看文件](src/components/virtual-list/README.md) |
 
 ## 專案結構
 
@@ -97,16 +102,24 @@ src/
 │   └── styles/
 │       └── main.css          # Tailwind v4 設定與 design token
 └── components/
+    ├── accordion/            # Accordion + AccordionItem
+    ├── badge/
     ├── button/
     │   ├── Button.vue        # 元件實作
     │   ├── Button.stories.ts # Storybook stories 與互動測試
     │   ├── types.ts          # Props 型別定義
     │   └── README.md         # 元件文件
-    └── input/
-        ├── Input.vue
-        ├── Input.stories.ts
-        ├── types.ts
-        └── README.md
+    ├── card/
+    ├── carousel/
+    ├── checkbox/             # Checkbox + CheckboxGroup
+    ├── icon/
+    ├── input/
+    ├── modal/
+    ├── pagination/
+    ├── select/
+    ├── table/
+    ├── textarea/
+    └── virtual-list/
 ```
 
 ## IDE 設定

@@ -31,7 +31,7 @@ const slideTemplate = `
 const meta = {
   title: 'Layout/Carousel',
   // generic component 需型別斷言，Storybook Meta 的型別系統不支援 Vue 3 generic SFC
-  component: Carousel as unknown as ConcreteComponent<CarouselProps<SlideItem>>,
+  component: Carousel as ConcreteComponent<CarouselProps<SlideItem>>,
   tags: ['autodocs'],
   argTypes: {
     modelValue: {

@@ -28,7 +28,7 @@ const ITEM_HEIGHT = 48
 const meta = {
   title: 'Layout/VirtualList',
   // Generic component 需型別斷言，Storybook Meta 型別系統不支援 Vue 3 generic SFC
-  component: VirtualList as unknown as ConcreteComponent<VirtualListProps<ListItem>>,
+  component: VirtualList as ConcreteComponent<VirtualListProps<ListItem>>,
   tags: ['autodocs'],
   argTypes: {
     items: {
