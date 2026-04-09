@@ -52,41 +52,99 @@ pnpm storybook
 
 ### 作為 Git Submodule 引入
 
-1. 在父專案中加入 submodule：
+#### 加入 Submodule
 
 ```sh
-git submodule add https://github.com/roger8426/roger-ui.git packages/roger-ui
+git submodule add https://github.com/roger8426/roger-ui.git packages/ui
 ```
 
-2. 安裝依賴並建置：
+#### 安裝依賴並建置
 
 ```sh
-cd packages/roger-ui && pnpm install && pnpm build
+cd packages/ui && pnpm install --ignore-workspace && pnpm build
 ```
 
-3. 在父專案的 `package.json` 中加入本地依賴：
+> 若父專案非 pnpm workspace，可省略 `--ignore-workspace`。
+
+#### 在父專案的 package.json 中加入本地依賴
 
 ```json
 {
   "dependencies": {
-    "roger-ui": "file:packages/roger-ui"
+    "roger-ui": "file:packages/ui"
   }
 }
 ```
 
-4. 引入元件（CSS 會隨 JS 自動載入，無需額外引入樣式）：
+#### 設定 Tailwind CSS 掃描路徑
+
+在父專案的 CSS 入口檔中加入 `@source`，讓 Tailwind 掃描元件庫中使用的 class：
+
+```css
+@import 'tailwindcss';
+@source '../../../packages/ui/src';
+```
+
+> `@source` 路徑須根據該 CSS 檔案相對於 submodule 的實際位置調整。
+
+確保父專案載入該 CSS 入口檔。以 Nuxt 為例：
+
+```ts
+// nuxt.config.ts
+export default defineNuxtConfig({
+  css: ['~/assets/css/main.css'],
+})
+```
+
+#### 引入元件
 
 ```ts
 import { Button, Modal, Input } from 'roger-ui'
 import type { ButtonProps } from 'roger-ui'
 ```
 
+#### 更新 Submodule
+
+首次 clone 含 submodule 的專案：
+
+```sh
+git clone --recurse-submodules https://github.com/roger8426/roger-ui.git
+# 或在已 clone 的專案中
+git submodule update --init
+```
+
+拉取 submodule 最新版本：
+
+```sh
+git submodule update --remote packages/ui
+cd packages/ui && pnpm install --ignore-workspace && pnpm build
+```
+
+#### 可選
+
+自定義別名設定，寫入 nuxt.config.ts 即可生效
+
+```ts
+alias: {
+  '@ui': fileURLToPath(new URL('./packages/ui', import.meta.url)),
+},
+```
+
+submodule 更新指令整合
+
+```json
+"scripts": {
+  "update:ui": "git submodule update --remote packages/ui && cd packages/ui && pnpm install --ignore-workspace && pnpm build && cd ../.. && git add packages/ui"
+}
+```
+
 > **注意事項**
 >
+> - 父專案須安裝 **Tailwind CSS v4** 與 `@tailwindcss/vite`（或對應的框架整合）
 > - 父專案的 Vue 版本須 `^3.5`，與本專案一致
 > - `vue` 已標記為 external，會使用父專案的 Vue 實例，不會重複打包
 > - 每次 submodule 內容更新後需重新執行 `pnpm build`
-> - 如需單獨引入樣式，仍可使用 `import 'roger-ui/styles'`
+> - Design token（`--rui-*` CSS custom properties）會在 import 元件時自動注入，如需單獨引入可使用 `import 'roger-ui/styles'`
 
 ## 元件
 
@@ -133,7 +191,8 @@ src/
 ├── index.ts
 ├── assets/
 │   └── styles/
-│       └── main.css
+│       ├── main.css
+│       └── tokens.css
 └── components/
     ├── accordion/            # Accordion + AccordionItem
     ├── badge/
