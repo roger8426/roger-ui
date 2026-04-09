@@ -1,4 +1,3 @@
-import { dirname, relative } from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -8,8 +7,11 @@ import vue from '@vitejs/plugin-vue'
 
 /**
  * Vite lib mode strips CSS imports from JS chunks when cssCodeSplit is enabled.
- * This plugin restores `import './Foo.css'` statements in each chunk that has
- * a corresponding extracted CSS asset.
+ * This plugin reads each chunk's associated CSS file content and injects it at
+ * runtime via a `<style>` tag, so consumers don't need to manually import CSS.
+ *
+ * - SSR-safe: guards with `typeof document !== 'undefined'`
+ * - Deduplication: uses a unique `id` per CSS asset to prevent double injection
  */
 function libCssInject(): Plugin {
   return {
@@ -29,21 +31,53 @@ function libCssInject(): Plugin {
 
         if (!importedCss || importedCss.size === 0) continue
 
-        const dir = dirname(fileName)
-
         // Remove /* empty css */ comments
         chunk.code = chunk.code.replace(/\/\* empty css\s*\*\/\n?/g, '')
 
-        // Prepend import for each associated CSS file
-        const imports = [...importedCss]
+        // Build runtime injection code for each CSS file
+        const injections = [...importedCss]
           .map((cssFile) => {
-            const relativePath = relative(dir, cssFile)
-            const importPath = relativePath.startsWith('.') ? relativePath : `./${relativePath}`
-            return `import '${importPath}';`
+            const cssAsset = bundle[cssFile]
+            if (!cssAsset || cssAsset.type !== 'asset') return ''
+
+            const cssContent = typeof cssAsset.source === 'string' ? cssAsset.source : ''
+            if (!cssContent) return ''
+
+            // Create a stable ID from the CSS file path
+            const styleId = `__rui_${cssFile.replace(/[/.]/g, '_')}`
+
+            // Escape backticks, backslashes, and ${} for template literal
+            const escaped = cssContent
+              .replace(/\\/g, '\\\\')
+              .replace(/`/g, '\\`')
+              .replace(/\$/g, '\\$')
+
+            return (
+              `(function(){` +
+              `if(typeof document!=='undefined'){` +
+              `var id='${styleId}';` +
+              `if(!document.getElementById(id)){` +
+              `var s=document.createElement('style');` +
+              `s.id=id;` +
+              `s.textContent=\`${escaped}\`;` +
+              `document.head.appendChild(s)` +
+              `}}` +
+              `})();`
+            )
           })
+          .filter(Boolean)
           .join('\n')
 
-        chunk.code = `${imports}\n${chunk.code}`
+        if (injections) {
+          chunk.code = `${injections}\n${chunk.code}`
+        }
+      }
+
+      // Remove standalone CSS assets from the bundle since they are now inlined
+      for (const [fileName, asset] of Object.entries(bundle)) {
+        if (asset.type === 'asset' && fileName.endsWith('.css')) {
+          delete bundle[fileName]
+        }
       }
     },
   }

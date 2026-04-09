@@ -1,4 +1,4 @@
-import './assets/styles/main.css'
+import './assets/styles/tokens.css'
 
 export { default as Button } from './components/button/Button.vue'
 export type { ButtonProps } from './components/button/types'
