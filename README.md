@@ -50,11 +50,43 @@ pnpm storybook
 
 ## 使用方式
 
-### 引入元件
+### 作為 Git Submodule 引入
+
+1. 在父專案中加入 submodule：
+
+```sh
+git submodule add https://github.com/roger8426/roger-ui.git packages/roger-ui
+```
+
+2. 安裝依賴並建置：
+
+```sh
+cd packages/roger-ui && pnpm install && pnpm build
+```
+
+3. 在父專案的 `package.json` 中加入本地依賴：
+
+```json
+{
+  "dependencies": {
+    "roger-ui": "file:packages/roger-ui"
+  }
+}
+```
+
+4. 引入元件（CSS 會隨 JS 自動載入，無需額外引入樣式）：
 
 ```ts
-import { Button } from 'roger-ui'
+import { Button, Modal, Input } from 'roger-ui'
+import type { ButtonProps } from 'roger-ui'
 ```
+
+> **注意事項**
+>
+> - 父專案的 Vue 版本須 `^3.5`，與本專案一致
+> - `vue` 已標記為 external，會使用父專案的 Vue 實例，不會重複打包
+> - 每次 submodule 內容更新後需重新執行 `pnpm build`
+> - 如需單獨引入樣式，仍可使用 `import 'roger-ui/styles'`
 
 ## 元件
 
@@ -122,12 +154,12 @@ src/
 
 每個元件目錄的檔案結構一致：
 
-| 檔案 | 說明 |
-|------|------|
-| `{ComponentName}.vue` | 元件實作 |
+| 檔案                         | 說明                         |
+| ---------------------------- | ---------------------------- |
+| `{ComponentName}.vue`        | 元件實作                     |
 | `{ComponentName}.stories.ts` | Storybook stories 與互動測試 |
-| `types.ts` | Props 型別定義 |
-| `README.md` | 元件文件 |
+| `types.ts`                   | Props 型別定義               |
+| `README.md`                  | 元件文件                     |
 
 ## IDE 設定
 

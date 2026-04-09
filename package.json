@@ -16,10 +16,9 @@
   },
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
-    "build": "run-s build:lib build:types build:styles",
+    "build": "run-s build:lib build:types",
     "build:lib": "vite build",
     "build:types": "vue-tsc -p tsconfig.build.json",
-    "build:styles": "mkdir -p dist/assets/styles && cp src/assets/styles/main.css dist/assets/styles/main.css",
     "ci": "run-s type-check lint:check test:unit:ci build build-storybook",
     "test:unit": "vitest",
     "test:unit:ci": "vitest --run",
