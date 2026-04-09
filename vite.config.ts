@@ -16,7 +16,10 @@ function libCssInject(): Plugin {
     name: 'lib-css-inject',
     apply: 'build',
     enforce: 'post',
-    generateBundle(_, bundle) {
+    generateBundle(opts, bundle) {
+      // Only run for library build (preserveModules), skip Storybook build
+      if (!opts.preserveModules) return
+
       for (const [fileName, chunk] of Object.entries(bundle)) {
         if (chunk.type !== 'chunk' || !fileName.endsWith('.js')) continue
 
