@@ -328,6 +328,37 @@ export const InteractionOpenClose: Story = {
   },
 }
 
+// ── NoHeader（無 title 也無 header slot）─────────────────────────
+export const NoHeader: Story = {
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Drawer, Button },
+      setup() {
+        return { args, updateArgs }
+      },
+      template: `
+        <div>
+          <Button @click="updateArgs({ modelValue: true })">開啟無標題 Drawer</Button>
+          <Drawer
+            v-bind="args"
+            @update:modelValue="updateArgs({ modelValue: $event })"
+          >
+            <p>未傳入 title 且無 header slot，header 區塊完全不渲染。</p>
+            <template #footer>
+              <Button @click="updateArgs({ modelValue: false })">關閉</Button>
+            </template>
+          </Drawer>
+        </div>
+      `,
+    }
+  },
+  args: {
+    modelValue: false,
+    title: '',
+  },
+}
+
 // ── InteractionEscape（play()）───────────────────────────────────
 export const InteractionEscape: Story = {
   render: () => ({

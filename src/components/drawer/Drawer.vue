@@ -12,7 +12,7 @@
         role="dialog"
         aria-modal="true"
         tabindex="-1"
-        :aria-labelledby="$slots.header ? undefined : headerId"
+        :aria-labelledby="$slots.header ? undefined : title ? headerId : undefined"
         :aria-describedby="description ? descId : undefined"
         @click.self="onBackdropClick"
         @keydown.escape="onEscapeKey"
@@ -24,7 +24,7 @@
           :style="panelColorVars"
         >
           <!-- header -->
-          <div class="rui-drawer-header">
+          <div v-if="$slots.header || title" class="rui-drawer-header">
             <slot name="header">
               <span :id="headerId" class="rui-drawer-title">{{ title }}</span>
             </slot>
@@ -56,7 +56,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useAttrs, useId, useSlots, useTemplateRef, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  ref,
+  useAttrs,
+  useId,
+  useSlots,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type { CSSProperties } from 'vue'
 import type { DrawerProps } from './types'
 import Icon from '../icon/Icon.vue'
