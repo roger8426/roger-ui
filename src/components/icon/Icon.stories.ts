@@ -3,6 +3,15 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import Icon from './Icon.vue'
 
+const iconModules = import.meta.glob('../../assets/icons/*.svg', {
+  query: '?raw',
+  eager: true,
+})
+
+const allIconNames = Object.keys(iconModules)
+  .map((path) => path.replace('../../assets/icons/', '').replace('.svg', ''))
+  .sort()
+
 const meta = {
   title: 'UI/Icon',
   component: Icon,
@@ -11,7 +20,7 @@ const meta = {
     name: {
       description: '圖示名稱，對應 assets/icons/{name}.svg',
       control: 'select',
-      options: ['list', 'check', 'close'],
+      options: allIconNames,
       table: {
         category: 'Appearance',
       },
@@ -97,5 +106,30 @@ export const DefaultState: Story = {
     await expect(icon).not.toBeNull()
     await expect(canvas.queryAllByRole('img')).toHaveLength(0)
     await expect(icon?.querySelector('svg')).not.toBeNull()
+  },
+}
+
+export const AllIcons: Story = {
+  render: () => ({
+    components: { Icon },
+    setup() {
+      return { icons: allIconNames }
+    },
+    template: `
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 24px; padding: 16px;">
+        <div v-for="name in icons" :key="name" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
+          <Icon :name="name" :size="24" />
+          <span style="font-size: 12px; color: #666;">{{ name }}</span>
+        </div>
+      </div>
+    `,
+  }),
+  play: async ({ canvasElement }) => {
+    const icons = canvasElement.querySelectorAll('[aria-hidden="true"]')
+    await expect(icons.length).toBe(allIconNames.length)
+
+    for (const icon of icons) {
+      await expect(icon.querySelector('svg')).not.toBeNull()
+    }
   },
 }
