@@ -311,8 +311,8 @@ watch(
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--rui-color-drawer-border);
+  padding: var(--rui-drawer-header-padding, 1rem 1.25rem);
+  border-bottom: var(--rui-drawer-header-border, 1px solid var(--rui-color-drawer-border));
   flex-shrink: 0;
 }
 
@@ -355,7 +355,7 @@ watch(
 .rui-drawer-body {
   flex: 1;
   overflow-y: auto;
-  padding: 1.25rem;
+  padding: var(--rui-drawer-body-padding, 1.25rem);
   font-size: 0.9375rem;
   line-height: 1.6;
 }
@@ -366,8 +366,8 @@ watch(
   align-items: center;
   justify-content: flex-end;
   gap: 0.5rem;
-  padding: 0.5rem 1.25rem;
-  border-top: 1px solid var(--rui-color-drawer-border);
+  padding: var(--rui-drawer-footer-padding, 0.5rem 1.25rem);
+  border-top: var(--rui-drawer-footer-border, 1px solid var(--rui-color-drawer-border));
   flex-shrink: 0;
 }
 
