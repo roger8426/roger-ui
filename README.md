@@ -126,7 +126,7 @@ cd packages/ui && pnpm install --ignore-workspace && pnpm build
 
 ```ts
 alias: {
-  '@ui': fileURLToPath(new URL('./packages/ui', import.meta.url)),
+  '@ui': fileURLToPath(new URL('./packages/ui/dist/index.d.ts', import.meta.url)),
 },
 ```
 
