@@ -60,6 +60,11 @@
   --rui-color-table-border: oklch(90% 0.008 264);
   --rui-color-table-sticky-shadow: oklch(0% 0 0 / 0.08);
 
+  /* ─── Switch / Toggle 元件 ────────────────────────────────── */
+  --rui-color-switch-track-off: oklch(78% 0.008 264);
+  --rui-color-switch-track-on: var(--rui-color-default);
+  --rui-color-switch-thumb: oklch(100% 0 0);
+
   /* ─── Z-index 層級 ─────────────────────────────────────────── */
   --rui-z-dropdown: 100;
   --rui-z-modal: 200;
@@ -84,4 +89,5 @@
   --rui-color-table-row-selected: oklch(26% 0.015 264);
   --rui-color-table-border: oklch(28% 0.01 264);
   --rui-color-table-sticky-shadow: oklch(0% 0 0 / 0.25);
+  --rui-color-switch-track-off: oklch(45% 0.008 264);
 }
