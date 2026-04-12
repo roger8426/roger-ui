@@ -65,11 +65,11 @@ export const Sizes: Story = {
     components: { Icon },
     template: `
       <div style="display: flex; align-items: center; gap: 16px;">
-        <Icon name="list" :size="12" />
-        <Icon name="list" :size="16" />
-        <Icon name="list" :size="20" />
-        <Icon name="list" :size="24" />
-        <Icon name="list" :size="32" />
+        <Icon name="hamburger" :size="12" />
+        <Icon name="hamburger" :size="16" />
+        <Icon name="hamburger" :size="20" />
+        <Icon name="hamburger" :size="24" />
+        <Icon name="hamburger" :size="32" />
       </div>
     `,
   }),
