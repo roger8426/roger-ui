@@ -44,6 +44,9 @@ export type {
   CheckboxGroupSlotProps,
 } from './components/checkbox/types'
 
+export { default as Toggle } from './components/toggle/Toggle.vue'
+export type { ToggleProps, ToggleSize } from './components/toggle/types'
+
 export { default as Carousel } from './components/carousel/Carousel.vue'
 export type { CarouselProps, CarouselEmits } from './components/carousel/types'
 

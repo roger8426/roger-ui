@@ -175,6 +175,7 @@ submodule 更新指令整合
 | Input                    | 文字輸入框，支援多種 type、錯誤狀態與前後綴插槽                                         | [查看文件](src/components/input/README.md)    |
 | Select                   | 下拉選單，支援單選、可搜尋、分組選項與鍵盤導航                                          | [查看文件](src/components/select/README.md)   |
 | TextArea                 | 多行文字輸入，支援自動高度調整、字元計數與錯誤狀態                                      | [查看文件](src/components/textarea/README.md) |
+| Toggle                   | 開關切換元件，支援 v-model、多種尺寸、自訂顏色與 thumb slot                             | [查看文件](src/components/toggle/README.md)   |
 
 ### Layout
 
@@ -208,6 +209,7 @@ src/
     ├── select/
     ├── table/
     ├── textarea/
+    ├── toggle/
     └── virtual-list/
 ```
 
