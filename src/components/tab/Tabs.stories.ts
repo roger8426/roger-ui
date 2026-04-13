@@ -425,13 +425,13 @@ export const Swipeable: Story = {
     template: `
       <Tabs v-bind="args" style="width: 480px;">
         <Tab value="tab-1" label="第一個">
-          <div style="padding: 16px;">第一個面板</div>
+          <div style="padding: 16px; height: 200px; background-color: lightgray;">第一個面板</div>
         </Tab>
         <Tab value="tab-2" label="第二個">
-          <div style="padding: 16px;">第二個面板</div>
+          <div style="padding: 16px; height: 200px; background-color: lightgray;">第二個面板</div>
         </Tab>
         <Tab value="tab-3" label="第三個">
-          <div style="padding: 16px;">第三個面板</div>
+          <div style="padding: 16px; height: 200px; background-color: lightgray;">第三個面板</div>
         </Tab>
       </Tabs>
     `,
