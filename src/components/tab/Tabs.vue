@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :style="props.activeColor ? { '--rui-color-tab-indicator': props.activeColor } : undefined">
     <div
       class="relative"
       :class="{ 'border-b border-(--rui-color-tab-border)': props.type === 'border' }"

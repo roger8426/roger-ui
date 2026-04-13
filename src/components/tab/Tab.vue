@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, type CSSProperties, useId } from 'vue'
+import { computed, inject, useId } from 'vue'
 import { TABS_CONTEXT_KEY, type TabProps } from './types'
 
 defineOptions({ name: 'Tab' })
@@ -49,6 +49,15 @@ const isActive = computed(() => context?.activeValue === props.value)
 const isDisabled = computed(() => props.disabled || (context?.disabled ?? false))
 
 const tabType = computed(() => context?.type ?? 'underline')
+
+const buttonStyle = computed<Record<string, string> | undefined>(() => {
+  const color = context?.activeColor
+  if (!color || !isActive.value || tabType.value !== 'border') return undefined
+  return {
+    '--rui-color-tab-border': color,
+    backgroundColor: color,
+  }
+})
 
 const buttonClasses = computed(() => {
   const classes: string[] = []
@@ -89,14 +98,6 @@ const buttonClasses = computed(() => {
   }
 
   return classes
-})
-
-const buttonStyle = computed<(CSSProperties & Record<`--${string}`, string>) | undefined>(() => {
-  const color = context?.activeColor
-  if (color && isActive.value) {
-    return { '--rui-color-tab-indicator': color }
-  }
-  return undefined
 })
 
 function handleClick(): void {
