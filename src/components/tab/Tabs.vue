@@ -21,11 +21,7 @@
       />
     </div>
     <div
-      :class="
-        props.type === 'border'
-          ? 'border-x border-b border-(--rui-color-tab-border) bg-(--rui-color-surface)'
-          : ''
-      "
+      :class="props.type === 'border' ? 'bg-(--rui-color-surface)' : ''"
       @touchstart.passive="handleTouchStart"
       @touchend.passive="handleTouchEnd"
     >
