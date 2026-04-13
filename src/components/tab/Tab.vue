@@ -56,7 +56,6 @@ const buttonStyle = computed<Record<string, string> | undefined>(() => {
   if (isActive.value) {
     const color = context?.activeColor
     if (!color) return undefined
-    result['--rui-color-tab-border'] = color
     result['backgroundColor'] = color
   } else {
     const color = context?.inactiveColor
