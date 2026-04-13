@@ -183,6 +183,7 @@ submodule 更新指令整合
 | ------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------- |
 | Accordion / AccordionItem | 可摺疊的手風琴元件，支援受控/非受控模式、多選展開與禁止收合設定                 | [查看文件](src/components/accordion/README.md)    |
 | Card                      | 通用卡片容器，支援封面、header、footer 插槽與 hover 效果                        | [查看文件](src/components/card/README.md)         |
+| Tabs / Tab                | 分頁導航元件，支援受控/非受控模式、鍵盤導航（ARIA Tabs Pattern）與三種外觀模式  | [查看文件](src/components/tab/README.md)          |
 | VirtualList               | 虛擬滾動列表，僅渲染可視範圍項目，適合萬筆以上資料，支援垂直/水平方向與無限捲動 | [查看文件](src/components/virtual-list/README.md) |
 
 ## 專案結構
@@ -207,6 +208,7 @@ src/
     ├── modal/
     ├── pagination/
     ├── select/
+    ├── tab/                  # Tabs + Tab
     ├── table/
     ├── textarea/
     ├── toggle/

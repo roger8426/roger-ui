@@ -71,3 +71,7 @@ export type {
   TableColumnAlign,
   TableEmits,
 } from './components/table/types'
+
+export { default as Tabs } from './components/tab/Tabs.vue'
+export { default as Tab } from './components/tab/Tab.vue'
+export type { TabsProps, TabProps, TabActivationMode, TabType } from './components/tab/types'

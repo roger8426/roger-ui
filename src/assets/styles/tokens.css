@@ -60,6 +60,14 @@
   --rui-color-table-border: oklch(90% 0.008 264);
   --rui-color-table-sticky-shadow: oklch(0% 0 0 / 0.08);
 
+  /* ─── Tabs 元件 ─────────────────────────────────────────────── */
+  --rui-color-tab-indicator: var(--rui-color-default);
+  --rui-color-tab-hover: var(--rui-color-surface-hover);
+  --rui-color-tab-pill-hover: color-mix(in oklch, var(--rui-color-tab-indicator) 12%, transparent);
+  --rui-color-tab-text: var(--rui-color-text-secondary);
+  --rui-color-tab-text-active: var(--rui-color-text-primary);
+  --rui-color-tab-border: var(--rui-color-border);
+
   /* ─── Switch / Toggle 元件 ────────────────────────────────── */
   --rui-color-switch-track-off: oklch(78% 0.008 264);
   --rui-color-switch-track-on: var(--rui-color-default);
