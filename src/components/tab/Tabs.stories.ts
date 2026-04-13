@@ -40,6 +40,11 @@ const meta = {
       control: 'color',
       table: { category: 'Appearance', defaultValue: { summary: 'undefined' } },
     },
+    inactiveColor: {
+      description: '覆蓋 border 模式下非活躍 tab 的背景色（任意 CSS 色彩字串）',
+      control: 'color',
+      table: { category: 'Appearance', defaultValue: { summary: 'undefined' } },
+    },
     type: {
       description: 'Tab 外觀模式：underline（預設）| border（border-card）| none（無樣式）',
       control: 'select',

@@ -51,12 +51,19 @@ const isDisabled = computed(() => props.disabled || (context?.disabled ?? false)
 const tabType = computed(() => context?.type ?? 'underline')
 
 const buttonStyle = computed<Record<string, string> | undefined>(() => {
-  const color = context?.activeColor
-  if (!color || !isActive.value || tabType.value !== 'border') return undefined
-  return {
-    '--rui-color-tab-border': color,
-    backgroundColor: color,
+  if (tabType.value !== 'border') return undefined
+  const result: Record<string, string> = {}
+  if (isActive.value) {
+    const color = context?.activeColor
+    if (!color) return undefined
+    result['--rui-color-tab-border'] = color
+    result['backgroundColor'] = color
+  } else {
+    const color = context?.inactiveColor
+    if (!color) return undefined
+    result['backgroundColor'] = color
   }
+  return result
 })
 
 const buttonClasses = computed(() => {

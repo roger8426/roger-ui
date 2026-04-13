@@ -54,6 +54,7 @@ const props = withDefaults(defineProps<TabsProps>(), {
   label: undefined,
   activationMode: 'auto',
   activeColor: undefined,
+  inactiveColor: undefined,
   type: 'underline',
   swipeable: false,
 })
@@ -230,6 +231,9 @@ provide(
     },
     get activeColor() {
       return props.activeColor
+    },
+    get inactiveColor() {
+      return props.inactiveColor
     },
     get type() {
       return props.type

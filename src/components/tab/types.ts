@@ -16,6 +16,8 @@ export interface TabsProps {
   activationMode?: TabActivationMode
   /** 覆蓋 active underline 顏色（任意 CSS 色彩字串） */
   activeColor?: string
+  /** 覆蓋 border 模式下非活躍 tab 的背景色（任意 CSS 色彩字串） */
+  inactiveColor?: string
   /** Tab 外觀模式：underline（預設）| border（border-card）| none（無樣式） */
   type?: TabType
   /** 啟用左右滑動手勢切換 tab */
@@ -38,6 +40,7 @@ export interface TabsContext {
   disabled: boolean
   activationMode: TabActivationMode
   activeColor: string | undefined
+  inactiveColor: string | undefined
   type: TabType
 }
 
