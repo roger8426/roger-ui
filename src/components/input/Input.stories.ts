@@ -162,6 +162,10 @@ export const Password: Story = {
   args: { type: 'password', placeholder: '請輸入密碼' },
 }
 
+export const NumberType: Story = {
+  args: { type: 'number', placeholder: '請輸入數字' },
+}
+
 export const CustomBorderColor: Story = {
   args: { borderColor: '#d0391e' },
 }

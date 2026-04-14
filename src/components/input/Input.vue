@@ -39,11 +39,7 @@
         <slot name="suffix" />
       </span>
     </div>
-    <span
-      v-if="errorActive && errorMsg"
-      :id="errorId"
-      class="text-xs text-(--rui-color-error)"
-    >{{
+    <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-(--rui-color-error)">{{
       errorMsg
     }}</span>
   </div>
@@ -150,3 +146,15 @@ defineExpose({
   focus: () => inputRef.value?.focus(),
 })
 </script>
+
+<style scoped>
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  appearance: textfield;
+}
+</style>
