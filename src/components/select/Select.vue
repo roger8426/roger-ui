@@ -140,6 +140,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   errorMsg: '',
   border: true,
   dropdownBg: undefined,
+  optionHoverColor: undefined,
 })
 
 const emit = defineEmits<{
@@ -211,6 +212,7 @@ const wrapperVars = computed(
   (): Record<string, string> => ({
     '--select-active-border': props.borderColor ?? 'var(--rui-color-default)',
     '--select-dropdown-bg': props.dropdownBg ?? 'var(--rui-color-select-bg)',
+    '--select-option-hover': props.optionHoverColor ?? 'var(--rui-color-surface-hover)',
     ...(isOpen.value ? { 'z-index': 'var(--rui-z-dropdown)' } : {}),
   }),
 )
@@ -266,8 +268,8 @@ function getOptionClasses(opt: SelectOption): string {
   const isFocused = navigableOptions.value.indexOf(opt) === focusedIndex.value
   const isSelected = opt.value === props.modelValue
   if (isSelected) return 'bg-(--rui-color-select-selected) font-medium'
-  if (isFocused) return 'bg-(--rui-color-surface-hover)'
-  return 'hover:bg-(--rui-color-surface-hover)'
+  if (isFocused) return 'bg-(--select-option-hover)'
+  return 'hover:bg-(--select-option-hover)'
 }
 
 // ── Actions ───────────────────────────────────────────────────────────────────

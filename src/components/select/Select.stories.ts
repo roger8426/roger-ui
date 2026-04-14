@@ -99,6 +99,12 @@ const meta = {
       control: 'color',
       table: { category: 'Appearance' },
     },
+    optionHoverColor: {
+      description:
+        '選項 hover / keyboard focus 背景顏色（任意 CSS 色彩值，預設使用 --rui-color-surface-hover token）',
+      control: 'color',
+      table: { category: 'Appearance' },
+    },
   },
   args: {
     modelValue: null,
@@ -117,7 +123,8 @@ const meta = {
       setup() {
         return { args, updateArgs }
       },
-      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+      template:
+        '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
     }
   },
 } satisfies Meta<typeof Select>
@@ -186,7 +193,8 @@ export const Interaction: Story = {
       setup() {
         return { args, updateArgs }
       },
-      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+      template:
+        '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
     }
   },
   play: async ({ canvasElement }) => {
@@ -227,7 +235,8 @@ export const InteractionKeyboard: Story = {
       setup() {
         return { args, updateArgs }
       },
-      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+      template:
+        '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
     }
   },
   play: async ({ canvasElement }) => {
@@ -259,7 +268,8 @@ export const InteractionSearchable: Story = {
       setup() {
         return { args, updateArgs }
       },
-      template: '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+      template:
+        '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
     }
   },
   play: async ({ canvasElement }) => {
