@@ -105,6 +105,12 @@ const meta = {
       control: 'color',
       table: { category: 'Appearance' },
     },
+    optionSelectedColor: {
+      description:
+        '已選中選項的背景顏色（任意 CSS 色彩值，預設使用 --rui-color-select-selected token）',
+      control: 'color',
+      table: { category: 'Appearance' },
+    },
   },
   args: {
     modelValue: null,

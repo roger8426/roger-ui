@@ -50,4 +50,6 @@ export interface SelectProps {
   dropdownBg?: string
   /** 選項 hover / keyboard focus 背景顏色（任意 CSS 色彩值，預設使用 --rui-color-surface-hover token） */
   optionHoverColor?: string
+  /** 已選中選項的背景顏色（任意 CSS 色彩值，預設使用 --rui-color-select-selected token） */
+  optionSelectedColor?: string
 }
