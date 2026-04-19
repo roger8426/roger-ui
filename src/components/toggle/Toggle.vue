@@ -6,7 +6,7 @@
       props.disabled && 'cursor-not-allowed opacity-50',
     ]"
   >
-    <span class="relative shrink-0">
+    <span class="relative shrink-0 flex items-center">
       <input
         :id="computedId"
         ref="switchRef"
