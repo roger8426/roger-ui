@@ -2,6 +2,7 @@ import { expect, within } from 'storybook/test'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import Icon from './Icon.vue'
+import type { IconName } from './iconNames'
 
 const iconModules = import.meta.glob('../../assets/icons/*.svg', {
   query: '?raw',
@@ -85,7 +86,8 @@ export const CustomColor: Story = {
 
 export const UnknownName: Story = {
   args: {
-    name: 'does-not-exist',
+    // 刻意傳入不存在的 name 以驗證 runtime fallback 行為
+    name: 'does-not-exist' as IconName,
   },
   play: async ({ canvasElement }) => {
     const icon = canvasElement.querySelector('[aria-hidden="true"]')

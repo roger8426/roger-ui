@@ -16,6 +16,8 @@ export type {
 
 export { default as Icon } from './components/icon/Icon.vue'
 export type { IconProps } from './components/icon/types'
+export { ICON_NAMES } from './components/icon/iconNames'
+export type { IconName } from './components/icon/iconNames'
 
 export { default as TextArea } from './components/textarea/TextArea.vue'
 export type { TextAreaProps } from './components/textarea/types'

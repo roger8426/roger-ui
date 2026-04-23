@@ -17,7 +17,8 @@
   },
   "scripts": {
     "prepare": "git config core.hooksPath .githooks",
-    "build": "run-s build:lib build:types",
+    "build": "run-s build:icons build:lib build:types",
+    "build:icons": "jiti scripts/generate-icon-names.ts",
     "build:lib": "vite build",
     "build:types": "vue-tsc -p tsconfig.build.json",
     "ci": "run-s type-check lint:check test:unit:ci build build-storybook",
