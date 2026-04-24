@@ -11,7 +11,7 @@ export interface SelectOptionGroup {
   /** 群組標題 */
   group: string
   /** 群組內選項 */
-  options: SelectOption[]
+  options: readonly SelectOption[]
 }
 
 export type SelectItem = SelectOption | SelectOptionGroup
@@ -21,13 +21,18 @@ export function isGroup(item: SelectItem): item is SelectOptionGroup {
   return 'group' in item
 }
 
+export interface SelectExpose {
+  /** 將焦點移至 Select 控制項（若為 searchable 且展開中則聚焦搜尋欄） */
+  focus: () => void
+}
+
 export interface SelectProps {
   /** input 元素 id，用於關聯外部 <label> */
   id?: string
   /** v-model 綁定值 */
   modelValue?: string | number | null
   /** 選項列表，支援 SelectOption 或 SelectOptionGroup */
-  options?: SelectItem[]
+  options?: readonly SelectItem[]
   /** 元件尺寸 */
   size?: 'sm' | 'md' | 'lg'
   /** 佔位文字 */

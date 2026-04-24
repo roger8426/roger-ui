@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, watchEffect } from 'vue'
 import type { BadgeProps } from './types'
 
 defineOptions({ name: 'Badge' })
@@ -27,6 +27,14 @@ const props = withDefaults(defineProps<BadgeProps>(), {
   radius: 'full',
 })
 
+if (import.meta.env.DEV) {
+  watchEffect(() => {
+    if (props.dot && props.value !== undefined) {
+      console.warn('[RogerUI/Badge] `dot` 模式下會忽略 `value`，兩者請擇一使用。')
+    }
+  })
+}
+
 const displayValue = computed(() => {
   if (props.value === undefined) return ''
   return props.value > props.max ? `${props.max}+` : String(props.value)
@@ -34,16 +42,12 @@ const displayValue = computed(() => {
 
 const sizeClasses = computed(() => {
   if (props.dot) {
-    return ({ sm: 'h-1.5 w-1.5', md: 'h-2 w-2', lg: 'h-2.5 w-2.5' })[props.size]
+    return { sm: 'h-1.5 w-1.5', md: 'h-2 w-2', lg: 'h-2.5 w-2.5' }[props.size]
   }
-  return ({ sm: 'px-1.5 h-4 text-xs', md: 'px-2 h-5 text-xs', lg: 'px-2.5 h-6 text-sm' })[
-    props.size
-  ]
+  return { sm: 'px-1.5 h-4 text-xs', md: 'px-2 h-5 text-xs', lg: 'px-2.5 h-6 text-sm' }[props.size]
 })
 
-const borderRadius = computed(() =>
-  props.radius === 'full' ? '9999px' : `${props.radius}px`,
-)
+const borderRadius = computed(() => (props.radius === 'full' ? '9999px' : `${props.radius}px`))
 
 const colorStyle = computed(() => {
   if (props.outline) {

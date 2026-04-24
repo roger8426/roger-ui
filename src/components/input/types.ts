@@ -1,3 +1,8 @@
+export interface InputExpose {
+  /** 將焦點移至內部 input 元素 */
+  focus: () => void
+}
+
 export interface InputProps {
   /** input 元素 id，用於關聯外部 <label> */
   id?: string

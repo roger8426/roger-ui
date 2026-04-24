@@ -32,7 +32,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  useId,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type { CSSProperties } from 'vue'
 import Icon from '../icon/Icon.vue'
 import { useToastStack } from './useToastStack'
@@ -79,7 +88,7 @@ const {
 } = useToastStack(stackKey, id, gapRef)
 
 // ── Toast 元素 ref + 高度量測 ─────────────────────────────────────
-const toastRef = ref<HTMLElement | null>(null)
+const toastRef = useTemplateRef<HTMLElement>('toastRef')
 let resizeObserver: ResizeObserver | null = null
 
 function observeHeight() {

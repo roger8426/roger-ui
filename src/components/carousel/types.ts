@@ -1,6 +1,15 @@
+export interface CarouselExpose {
+  /** 切換至下一張（loop 模式下自尾回首） */
+  next: () => void
+  /** 切換至上一張（loop 模式下自首回尾） */
+  prev: () => void
+  /** 切換至指定 index（受 loop / clamp 規則約束） */
+  goTo: (index: number) => void
+}
+
 export interface CarouselProps<T> {
   /** 輪播項目資料陣列，泛型 T 由傳入值自動推導 */
-  items: T[]
+  items: readonly T[]
   /** 受控模式：目前顯示的 slide index（0-based）  */
   modelValue?: number
   /** 是否使用淡入淡出切換動畫（預設為水平滑動） */

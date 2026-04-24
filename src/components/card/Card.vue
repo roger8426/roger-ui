@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue'
+import { computed, useSlots, useTemplateRef } from 'vue'
 import type { CardProps } from './types'
 
 defineOptions({ name: 'Card' })
@@ -45,11 +45,16 @@ const props = withDefaults(defineProps<CardProps>(), {
 })
 
 const slots = useSlots()
-const cardRef = ref<HTMLDivElement | null>(null)
+const cardRef = useTemplateRef<HTMLDivElement>('cardRef')
 
 function handleKeyActivate(event: KeyboardEvent) {
   if (!props.hoverable) return
-  if (event.key === 'Enter' || event.key === ' ' || event.key === 'Space' || event.code === 'Space') {
+  if (
+    event.key === 'Enter' ||
+    event.key === ' ' ||
+    event.key === 'Space' ||
+    event.code === 'Space'
+  ) {
     event.preventDefault()
     cardRef.value?.click()
   }

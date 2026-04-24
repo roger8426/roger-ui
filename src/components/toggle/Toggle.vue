@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { computed, useId, useTemplateRef } from 'vue'
-import type { ToggleProps } from './types'
+import type { ToggleExpose, ToggleProps } from './types'
 
 defineOptions({ name: 'Toggle' })
 
@@ -65,6 +65,7 @@ const autoId = useId()
 const computedId = computed(() => props.id ?? autoId)
 
 function handleChange(event: Event): void {
+  // @change 綁在本元件 template 內的 <input type="checkbox">，target 必為 HTMLInputElement
   const target = event.target as HTMLInputElement
   emit('update:modelValue', target.checked)
   emit('change', target.checked, event)
@@ -114,7 +115,7 @@ const thumbClasses = computed(() => [
   thumbTranslateClass.value,
 ])
 
-defineExpose({
+defineExpose<ToggleExpose>({
   focus: () => switchRef.value?.focus(),
 })
 </script>

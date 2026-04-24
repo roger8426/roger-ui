@@ -50,13 +50,12 @@ const props = withDefaults(defineProps<AccordionItemProps>(), {
 })
 
 const context = inject(ACCORDION_CONTEXT_KEY)
-
-if (import.meta.env.DEV && !context) {
-  console.warn('[RogerUI/AccordionItem] 必須在 <Accordion> 內使用。')
+if (!context) {
+  throw new Error('[RogerUI/AccordionItem] 必須在 <Accordion> 內使用。')
 }
 
-const open = computed(() => context?.isOpen(props.value) ?? false)
-const isDisabled = computed(() => props.disabled || (context?.disabled ?? false))
+const open = computed(() => context.isOpen(props.value))
+const isDisabled = computed(() => props.disabled || context.disabled)
 
 const headerId = computed(() => `accordion-header-${props.value}`)
 const panelId = computed(() => `accordion-panel-${props.value}`)
@@ -68,7 +67,7 @@ const headerClasses = computed(() => {
   return 'hover:bg-(--rui-color-surface-hover) active:brightness-95'
 })
 
-function handleToggle(): void {
-  context?.toggle(props.value)
+const handleToggle = (): void => {
+  context.toggle(props.value)
 }
 </script>

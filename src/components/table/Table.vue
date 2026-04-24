@@ -270,6 +270,8 @@ const flatRows = computed((): T[] => {
     if (isTableRowGroup(item)) {
       result.push(...item.rows)
     } else {
+      // isTableRowGroup 為 false 時 item 必為 T，但因 T extends Record<string, unknown>
+      // 其 structural type 可能與 TableRowGroup<T> 重疊，TS 無法完全收斂，需顯式斷言
       result.push(item as T)
     }
   }

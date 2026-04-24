@@ -1,5 +1,5 @@
 <template>
-  <Teleport defer :to="`#${context?.tablistId}`">
+  <Teleport defer :to="`#${context.tablistId}`">
     <button
       :id="tabId"
       role="tab"
@@ -37,28 +37,27 @@ const props = withDefaults(defineProps<TabProps>(), {
 })
 
 const context = inject(TABS_CONTEXT_KEY)
-
-if (import.meta.env.DEV && !context) {
-  console.warn('[RogerUI/Tab] 必須在 <Tabs> 內使用。')
+if (!context) {
+  throw new Error('[RogerUI/Tab] 必須在 <Tabs> 內使用。')
 }
 
 const tabId = `rui-tab-${useId()}`
 const panelId = `rui-tabpanel-${useId()}`
 
-const isActive = computed(() => context?.activeValue === props.value)
-const isDisabled = computed(() => props.disabled || (context?.disabled ?? false))
+const isActive = computed(() => context.activeValue === props.value)
+const isDisabled = computed(() => props.disabled || context.disabled)
 
-const tabType = computed(() => context?.type ?? 'underline')
+const tabType = computed(() => context.type)
 
 const buttonStyle = computed<Record<string, string> | undefined>(() => {
   if (tabType.value !== 'border') return undefined
   const result: Record<string, string> = {}
   if (isActive.value) {
-    const color = context?.activeColor
+    const color = context.activeColor
     if (!color) return undefined
     result['backgroundColor'] = color
   } else {
-    const color = context?.inactiveColor
+    const color = context.inactiveColor
     if (!color) return undefined
     result['backgroundColor'] = color
   }
@@ -106,8 +105,8 @@ const buttonClasses = computed(() => {
   return classes
 })
 
-function handleClick(): void {
+const handleClick = (): void => {
   if (isDisabled.value) return
-  context?.select(props.value)
+  context.select(props.value)
 }
 </script>

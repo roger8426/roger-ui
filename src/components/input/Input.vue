@@ -46,8 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, useId } from 'vue'
-import type { InputProps } from './types'
+import { computed, useId, useTemplateRef } from 'vue'
+import type { InputExpose, InputProps } from './types'
 
 const props = withDefaults(defineProps<InputProps>(), {
   modelValue: '',
@@ -68,7 +68,7 @@ const emit = defineEmits<{
   blur: [event: FocusEvent]
 }>()
 
-const inputRef = ref<HTMLInputElement | null>(null)
+const inputRef = useTemplateRef<HTMLInputElement>('inputRef')
 const errorId = `${useId()}-error`
 
 const wrapperVars = computed(
@@ -135,14 +135,18 @@ const wrapperStateClasses = computed(() => {
 })
 
 function onInput(event: Event) {
-  emit('update:modelValue', (event.target as HTMLInputElement).value)
+  // @input 只會綁在本元件 template 內的 <input>，event.target 必為 HTMLInputElement
+  const target = event.target as HTMLInputElement
+  emit('update:modelValue', target.value)
 }
 
 function onChange(event: Event) {
-  emit('change', (event.target as HTMLInputElement).value, event)
+  // @change 同上，target 必為本元件的 <input>
+  const target = event.target as HTMLInputElement
+  emit('change', target.value, event)
 }
 
-defineExpose({
+defineExpose<InputExpose>({
   focus: () => inputRef.value?.focus(),
 })
 </script>

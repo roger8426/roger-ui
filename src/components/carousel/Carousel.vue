@@ -91,9 +91,9 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { computed, onUnmounted, ref, watch } from 'vue'
+import { computed, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import Icon from '../icon/Icon.vue'
-import type { CarouselProps, CarouselEmits } from './types'
+import type { CarouselEmits, CarouselExpose, CarouselProps } from './types'
 
 const props = withDefaults(defineProps<CarouselProps<T>>(), {
   modelValue: 0,
@@ -121,7 +121,7 @@ const lastIndex = computed(() => Math.max(0, itemCount.value - 1))
 const internalIndex = ref(0)
 const isAnimating = ref(false)
 const isHoverPaused = ref(false)
-const viewportRef = ref<HTMLElement | null>(null)
+const viewportRef = useTemplateRef<HTMLElement>('viewportRef')
 
 // touch swipe
 let touchStartX = 0
@@ -305,7 +305,7 @@ watch(
 
 // ─── expose ────────────────────────────────────────────────────
 
-defineExpose({ next, prev, goTo })
+defineExpose<CarouselExpose>({ next, prev, goTo })
 </script>
 
 <style scoped>

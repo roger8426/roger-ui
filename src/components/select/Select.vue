@@ -124,10 +124,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, useId, watch } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, useId, useTemplateRef, watch } from 'vue'
 import Icon from '../icon/Icon.vue'
 import { isGroup } from './types'
-import type { SelectOption, SelectProps } from './types'
+import type { SelectExpose, SelectItem, SelectOption, SelectProps } from './types'
 
 const props = withDefaults(defineProps<SelectProps>(), {
   modelValue: null,
@@ -149,8 +149,8 @@ const emit = defineEmits<{
   change: [value: string | number | null, option: SelectOption | null]
 }>()
 
-const rootEl = ref<HTMLElement | null>(null)
-const searchInputRef = ref<HTMLInputElement | null>(null)
+const rootEl = useTemplateRef<HTMLElement>('rootEl')
+const searchInputRef = useTemplateRef<HTMLInputElement>('searchInputRef')
 const listboxId = `${useId()}-listbox`
 const errorId = `${useId()}-error`
 
@@ -180,7 +180,7 @@ const filteredOptions = computed(() => {
   const q = searchQuery.value.toLowerCase().trim()
   if (!q) return props.options
 
-  return props.options.reduce<typeof props.options>((acc, item) => {
+  return props.options.reduce<SelectItem[]>((acc, item) => {
     if (isGroup(item)) {
       const matched = item.options.filter((o) => o.label.toLowerCase().includes(q))
       if (matched.length > 0) acc.push({ group: item.group, options: matched })
@@ -339,6 +339,7 @@ function handleNavKey(e: KeyboardEvent) {
 // ── Click outside ─────────────────────────────────────────────────────────────
 
 function onOutsideClick(e: MouseEvent) {
+  // mousedown 事件的 target 永遠是 EventTarget，此處僅作 contains 判定故收斂為 Node
   if (rootEl.value && !rootEl.value.contains(e.target as Node)) {
     closeDropdown()
   }
@@ -354,7 +355,7 @@ watch(filteredOptions, () => {
 
 // ── Public API ────────────────────────────────────────────────────────────────
 
-defineExpose({
+defineExpose<SelectExpose>({
   focus: () => {
     if (props.searchable && isOpen.value) {
       searchInputRef.value?.focus()

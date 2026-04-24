@@ -40,8 +40,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useId, watch } from 'vue'
-import type { TextAreaProps } from './types'
+import { computed, nextTick, onMounted, useId, useTemplateRef, watch } from 'vue'
+import type { TextAreaExpose, TextAreaProps } from './types'
 
 const props = withDefaults(defineProps<TextAreaProps>(), {
   modelValue: '',
@@ -64,7 +64,7 @@ const emit = defineEmits<{
   blur: [event: FocusEvent]
 }>()
 
-const textareaRef = ref<HTMLTextAreaElement | null>(null)
+const textareaRef = useTemplateRef<HTMLTextAreaElement>('textareaRef')
 const errorId = `textarea-error-${useId()}`
 
 // ─── 狀態 ─────────────────────────────────────────────────────────────────────
@@ -144,11 +144,13 @@ const wrapperStateClasses = computed(() => {
   return ['border-transparent']
 })
 
-const textareaStyle = computed((): Record<string, string> => ({
-  overflow: props.maxHeight ? 'auto' : 'hidden',
-  ...(props.maxHeight ? { maxHeight: props.maxHeight } : {}),
-  ...(props.color ? { color: props.color } : {}),
-}))
+const textareaStyle = computed(
+  (): Record<string, string> => ({
+    overflow: props.maxHeight ? 'auto' : 'hidden',
+    ...(props.maxHeight ? { maxHeight: props.maxHeight } : {}),
+    ...(props.color ? { color: props.color } : {}),
+  }),
+)
 
 // ─── Auto-resize ───────────────────────────────────────────────────────────────
 
@@ -173,16 +175,20 @@ watch(
 // ─── 事件 ──────────────────────────────────────────────────────────────────────
 
 function onInput(event: Event) {
-  emit('update:modelValue', (event.target as HTMLTextAreaElement).value)
+  // @input 只會綁在本元件 template 內的 <textarea>，event.target 必為 HTMLTextAreaElement
+  const target = event.target as HTMLTextAreaElement
+  emit('update:modelValue', target.value)
 }
 
 function onChange(event: Event) {
-  emit('change', (event.target as HTMLTextAreaElement).value, event)
+  // @change 同上，target 必為本元件的 <textarea>
+  const target = event.target as HTMLTextAreaElement
+  emit('change', target.value, event)
 }
 
 // ─── Expose ────────────────────────────────────────────────────────────────────
 
-defineExpose({
+defineExpose<TextAreaExpose>({
   focus: () => textareaRef.value?.focus(),
 })
 </script>

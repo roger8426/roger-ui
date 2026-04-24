@@ -51,7 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref, useAttrs, useId, useSlots, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  ref,
+  useAttrs,
+  useId,
+  useSlots,
+  useTemplateRef,
+  watch,
+} from 'vue'
 import type { CSSProperties } from 'vue'
 import type { ModalProps } from './types'
 import Icon from '../icon/Icon.vue'
@@ -96,8 +106,8 @@ const headerId = `${baseId}-header`
 const descId = `${baseId}-desc`
 
 // ── Panel / wrapper refs ─────────────────────────────────────────
-const panelRef = ref<HTMLElement | null>(null)
-const wrapperRef = ref<HTMLElement | null>(null)
+const panelRef = useTemplateRef<HTMLElement>('panelRef')
+const wrapperRef = useTemplateRef<HTMLElement>('wrapperRef')
 
 // ── Composables ───────────────────────────────────────────────────
 const { enable: enableFocusTrap, disable: disableFocusTrap, focusFirst } = useFocusTrap()

@@ -1,5 +1,10 @@
 import type { InjectionKey, Ref } from 'vue'
 
+export interface CheckboxExpose {
+  /** 將焦點移至內部 checkbox 元素 */
+  focus: () => void
+}
+
 export interface CheckboxProps {
   modelValue?: boolean
   indeterminate?: boolean
@@ -17,7 +22,7 @@ export interface CheckboxProps {
 }
 
 export interface CheckboxGroupProps {
-  modelValue: unknown[]
+  modelValue: readonly unknown[]
   disabled?: boolean
   name?: string
 }
@@ -29,7 +34,7 @@ export interface CheckboxGroupSlotProps {
 }
 
 export interface CheckboxGroupContext {
-  selectedValues: Ref<unknown[]>
+  selectedValues: Ref<readonly unknown[]>
   toggle: (value: unknown) => void
   isChecked: (value: unknown) => boolean
   registerOption: (value: unknown) => void

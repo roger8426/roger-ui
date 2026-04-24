@@ -28,7 +28,7 @@
 </template>
 
 <script setup lang="ts" generic="T">
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import type { VirtualListProps, VirtualListEmits, VirtualListExpose } from './types'
 
 const props = withDefaults(defineProps<VirtualListProps<T>>(), {
@@ -44,7 +44,7 @@ const emit = defineEmits<VirtualListEmits>()
 
 // ─── Refs ──────────────────────────────────────────────────────
 
-const containerRef = ref<HTMLElement | null>(null)
+const containerRef = useTemplateRef<HTMLElement>('containerRef')
 const scrollOffset = ref(0)
 const containerSize = ref(0)
 

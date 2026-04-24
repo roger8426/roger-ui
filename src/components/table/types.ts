@@ -34,7 +34,7 @@ export interface TableProps<T extends Record<string, unknown>> {
   /** 表格可存取名稱，渲染為 <caption class="sr-only">（供螢幕閱讀器識別） */
   caption?: string
   /** 欄位定義 */
-  columns: TableColumnDef<T>[]
+  columns: readonly TableColumnDef<T>[]
   /** 資料列，可混用普通列與分組列 */
   rows: readonly TableDataItem<T>[]
   /** 唯一識別資料列的 key */
@@ -46,7 +46,7 @@ export interface TableProps<T extends Record<string, unknown>> {
   /** 是否啟用 row 選取 */
   selectable?: boolean
   /** 已選取的 rowKey 值（v-model:selectedKeys） */
-  selectedKeys?: TableRowKey[]
+  selectedKeys?: readonly TableRowKey[]
   /** 是否固定表頭 */
   stickyHeader?: boolean
   /** 表格容器最大高度（CSS 值，stickyHeader 時有效） */

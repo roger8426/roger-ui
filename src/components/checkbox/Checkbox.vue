@@ -31,7 +31,10 @@
           />
         </span>
       </span>
-      <span v-if="$slots.default || label" class="select-none text-sm text-(--checkbox-label-color)">
+      <span
+        v-if="$slots.default || label"
+        class="select-none text-sm text-(--checkbox-label-color)"
+      >
         <slot>{{ label }}</slot>
       </span>
     </label>
@@ -42,8 +45,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, onUnmounted, ref, useId, watchEffect } from 'vue'
-import { CHECKBOX_GROUP_KEY, type CheckboxProps } from './types'
+import { computed, inject, onMounted, onUnmounted, useId, useTemplateRef, watchEffect } from 'vue'
+import { CHECKBOX_GROUP_KEY, type CheckboxExpose, type CheckboxProps } from './types'
 import Icon from '../icon/Icon.vue'
 
 defineOptions({ name: 'Checkbox' })
@@ -71,7 +74,7 @@ const emit = defineEmits<{
   blur: [event: FocusEvent]
 }>()
 
-const checkboxRef = ref<HTMLInputElement | null>(null)
+const checkboxRef = useTemplateRef<HTMLInputElement>('checkboxRef')
 const autoId = useId()
 const computedId = computed(() => props.id ?? autoId)
 const errorId = computed(() => `${computedId.value}-error`)
@@ -109,6 +112,7 @@ watchEffect(() => {
 })
 
 function handleChange(event: Event): void {
+  // @change 綁在本元件 template 內的 <input type="checkbox">，target 必為 HTMLInputElement
   const target = event.target as HTMLInputElement
   if (isInGroup.value && groupCtx) {
     groupCtx.toggle(props.value)
@@ -167,7 +171,7 @@ const visualClasses = computed(() => [
       : 'border-(--rui-color-border) bg-(--rui-color-surface)',
 ])
 
-defineExpose({
+defineExpose<CheckboxExpose>({
   focus: () => checkboxRef.value?.focus(),
 })
 </script>

@@ -4,10 +4,11 @@ export { default as Button } from './components/button/Button.vue'
 export type { ButtonProps } from './components/button/types'
 
 export { default as Input } from './components/input/Input.vue'
-export type { InputProps } from './components/input/types'
+export type { InputExpose, InputProps } from './components/input/types'
 
 export { default as Select } from './components/select/Select.vue'
 export type {
+  SelectExpose,
   SelectProps,
   SelectOption,
   SelectOptionGroup,
@@ -20,7 +21,7 @@ export { ICON_NAMES } from './components/icon/iconNames'
 export type { IconName } from './components/icon/iconNames'
 
 export { default as TextArea } from './components/textarea/TextArea.vue'
-export type { TextAreaProps } from './components/textarea/types'
+export type { TextAreaExpose, TextAreaProps } from './components/textarea/types'
 
 export { default as Badge } from './components/badge/Badge.vue'
 export type { BadgeProps } from './components/badge/types'
@@ -41,16 +42,17 @@ export type { DrawerProps } from './components/drawer/types'
 export { default as Checkbox } from './components/checkbox/Checkbox.vue'
 export { default as CheckboxGroup } from './components/checkbox/CheckboxGroup.vue'
 export type {
+  CheckboxExpose,
   CheckboxProps,
   CheckboxGroupProps,
   CheckboxGroupSlotProps,
 } from './components/checkbox/types'
 
 export { default as Toggle } from './components/toggle/Toggle.vue'
-export type { ToggleProps, ToggleSize } from './components/toggle/types'
+export type { ToggleExpose, ToggleProps, ToggleSize } from './components/toggle/types'
 
 export { default as Carousel } from './components/carousel/Carousel.vue'
-export type { CarouselProps, CarouselEmits } from './components/carousel/types'
+export type { CarouselEmits, CarouselExpose, CarouselProps } from './components/carousel/types'
 
 export { default as VirtualList } from './components/virtual-list/VirtualList.vue'
 export type {

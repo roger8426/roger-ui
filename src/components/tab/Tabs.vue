@@ -94,6 +94,7 @@ function handleKeydown(event: KeyboardEvent): void {
   const tabs = getTabs()
   if (tabs.length === 0) return
 
+  // keydown 事件源自 tablist 內的 [role="tab"] 按鈕，target 必為 HTMLElement
   const currentIndex = tabs.indexOf(event.target as HTMLElement)
   if (currentIndex === -1) return
 

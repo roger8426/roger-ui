@@ -1,3 +1,8 @@
+export interface TextAreaExpose {
+  /** 將焦點移至內部 textarea 元素 */
+  focus: () => void
+}
+
 export interface TextAreaProps {
   /** textarea 元素 id，用於關聯外部 <label> */
   id?: string

@@ -1,6 +1,6 @@
 export interface VirtualListProps<T> {
   /** 資料陣列，泛型 T 由傳入值自動推導 */
-  items: T[]
+  items: readonly T[]
   /** 每個項目在捲動軸上的固定尺寸（px）；垂直方向 = 高度，水平方向 = 寬度 */
   itemSize: number
   /** 捲動方向，預設垂直 */
