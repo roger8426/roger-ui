@@ -77,3 +77,6 @@ export type {
 export { default as Tabs } from './components/tab/Tabs.vue'
 export { default as Tab } from './components/tab/Tab.vue'
 export type { TabsProps, TabProps, TabActivationMode, TabType } from './components/tab/types'
+
+export { default as Toast } from './components/toast/Toast.vue'
+export type { ToastProps, ToastEmits, ToastX, ToastY } from './components/toast/types'
