@@ -10,33 +10,34 @@
 
 ## Props
 
-| Prop | 型別 | 預設值 | 說明 |
-|---|---|---|---|
-| `modelValue` | `string \| number \| null` | `null` | v-model 綁定值 |
-| `options` | `SelectItem[]` | `[]` | 選項列表，支援 `SelectOption` 或 `SelectOptionGroup` |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | 元件尺寸 |
-| `placeholder` | `string` | `'請選擇...'` | 未選取時的佔位文字 |
-| `searchable` | `boolean` | `false` | 是否可搜尋/過濾選項 |
-| `disabled` | `boolean` | `false` | 是否停用 |
-| `error` | `boolean` | `false` | 是否為錯誤狀態 |
-| `errorMsg` | `string` | `''` | 錯誤訊息（傳入時自動啟用 error 狀態） |
-| `border` | `boolean` | `true` | 是否顯示邊框 |
-| `borderColor` | `string` | — | 邊框顏色（任意 CSS 色彩值，預設使用 `--rui-color-default` token） |
-| `color` | `string` | — | 文字顏色（任意 CSS 色彩值，預設繼承） |
-| `dropdownBg` | `string` | — | 下拉面板背景顏色（任意 CSS 色彩値，預設使用 `--rui-color-select-bg` token） |
-| `id` | `string` | — | trigger 的 id，用於關聯外部 `<label>` |
+| Prop            | 型別                       | 預設值        | 說明                                                                        |
+| --------------- | -------------------------- | ------------- | --------------------------------------------------------------------------- |
+| `modelValue`    | `string \| number \| null` | `null`        | v-model 綁定值                                                              |
+| `options`       | `SelectItem[]`             | `[]`          | 選項列表，支援 `SelectOption` 或 `SelectOptionGroup`                        |
+| `size`          | `'sm' \| 'md' \| 'lg'`     | `'md'`        | 元件尺寸                                                                    |
+| `placeholder`   | `string`                   | `'請選擇...'` | 未選取時的佔位文字                                                          |
+| `searchable`    | `boolean`                  | `false`       | 是否可搜尋/過濾選項                                                         |
+| `disabled`      | `boolean`                  | `false`       | 是否停用                                                                    |
+| `error`         | `boolean`                  | `false`       | 是否為錯誤狀態                                                              |
+| `errorMsg`      | `string`                   | `''`          | 錯誤訊息（傳入時自動啟用 error 狀態）                                       |
+| `border`        | `boolean`                  | `true`        | 是否顯示邊框                                                                |
+| `showScrollbar` | `boolean`                  | `false`       | 下拉選單是否顯示捲軸（仍可滾動，僅控制視覺）                                |
+| `borderColor`   | `string`                   | —             | 邊框顏色（任意 CSS 色彩值，預設使用 `--rui-color-default` token）           |
+| `color`         | `string`                   | —             | 文字顏色（任意 CSS 色彩值，預設繼承）                                       |
+| `dropdownBg`    | `string`                   | —             | 下拉面板背景顏色（任意 CSS 色彩値，預設使用 `--rui-color-select-bg` token） |
+| `id`            | `string`                   | —             | trigger 的 id，用於關聯外部 `<label>`                                       |
 
 ## Emits
 
-| Event | Payload | 說明 |
-|---|---|---|
-| `update:modelValue` | `string \| number \| null` | 選取值變更（v-model） |
-| `change` | `(value, option)` | 選取值變更，附帶完整 option 物件 |
+| Event               | Payload                    | 說明                             |
+| ------------------- | -------------------------- | -------------------------------- |
+| `update:modelValue` | `string \| number \| null` | 選取值變更（v-model）            |
+| `change`            | `(value, option)`          | 選取值變更，附帶完整 option 物件 |
 
 ## Expose
 
-| 方法 | 說明 |
-|---|---|
+| 方法      | 說明                                                                             |
+| --------- | -------------------------------------------------------------------------------- |
 | `focus()` | 聚焦元件（下拉選單展開且 searchable 為 true 時聚焦搜尋 input，否則聚焦 trigger） |
 
 ## 選項型別
@@ -92,10 +93,10 @@ type SelectItem = SelectOption | SelectOptionGroup
 
 ## 鍵盤操作
 
-| 按鍵 | 行為 |
-|---|---|
-| `Enter` / `ArrowDown` / `ArrowUp` | 開啟下拉選單 |
-| `ArrowDown` | 移至下一個選項 |
-| `ArrowUp` | 移至上一個選項 |
-| `Enter` | 選取目前焦點選項 |
-| `Escape` / `Tab` | 關閉下拉選單 |
+| 按鍵                              | 行為             |
+| --------------------------------- | ---------------- |
+| `Enter` / `ArrowDown` / `ArrowUp` | 開啟下拉選單     |
+| `ArrowDown`                       | 移至下一個選項   |
+| `ArrowUp`                         | 移至上一個選項   |
+| `Enter`                           | 選取目前焦點選項 |
+| `Escape` / `Tab`                  | 關閉下拉選單     |

@@ -57,4 +57,6 @@ export interface SelectProps {
   optionHoverColor?: string
   /** 已選中選項的背景顏色（任意 CSS 色彩值，預設使用 --rui-color-select-selected token） */
   optionSelectedColor?: string
+  /** 下拉選單是否顯示捲軸（仍可滾動，僅控制視覺） */
+  showScrollbar?: boolean
 }

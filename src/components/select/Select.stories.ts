@@ -111,6 +111,11 @@ const meta = {
       control: 'color',
       table: { category: 'Appearance' },
     },
+    showScrollbar: {
+      description: '下拉選單是否顯示捲軸（仍可滾動，僅控制視覺）',
+      control: 'boolean',
+      table: { category: 'Appearance', defaultValue: { summary: 'false' } },
+    },
   },
   args: {
     modelValue: null,
@@ -121,6 +126,7 @@ const meta = {
     disabled: false,
     error: false,
     border: true,
+    showScrollbar: false,
   },
   render: () => {
     const [args, updateArgs] = useArgs()
@@ -188,6 +194,20 @@ export const ErrorWithMessage: Story = {
 export const NoBorder: Story = {
   args: {
     border: false,
+  },
+}
+
+export const ShowScrollbar: Story = {
+  args: {
+    showScrollbar: true,
+    options: [
+      ...baseOptions,
+      { value: 'fr', label: '法國' },
+      { value: 'gb', label: '英國' },
+      { value: 'it', label: '義大利' },
+      { value: 'es', label: '西班牙' },
+      { value: 'cn', label: '中國' },
+    ],
   },
 }
 

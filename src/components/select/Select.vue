@@ -59,6 +59,7 @@
       :id="listboxId"
       role="listbox"
       class="absolute left-0 top-full mt-1 max-h-60 w-full overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
+      :class="{ 'select-no-scrollbar': !showScrollbar }"
     >
       <template v-if="!filteredOptions.length">
         <li class="px-3 py-2 text-sm text-(--rui-color-text-muted)" role="presentation">
@@ -142,6 +143,7 @@ const props = withDefaults(defineProps<SelectProps>(), {
   dropdownBg: undefined,
   optionHoverColor: undefined,
   optionSelectedColor: undefined,
+  showScrollbar: false,
 })
 
 const emit = defineEmits<{
@@ -365,3 +367,12 @@ defineExpose<SelectExpose>({
   },
 })
 </script>
+
+<style scoped>
+.select-no-scrollbar {
+  scrollbar-width: none;
+}
+.select-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>
