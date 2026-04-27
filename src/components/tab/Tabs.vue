@@ -9,8 +9,9 @@
         :id="tablistId"
         role="tablist"
         :aria-label="label"
-        class="flex"
+        class="tabs-no-scrollbar flex overflow-x-auto"
         :class="{ 'gap-1 px-2 pt-1': props.type === 'border' }"
+        @scroll.passive="scheduleUpdate"
         @keydown="handleKeydown"
       />
       <div
@@ -221,7 +222,9 @@ watch(activeValue, () => {
 provide(
   TABS_CONTEXT_KEY,
   reactive({
-    tablistId,
+    get tablistEl() {
+      return tablistEl.value
+    },
     activeValue,
     select,
     get disabled() {
@@ -242,3 +245,12 @@ provide(
   }),
 )
 </script>
+
+<style scoped>
+.tabs-no-scrollbar {
+  scrollbar-width: none;
+}
+.tabs-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <Teleport defer :to="`#${context.tablistId}`">
+  <Teleport v-if="context.tablistEl" defer :to="context.tablistEl">
     <button
       :id="tabId"
       role="tab"
@@ -9,7 +9,7 @@
       :tabindex="isActive ? 0 : -1"
       :disabled="isDisabled || undefined"
       :data-value="value"
-      class="relative cursor-pointer px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-(--rui-color-default)"
+      class="relative shrink-0 cursor-pointer px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-(--rui-color-default)"
       :class="buttonClasses"
       :style="buttonStyle"
       @click="handleClick"

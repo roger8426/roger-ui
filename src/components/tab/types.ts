@@ -34,7 +34,7 @@ export interface TabProps {
 }
 
 export interface TabsContext {
-  tablistId: string
+  tablistEl: HTMLElement | null
   activeValue: string | undefined
   select: (value: string) => void
   disabled: boolean
