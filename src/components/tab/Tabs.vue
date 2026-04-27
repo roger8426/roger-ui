@@ -1,25 +1,26 @@
 <template>
   <div :style="props.activeColor ? { '--rui-color-tab-indicator': props.activeColor } : undefined">
-    <div
-      class="relative"
-      :class="{ 'border-b border-(--rui-color-tab-border)': props.type === 'border' }"
-    >
+    <div class="tabs-no-scrollbar overflow-x-auto">
       <div
-        ref="tablistEl"
-        :id="tablistId"
-        role="tablist"
-        :aria-label="label"
-        class="tabs-no-scrollbar flex overflow-x-auto"
-        :class="{ 'gap-1 px-2 pt-1': props.type === 'border' }"
-        @scroll.passive="scheduleUpdate"
-        @keydown="handleKeydown"
-      />
-      <div
-        v-if="indicatorWidth > 0 && props.type === 'underline'"
-        aria-hidden="true"
-        class="absolute bottom-0 h-0.5 bg-(--rui-color-tab-indicator) transition-[left,width] duration-300 ease-in-out"
-        :style="{ left: `${indicatorLeft}px`, width: `${indicatorWidth}px` }"
-      />
+        class="relative"
+        :class="{ 'border-b border-(--rui-color-tab-border)': props.type === 'border' }"
+      >
+        <div
+          ref="tablistEl"
+          :id="tablistId"
+          role="tablist"
+          :aria-label="label"
+          class="flex"
+          :class="{ 'gap-1 px-2 pt-1': props.type === 'border' }"
+          @keydown="handleKeydown"
+        />
+        <div
+          v-if="indicatorWidth > 0 && props.type === 'underline'"
+          aria-hidden="true"
+          class="absolute bottom-0 h-0.5 bg-(--rui-color-tab-indicator) transition-[left,width] duration-300 ease-in-out"
+          :style="{ left: `${indicatorLeft}px`, width: `${indicatorWidth}px` }"
+        />
+      </div>
     </div>
     <div
       :class="props.type === 'border' ? 'bg-(--rui-color-surface)' : ''"
