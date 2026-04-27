@@ -2,7 +2,7 @@
   <div :style="props.activeColor ? { '--rui-color-tab-indicator': props.activeColor } : undefined">
     <div class="tabs-no-scrollbar overflow-x-auto">
       <div
-        class="relative"
+        class="relative min-w-max"
         :class="{ 'border-b border-(--rui-color-tab-border)': props.type === 'border' }"
       >
         <div
