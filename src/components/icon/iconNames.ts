@@ -3,6 +3,7 @@
 export const ICON_NAMES = [
   'alert-circle',
   'alert-triangle',
+  'arrow-left-right',
   'check',
   'check-circle',
   'chevron-down',
