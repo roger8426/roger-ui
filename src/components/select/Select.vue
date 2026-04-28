@@ -54,68 +54,75 @@
     </div>
 
     <!-- Listbox dropdown -->
-    <ul
-      v-show="isOpen"
-      :id="listboxId"
-      role="listbox"
-      class="absolute left-0 top-full mt-1 max-h-60 w-full overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
-      :class="{ 'select-no-scrollbar': !showScrollbar }"
-    >
-      <template v-if="!filteredOptions.length">
-        <li class="px-3 py-2 text-sm text-(--rui-color-text-muted)" role="presentation">
-          無符合選項
-        </li>
-      </template>
-      <template v-else>
-        <template v-for="item in filteredOptions" :key="isGroup(item) ? item.group : item.value">
-          <!-- Option group -->
-          <template v-if="isGroup(item)">
-            <li role="presentation">
-              <span
-                class="block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-(--rui-color-text-muted)"
-              >
-                {{ item.group }}
-              </span>
-              <ul>
-                <li
-                  v-for="opt in item.options"
-                  :key="opt.value"
-                  :id="`${listboxId}-opt-${opt.value}`"
-                  role="option"
-                  :aria-selected="opt.value === modelValue"
-                  :aria-disabled="opt.disabled || undefined"
-                  :data-focused="navigableOptions.indexOf(opt) === focusedIndex"
-                  class="cursor-pointer truncate px-3 py-2"
-                  :class="getOptionClasses(opt)"
-                  @mousedown.prevent
-                  @click="!opt.disabled && selectOption(opt)"
-                  @mouseenter="!opt.disabled && (focusedIndex = navigableOptions.indexOf(opt))"
-                >
-                  {{ opt.label }}
-                </li>
-              </ul>
-            </li>
-          </template>
-
-          <!-- Flat option -->
-          <li
-            v-else
-            :id="`${listboxId}-opt-${item.value}`"
-            role="option"
-            :aria-selected="item.value === modelValue"
-            :aria-disabled="item.disabled || undefined"
-            :data-focused="navigableOptions.indexOf(item) === focusedIndex"
-            class="cursor-pointer truncate px-3 py-2"
-            :class="getOptionClasses(item)"
-            @mousedown.prevent
-            @click="!item.disabled && selectOption(item)"
-            @mouseenter="!item.disabled && (focusedIndex = navigableOptions.indexOf(item))"
-          >
-            {{ item.label }}
+    <Teleport :to="teleportTarget" :disabled="!teleport" defer>
+      <ul
+        v-show="isOpen"
+        ref="listboxEl"
+        :id="listboxId"
+        role="listbox"
+        class="max-h-60 overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
+        :class="[
+          teleport ? '' : 'absolute left-0 top-full mt-1 w-full',
+          { 'select-no-scrollbar': !showScrollbar },
+        ]"
+        :style="listboxStyle"
+      >
+        <template v-if="!filteredOptions.length">
+          <li class="px-3 py-2 text-sm text-(--rui-color-text-muted)" role="presentation">
+            無符合選項
           </li>
         </template>
-      </template>
-    </ul>
+        <template v-else>
+          <template v-for="item in filteredOptions" :key="isGroup(item) ? item.group : item.value">
+            <!-- Option group -->
+            <template v-if="isGroup(item)">
+              <li role="presentation">
+                <span
+                  class="block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-(--rui-color-text-muted)"
+                >
+                  {{ item.group }}
+                </span>
+                <ul>
+                  <li
+                    v-for="opt in item.options"
+                    :key="opt.value"
+                    :id="`${listboxId}-opt-${opt.value}`"
+                    role="option"
+                    :aria-selected="opt.value === modelValue"
+                    :aria-disabled="opt.disabled || undefined"
+                    :data-focused="navigableOptions.indexOf(opt) === focusedIndex"
+                    class="cursor-pointer truncate px-3 py-2"
+                    :class="getOptionClasses(opt)"
+                    @mousedown.prevent
+                    @click="!opt.disabled && selectOption(opt)"
+                    @mouseenter="!opt.disabled && (focusedIndex = navigableOptions.indexOf(opt))"
+                  >
+                    {{ opt.label }}
+                  </li>
+                </ul>
+              </li>
+            </template>
+
+            <!-- Flat option -->
+            <li
+              v-else
+              :id="`${listboxId}-opt-${item.value}`"
+              role="option"
+              :aria-selected="item.value === modelValue"
+              :aria-disabled="item.disabled || undefined"
+              :data-focused="navigableOptions.indexOf(item) === focusedIndex"
+              class="cursor-pointer truncate px-3 py-2"
+              :class="getOptionClasses(item)"
+              @mousedown.prevent
+              @click="!item.disabled && selectOption(item)"
+              @mouseenter="!item.disabled && (focusedIndex = navigableOptions.indexOf(item))"
+            >
+              {{ item.label }}
+            </li>
+          </template>
+        </template>
+      </ul>
+    </Teleport>
 
     <!-- Error message -->
     <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-(--rui-color-error)">
@@ -126,6 +133,7 @@
 
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, useId, useTemplateRef, watch } from 'vue'
+import type { CSSProperties } from 'vue'
 import Icon from '../icon/Icon.vue'
 import { isGroup } from './types'
 import type { SelectExpose, SelectItem, SelectOption, SelectProps } from './types'
@@ -144,6 +152,8 @@ const props = withDefaults(defineProps<SelectProps>(), {
   optionHoverColor: undefined,
   optionSelectedColor: undefined,
   showScrollbar: false,
+  teleport: 'body',
+  placement: 'auto',
 })
 
 const emit = defineEmits<{
@@ -152,9 +162,15 @@ const emit = defineEmits<{
 }>()
 
 const rootEl = useTemplateRef<HTMLElement>('rootEl')
+const listboxEl = useTemplateRef<HTMLElement>('listboxEl')
 const searchInputRef = useTemplateRef<HTMLInputElement>('searchInputRef')
 const listboxId = `${useId()}-listbox`
 const errorId = `${useId()}-error`
+
+const teleportTarget = computed<string | HTMLElement>(() => {
+  const t = props.teleport
+  return typeof t === 'string' || t instanceof HTMLElement ? t : 'body'
+})
 
 const isOpen = ref(false)
 const searchQuery = ref('')
@@ -217,9 +233,63 @@ const wrapperVars = computed(
     '--select-dropdown-bg': props.dropdownBg ?? 'var(--rui-color-select-bg)',
     '--select-option-hover': props.optionHoverColor ?? 'var(--rui-color-surface-hover)',
     '--select-option-selected': props.optionSelectedColor ?? 'var(--rui-color-select-selected)',
-    ...(isOpen.value ? { 'z-index': 'var(--rui-z-dropdown)' } : {}),
+    // 內嵌渲染才需 wrapper 提層；teleport 模式 z-index 套在 listbox 自身
+    ...(isOpen.value && !props.teleport ? { 'z-index': 'var(--rui-z-dropdown)' } : {}),
   }),
 )
+
+// ── Teleport 浮動定位 ────────────────────────────────────────────────────────
+// 下拉清單 teleport 至 body 後不再受 Select 祖先 (Modal panel/body) overflow 限制；
+// 改以 fixed 定位、跟隨 trigger rect 重新計算 top/left/width，避免被 Modal 邊界裁切。
+const floatingStyle = ref<CSSProperties>({})
+
+function updatePosition() {
+  if (!rootEl.value) return
+  const r = rootEl.value.getBoundingClientRect()
+  const gap = 4
+  const dropdownMaxH = 240 // 對應 max-h-60
+  const spaceBelow = window.innerHeight - r.bottom
+  const flip =
+    props.placement === 'top' ||
+    (props.placement === 'auto' && spaceBelow < dropdownMaxH && r.top > spaceBelow)
+  floatingStyle.value = {
+    position: 'fixed',
+    left: `${r.left}px`,
+    width: `${r.width}px`,
+    top: flip ? 'auto' : `${r.bottom + gap}px`,
+    bottom: flip ? `${window.innerHeight - r.top + gap}px` : 'auto',
+    zIndex: 'var(--rui-z-dropdown)',
+  }
+}
+
+// teleport 後 listbox 不再繼承 rootEl 的 CSS custom properties，需直接掛在 listbox
+const listboxStyle = computed<CSSProperties | undefined>(() => {
+  if (!props.teleport) return undefined
+  return {
+    ...floatingStyle.value,
+    '--select-dropdown-bg': props.dropdownBg ?? 'var(--rui-color-select-bg)',
+    '--select-option-hover': props.optionHoverColor ?? 'var(--rui-color-surface-hover)',
+    '--select-option-selected': props.optionSelectedColor ?? 'var(--rui-color-select-selected)',
+  } as CSSProperties
+})
+
+let resizeObserver: ResizeObserver | null = null
+
+function attachPositionListeners() {
+  window.addEventListener('scroll', updatePosition, { capture: true, passive: true })
+  window.addEventListener('resize', updatePosition)
+  if (rootEl.value && typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(updatePosition)
+    resizeObserver.observe(rootEl.value)
+  }
+}
+
+function detachPositionListeners() {
+  window.removeEventListener('scroll', updatePosition, { capture: true } as EventListenerOptions)
+  window.removeEventListener('resize', updatePosition)
+  resizeObserver?.disconnect()
+  resizeObserver = null
+}
 
 const sizeWrapperClasses = computed(
   () =>
@@ -289,6 +359,12 @@ function toggle() {
 function openDropdown() {
   isOpen.value = true
   focusedIndex.value = -1
+  if (props.teleport) {
+    updatePosition()
+    attachPositionListeners()
+    // 等 Teleport 與 transition 渲染完成後再校正一次，避免初次定位偏差
+    nextTick(() => requestAnimationFrame(updatePosition))
+  }
   if (props.searchable) {
     nextTick(() => searchInputRef.value?.focus())
   }
@@ -298,6 +374,7 @@ function closeDropdown() {
   isOpen.value = false
   focusedIndex.value = -1
   searchQuery.value = ''
+  detachPositionListeners()
 }
 
 function selectOption(opt: SelectOption) {
@@ -341,14 +418,17 @@ function handleNavKey(e: KeyboardEvent) {
 // ── Click outside ─────────────────────────────────────────────────────────────
 
 function onOutsideClick(e: MouseEvent) {
-  // mousedown 事件的 target 永遠是 EventTarget，此處僅作 contains 判定故收斂為 Node
-  if (rootEl.value && !rootEl.value.contains(e.target as Node)) {
-    closeDropdown()
-  }
+  // teleport 後 listbox 不在 rootEl 內，需另外檢查 listboxEl 才不會誤關閉
+  const t = e.target as Node
+  if (rootEl.value?.contains(t) || listboxEl.value?.contains(t)) return
+  closeDropdown()
 }
 
 onMounted(() => document.addEventListener('mousedown', onOutsideClick))
-onUnmounted(() => document.removeEventListener('mousedown', onOutsideClick))
+onUnmounted(() => {
+  document.removeEventListener('mousedown', onOutsideClick)
+  detachPositionListeners()
+})
 
 // Reset focused index when filtered options change
 watch(filteredOptions, () => {

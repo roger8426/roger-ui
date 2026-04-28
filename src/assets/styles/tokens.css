@@ -93,7 +93,7 @@
   --rui-color-switch-thumb: oklch(100% 0 0);
 
   /* ─── Z-index 層級 ─────────────────────────────────────────── */
-  --rui-z-dropdown: 100;
+  --rui-z-dropdown: 250;
   --rui-z-modal: 200;
   --rui-z-toast: 300;
   --rui-z-table-sticky-header: 10;

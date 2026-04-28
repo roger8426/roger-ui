@@ -59,4 +59,14 @@ export interface SelectProps {
   optionSelectedColor?: string
   /** 下拉選單是否顯示捲軸（仍可滾動，僅控制視覺） */
   showScrollbar?: boolean
+  /**
+   * 下拉清單 Teleport 目標。預設 'body'，避免被祖先 overflow 裁切（如 Modal）。
+   * 傳 false 維持內嵌渲染（用於需要 listbox 留在原 DOM 結構內的情境）。
+   */
+  teleport?: boolean | string | HTMLElement
+  /**
+   * 下拉開啟方向。'auto' 在底部空間不足時自動向上翻轉。
+   * @default 'auto'
+   */
+  placement?: 'bottom' | 'top' | 'auto'
 }

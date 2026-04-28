@@ -230,13 +230,16 @@ export const Interaction: Story = {
     const trigger = canvas.getByRole('combobox')
     await expect(trigger).toBeVisible()
 
+    // listbox teleport 至 body，需從 document 查詢而非 canvas
+    const body = within(document.body)
+
     // 點擊展開 dropdown
     await userEvent.click(trigger)
-    const listbox = canvas.getByRole('listbox')
+    const listbox = body.getByRole('listbox')
     await expect(listbox).toBeVisible()
 
     // 選取第一個選項（台灣）
-    const firstOption = canvas.getByRole('option', { name: '台灣' })
+    const firstOption = body.getByRole('option', { name: '台灣' })
     await expect(firstOption).toBeVisible()
     await userEvent.click(firstOption)
 
@@ -267,13 +270,14 @@ export const InteractionKeyboard: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    const body = within(document.body)
     const trigger = canvas.getByRole('combobox')
 
     // Tab 聚焦後 Enter 展開
     await userEvent.tab()
     await expect(trigger).toHaveFocus()
     await userEvent.keyboard('{Enter}')
-    const listbox = canvas.getByRole('listbox')
+    const listbox = body.getByRole('listbox')
     await expect(listbox).toBeVisible()
 
     // ArrowDown 移動焦點，Enter 選取
@@ -300,11 +304,12 @@ export const InteractionSearchable: Story = {
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement)
+    const body = within(document.body)
     const trigger = canvas.getByRole('combobox')
 
     // 展開
     await userEvent.click(trigger)
-    const listbox = canvas.getByRole('listbox')
+    const listbox = body.getByRole('listbox')
     await expect(listbox).toBeVisible()
 
     // 輸入搜尋字詞過濾
@@ -312,9 +317,9 @@ export const InteractionSearchable: Story = {
     await userEvent.type(searchInput, '日')
 
     // 只應出現「日本」
-    const japanOption = canvas.getByRole('option', { name: '日本' })
+    const japanOption = body.getByRole('option', { name: '日本' })
     await expect(japanOption).toBeVisible()
-    await expect(canvas.queryByRole('option', { name: '台灣' })).toBeNull()
+    await expect(body.queryByRole('option', { name: '台灣' })).toBeNull()
 
     // 選取日本
     await userEvent.click(japanOption)
