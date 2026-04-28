@@ -93,6 +93,7 @@
                     :data-focused="navigableOptions.indexOf(opt) === focusedIndex"
                     class="cursor-pointer truncate px-3 py-2"
                     :class="getOptionClasses(opt)"
+                    :style="color ? { color } : undefined"
                     @mousedown.prevent
                     @click="!opt.disabled && selectOption(opt)"
                     @mouseenter="!opt.disabled && (focusedIndex = navigableOptions.indexOf(opt))"
@@ -113,6 +114,7 @@
               :data-focused="navigableOptions.indexOf(item) === focusedIndex"
               class="cursor-pointer truncate px-3 py-2"
               :class="getOptionClasses(item)"
+              :style="color ? { color } : undefined"
               @mousedown.prevent
               @click="!item.disabled && selectOption(item)"
               @mouseenter="!item.disabled && (focusedIndex = navigableOptions.indexOf(item))"
