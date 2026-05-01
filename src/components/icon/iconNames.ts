@@ -4,6 +4,7 @@ export const ICON_NAMES = [
   'alert-circle',
   'alert-triangle',
   'arrow-left-right',
+  'calendar',
   'check',
   'check-circle',
   'chevron-down',

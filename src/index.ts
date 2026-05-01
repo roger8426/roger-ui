@@ -82,3 +82,14 @@ export type { TabsProps, TabProps, TabActivationMode, TabType } from './componen
 
 export { default as Toast } from './components/toast/Toast.vue'
 export type { ToastProps, ToastEmits, ToastX, ToastY } from './components/toast/types'
+
+export { default as DatePicker } from './components/date-picker/DatePicker.vue'
+export type {
+  DatePickerProps,
+  DatePickerExpose,
+  DatePickerMode,
+  DateRange,
+  DatePickerModelValue,
+  DatePickerLocale,
+} from './components/date-picker/types'
+export { DEFAULT_LOCALE_ZH_TW } from './components/date-picker/types'
