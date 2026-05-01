@@ -17,31 +17,151 @@
       @click="!disabled && toggle()"
       @keydown="handleNavKey"
     >
-      <!-- searchable: input；否則 span 顯示選中值 -->
-      <template v-if="searchable && isOpen">
-        <input
-          ref="searchInputRef"
-          v-model="searchQuery"
-          class="min-w-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50"
-          :class="sizeInputClasses"
-          :style="color ? { color } : undefined"
-          :placeholder="selectedLabel ?? placeholder"
-          :aria-label="controlAriaLabel"
-          aria-autocomplete="list"
-          :aria-controls="listboxId"
-          @keydown="handleNavKey"
-          @click.stop
-        />
+      <!-- 多選：chips 區塊 + 可選 search input -->
+      <template v-if="multiple">
+        <!-- multiple + searchable：簡化為 +N 指示 + 搜尋輸入，避免 chips 干擾輸入焦點 -->
+        <template v-if="searchable">
+          <div class="flex min-w-0 flex-1 items-center gap-1 overflow-hidden">
+            <span
+              v-if="selectedOptions.length > 0"
+              class="inline-flex shrink-0 items-center rounded-sm bg-(--select-option-hover) px-1.5 py-0.5 text-sm"
+              :style="color ? { color } : undefined"
+              :aria-label="`已選 ${selectedOptions.length} 項`"
+            >
+              +{{ selectedOptions.length }}
+            </span>
+            <input
+              v-if="isOpen"
+              ref="searchInputRef"
+              v-model="searchQuery"
+              class="min-w-10 flex-1 border-none bg-transparent outline-none placeholder:opacity-50"
+              :class="sizeInputClasses"
+              :style="color ? { color } : undefined"
+              :placeholder="selectedOptions.length === 0 ? placeholder : ''"
+              :aria-label="controlAriaLabel"
+              aria-autocomplete="list"
+              :aria-controls="listboxId"
+              @keydown="handleNavKey"
+              @click.stop
+            />
+            <span
+              v-else-if="selectedOptions.length === 0"
+              class="truncate text-(--rui-color-text-muted)"
+              :class="sizeInputClasses"
+            >
+              {{ placeholder }}
+            </span>
+          </div>
+        </template>
+
+        <!-- multiple 不搭 searchable：依 multipleDisplay 渲染 chips/count/comma -->
+        <template v-else>
+          <div
+            ref="chipsContainerEl"
+            class="flex min-w-0 flex-1 items-center gap-1 overflow-hidden"
+          >
+            <template v-if="selectedOptions.length === 0">
+              <span class="truncate text-(--rui-color-text-muted)" :class="sizeInputClasses">
+                {{ placeholder }}
+              </span>
+            </template>
+
+            <!-- chips 顯示模式 -->
+            <template v-if="multipleDisplay === 'chips'">
+              <span
+                v-for="(opt, i) in selectedOptions"
+                :key="opt.value"
+                data-chip
+                :hidden="visibleChipCount !== null && i >= visibleChipCount"
+                class="inline-flex shrink-0 items-center gap-1 rounded-sm bg-(--select-option-hover) px-1.5 py-0.5 text-sm"
+                :style="color ? { color } : undefined"
+              >
+                <span class="truncate">{{ opt.label }}</span>
+                <button
+                  v-if="!disabled"
+                  type="button"
+                  class="inline-flex shrink-0 items-center opacity-60 hover:opacity-100"
+                  :aria-label="`移除 ${opt.label}`"
+                  @click.stop="removeValue(opt.value)"
+                  @mousedown.stop.prevent
+                >
+                  <Icon name="close" :size="12" />
+                </button>
+              </span>
+              <span
+                v-if="hiddenChipCount > 0"
+                data-chip-overflow
+                class="inline-flex shrink-0 items-center rounded-sm bg-(--select-option-hover) px-1.5 py-0.5 text-sm"
+                :style="color ? { color } : undefined"
+              >
+                +{{ hiddenChipCount }}
+              </span>
+            </template>
+
+            <!-- count 模式 -->
+            <template v-else-if="multipleDisplay === 'count' && selectedOptions.length > 0">
+              <span
+                class="truncate"
+                :class="sizeInputClasses"
+                :style="color ? { color } : undefined"
+              >
+                已選 {{ selectedOptions.length }} 項
+              </span>
+            </template>
+
+            <!-- comma 模式 -->
+            <template v-else-if="multipleDisplay === 'comma' && selectedOptions.length > 0">
+              <span
+                class="truncate"
+                :class="sizeInputClasses"
+                :style="color ? { color } : undefined"
+              >
+                {{ selectedOptions.map((o) => o.label).join(', ') }}
+              </span>
+            </template>
+          </div>
+        </template>
       </template>
+
+      <!-- 單選：原行為 -->
       <template v-else>
-        <span
-          class="min-w-0 flex-1 truncate"
-          :class="[sizeInputClasses, selectedLabel ? '' : 'text-(--rui-color-text-muted)']"
-          :style="color && selectedLabel ? { color } : undefined"
-        >
-          {{ selectedLabel ?? placeholder }}
-        </span>
+        <template v-if="searchable && isOpen">
+          <input
+            ref="searchInputRef"
+            v-model="searchQuery"
+            class="min-w-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50"
+            :class="sizeInputClasses"
+            :style="color ? { color } : undefined"
+            :placeholder="selectedLabel ?? placeholder"
+            :aria-label="controlAriaLabel"
+            aria-autocomplete="list"
+            :aria-controls="listboxId"
+            @keydown="handleNavKey"
+            @click.stop
+          />
+        </template>
+        <template v-else>
+          <span
+            class="min-w-0 flex-1 truncate"
+            :class="[sizeInputClasses, selectedLabel ? '' : 'text-(--rui-color-text-muted)']"
+            :style="color && selectedLabel ? { color } : undefined"
+          >
+            {{ selectedLabel ?? placeholder }}
+          </span>
+        </template>
       </template>
+
+      <!-- Clear-all 按鈕（多選且已選 ≥ 1 時顯示） -->
+      <button
+        v-if="multiple && !disabled && selectedOptions.length > 0"
+        type="button"
+        class="ml-2 inline-flex shrink-0 items-center opacity-60 hover:opacity-100"
+        aria-label="清除全部"
+        @click.stop="clearAll"
+        @mousedown.stop.prevent
+      >
+        <Icon name="close" :size="14" />
+      </button>
 
       <!-- Chevron icon -->
       <span
@@ -57,9 +177,10 @@
     <Teleport :to="teleportTarget" :disabled="!teleport" defer>
       <ul
         v-show="isOpen"
-        ref="listboxEl"
         :id="listboxId"
+        ref="listboxEl"
         role="listbox"
+        :aria-multiselectable="multiple || undefined"
         class="max-h-60 overflow-y-auto rounded-md bg-(--select-dropdown-bg) py-1 shadow-md"
         :class="[
           teleport ? '' : 'absolute left-0 top-full mt-1 w-full',
@@ -85,20 +206,29 @@
                 <ul>
                   <li
                     v-for="opt in item.options"
-                    :key="opt.value"
                     :id="`${listboxId}-opt-${opt.value}`"
+                    :key="opt.value"
                     role="option"
-                    :aria-selected="opt.value === modelValue"
-                    :aria-disabled="opt.disabled || undefined"
+                    :aria-selected="isOptionSelected(opt)"
+                    :aria-disabled="isOptionBlocked(opt) || undefined"
                     :data-focused="navigableOptions.indexOf(opt) === focusedIndex"
-                    class="cursor-pointer truncate px-3 py-2"
+                    class="flex cursor-pointer items-center gap-2 truncate px-3 py-2"
                     :class="getOptionClasses(opt)"
                     :style="color ? { color } : undefined"
                     @mousedown.prevent
-                    @click="!opt.disabled && selectOption(opt)"
-                    @mouseenter="!opt.disabled && (focusedIndex = navigableOptions.indexOf(opt))"
+                    @click="!isOptionBlocked(opt) && selectOption(opt)"
+                    @mouseenter="
+                      !isOptionBlocked(opt) && (focusedIndex = navigableOptions.indexOf(opt))
+                    "
                   >
-                    {{ opt.label }}
+                    <span
+                      v-if="multiple"
+                      class="inline-flex w-4 shrink-0 items-center justify-center"
+                      aria-hidden="true"
+                    >
+                      <Icon v-if="isOptionSelected(opt)" name="check" :size="14" />
+                    </span>
+                    <span class="truncate">{{ opt.label }}</span>
                   </li>
                 </ul>
               </li>
@@ -109,17 +239,26 @@
               v-else
               :id="`${listboxId}-opt-${item.value}`"
               role="option"
-              :aria-selected="item.value === modelValue"
-              :aria-disabled="item.disabled || undefined"
+              :aria-selected="isOptionSelected(item)"
+              :aria-disabled="isOptionBlocked(item) || undefined"
               :data-focused="navigableOptions.indexOf(item) === focusedIndex"
-              class="cursor-pointer truncate px-3 py-2"
+              class="flex cursor-pointer items-center gap-2 truncate px-3 py-2"
               :class="getOptionClasses(item)"
               :style="color ? { color } : undefined"
               @mousedown.prevent
-              @click="!item.disabled && selectOption(item)"
-              @mouseenter="!item.disabled && (focusedIndex = navigableOptions.indexOf(item))"
+              @click="!isOptionBlocked(item) && selectOption(item)"
+              @mouseenter="
+                !isOptionBlocked(item) && (focusedIndex = navigableOptions.indexOf(item))
+              "
             >
-              {{ item.label }}
+              <span
+                v-if="multiple"
+                class="inline-flex w-4 shrink-0 items-center justify-center"
+                aria-hidden="true"
+              >
+                <Icon v-if="isOptionSelected(item)" name="check" :size="14" />
+              </span>
+              <span class="truncate">{{ item.label }}</span>
             </li>
           </template>
         </template>
@@ -134,11 +273,28 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted, ref, useId, useTemplateRef, watch } from 'vue'
+import {
+  computed,
+  nextTick,
+  onMounted,
+  onUnmounted,
+  ref,
+  useId,
+  useTemplateRef,
+  watch,
+  watchEffect,
+} from 'vue'
 import type { CSSProperties } from 'vue'
 import Icon from '../icon/Icon.vue'
 import { isGroup } from './types'
-import type { SelectExpose, SelectItem, SelectOption, SelectProps } from './types'
+import type {
+  SelectExpose,
+  SelectItem,
+  SelectModelValue,
+  SelectOption,
+  SelectProps,
+  SelectValue,
+} from './types'
 
 const props = withDefaults(defineProps<SelectProps>(), {
   modelValue: null,
@@ -156,16 +312,20 @@ const props = withDefaults(defineProps<SelectProps>(), {
   showScrollbar: false,
   teleport: 'body',
   placement: 'auto',
+  multiple: false,
+  maxSelected: undefined,
+  multipleDisplay: 'chips',
 })
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string | number | null]
-  change: [value: string | number | null, option: SelectOption | null]
+  'update:modelValue': [value: SelectModelValue]
+  change: [value: SelectModelValue, option: SelectOption | SelectOption[] | null]
 }>()
 
 const rootEl = useTemplateRef<HTMLElement>('rootEl')
 const listboxEl = useTemplateRef<HTMLElement>('listboxEl')
 const searchInputRef = useTemplateRef<HTMLInputElement>('searchInputRef')
+const chipsContainerEl = useTemplateRef<HTMLElement>('chipsContainerEl')
 const listboxId = `${useId()}-listbox`
 const errorId = `${useId()}-error`
 
@@ -177,6 +337,7 @@ const teleportTarget = computed<string | HTMLElement>(() => {
 const isOpen = ref(false)
 const searchQuery = ref('')
 const focusedIndex = ref(-1)
+const visibleChipCount = ref<number | null>(null)
 
 // ── Computed ──────────────────────────────────────────────────────────────────
 
@@ -184,17 +345,63 @@ const errorActive = computed(() => props.error || !!props.errorMsg)
 
 const controlAriaLabel = computed(() => props.placeholder || '請選擇項目')
 
+/** 將 modelValue 標準化為陣列形式，方便統一處理 */
+const selectedValues = computed<SelectValue[]>(() => {
+  const v = props.modelValue
+  if (props.multiple) return Array.isArray(v) ? [...v] : []
+  if (v == null || Array.isArray(v)) return []
+  return [v]
+})
+
+/** 把所有 options（含 group 內）攤平成單層，便於 value → option 反查 */
+const flatOptions = computed<SelectOption[]>(() => {
+  const result: SelectOption[] = []
+  for (const item of props.options) {
+    if (isGroup(item)) result.push(...item.options)
+    else result.push(item)
+  }
+  return result
+})
+
+/** 已選 value 的 Set，供 isOptionSelected O(1) 查找避免渲染時 O(N²) */
+const selectedValueSet = computed(() => new Set<SelectValue>(selectedValues.value))
+
+/** 已選中的 option 物件清單（多選用；找不到對應 option 時回退為純值的 placeholder option） */
+const selectedOptions = computed<SelectOption[]>(() => {
+  if (!props.multiple) return []
+  const map = new Map(flatOptions.value.map((o) => [o.value, o]))
+  return selectedValues.value.map((v) => map.get(v) ?? { value: v, label: String(v) })
+})
+
 const selectedLabel = computed(() => {
+  if (props.multiple) return null
+  const v = props.modelValue
+  if (v == null || Array.isArray(v)) return null
   for (const item of props.options) {
     if (isGroup(item)) {
-      const found = item.options.find((o) => o.value === props.modelValue)
+      const found = item.options.find((o) => o.value === v)
       if (found) return found.label
-    } else if (item.value === props.modelValue) {
+    } else if (item.value === v) {
       return item.label
     }
   }
   return null
 })
+
+const isMaxedOut = computed(() => {
+  if (!props.multiple || props.maxSelected == null) return false
+  return selectedValues.value.length >= props.maxSelected
+})
+
+function isOptionSelected(opt: SelectOption): boolean {
+  return selectedValueSet.value.has(opt.value)
+}
+
+function isOptionBlocked(opt: SelectOption): boolean {
+  if (opt.disabled) return true
+  if (props.multiple && isMaxedOut.value && !isOptionSelected(opt)) return true
+  return false
+}
 
 const filteredOptions = computed(() => {
   const q = searchQuery.value.toLowerCase().trim()
@@ -215,8 +422,8 @@ const navigableOptions = computed(() => {
   const result: SelectOption[] = []
   for (const item of filteredOptions.value) {
     if (isGroup(item)) {
-      result.push(...item.options.filter((o) => !o.disabled))
-    } else if (!item.disabled) {
+      result.push(...item.options.filter((o) => !isOptionBlocked(o)))
+    } else if (!isOptionBlocked(item)) {
       result.push(item)
     }
   }
@@ -227,6 +434,12 @@ const activeDescendantId = computed(() => {
   if (focusedIndex.value < 0) return undefined
   const opt = navigableOptions.value[focusedIndex.value]
   return opt ? `${listboxId}-opt-${opt.value}` : undefined
+})
+
+const hiddenChipCount = computed(() => {
+  if (props.multipleDisplay !== 'chips') return 0
+  if (visibleChipCount.value === null) return 0
+  return Math.max(0, selectedOptions.value.length - visibleChipCount.value)
 })
 
 const wrapperVars = computed(
@@ -340,22 +553,97 @@ const wrapperStateClasses = computed(() => {
 // ── Option class helper ───────────────────────────────────────────────────────
 
 function getOptionClasses(opt: SelectOption): string {
-  if (opt.disabled) return 'cursor-not-allowed opacity-40'
+  if (isOptionBlocked(opt)) return 'cursor-not-allowed opacity-40'
   const isFocused = navigableOptions.value.indexOf(opt) === focusedIndex.value
-  const isSelected = opt.value === props.modelValue
-  if (isSelected) return 'bg-(--select-option-selected) font-medium'
+  const selected = isOptionSelected(opt)
+  if (selected && !props.multiple) return 'bg-(--select-option-selected) font-medium'
+  if (selected && props.multiple) {
+    return isFocused
+      ? 'bg-(--select-option-hover) font-medium'
+      : 'bg-(--select-option-selected) font-medium'
+  }
   if (isFocused) return 'bg-(--select-option-hover)'
   return 'hover:bg-(--select-option-hover)'
 }
 
+// ── Chips 截斷量測 ─────────────────────────────────────────────────────────────
+// 多選 + chips 模式下 trigger 高度固定，超出寬度的 chip 用 +N 取代。
+// 演算法：先讓所有 chip 顯示、隱藏 +N，量測各 chip 的 offsetLeft+offsetWidth；
+// 若全部都放得下則直接顯示；放不下時保留 +N 的寬度再重新計算可顯示數量。
+function measureChips() {
+  if (!props.multiple || props.searchable || props.multipleDisplay !== 'chips') {
+    visibleChipCount.value = null
+    return
+  }
+  const container = chipsContainerEl.value
+  if (!container) return
+
+  const chipEls = Array.from(container.querySelectorAll<HTMLElement>('[data-chip]'))
+  if (chipEls.length === 0) {
+    visibleChipCount.value = 0
+    return
+  }
+
+  // 先讓所有 chip 可見以利量測；下一個 tick offsetLeft/offsetWidth 才會反映實際版面
+  visibleChipCount.value = chipEls.length
+
+  nextTick(() => {
+    const overflowEl = container.querySelector<HTMLElement>('[data-chip-overflow]')
+    const containerWidth = container.clientWidth
+
+    let baseCount = 0
+    for (const c of chipEls) {
+      if (c.offsetLeft + c.offsetWidth <= containerWidth) baseCount++
+      else break
+    }
+
+    if (baseCount === chipEls.length) {
+      visibleChipCount.value = chipEls.length
+      return
+    }
+
+    // 預留 +N chip 寬度（offsetWidth 含 padding；4px = container gap）
+    const overflowWidth = overflowEl?.offsetWidth ?? 36
+    const reserve = containerWidth - overflowWidth - 4
+    let count = 0
+    for (const c of chipEls) {
+      if (c.offsetLeft + c.offsetWidth <= reserve) count++
+      else break
+    }
+    visibleChipCount.value = Math.max(1, count)
+  })
+}
+
+let chipsResizeObserver: ResizeObserver | null = null
+
+function detachChipsObserver() {
+  chipsResizeObserver?.disconnect()
+  chipsResizeObserver = null
+}
+
+// 響應式 attach/detach：multiple/searchable/multipleDisplay 切換時 chipsContainerEl 會被
+// v-if 重新掛載/卸載，必須跟著 prop 變化重新觀察，否則切回 chips 模式時無 ResizeObserver。
+watchEffect(() => {
+  detachChipsObserver()
+  const enabled = props.multiple && !props.searchable && props.multipleDisplay === 'chips'
+  if (!enabled) return
+  const el = chipsContainerEl.value
+  if (!el || typeof ResizeObserver === 'undefined') return
+  chipsResizeObserver = new ResizeObserver(() => measureChips())
+  chipsResizeObserver.observe(el)
+})
+
+watch(
+  () => [selectedValues.value.length, props.multipleDisplay, props.multiple] as const,
+  () => nextTick(measureChips),
+  { flush: 'post' },
+)
+
 // ── Actions ───────────────────────────────────────────────────────────────────
 
 function toggle() {
-  if (isOpen.value) {
-    closeDropdown()
-  } else {
-    openDropdown()
-  }
+  if (isOpen.value) closeDropdown()
+  else openDropdown()
 }
 
 function openDropdown() {
@@ -379,10 +667,48 @@ function closeDropdown() {
   detachPositionListeners()
 }
 
+function emitChange(next: SelectModelValue) {
+  emit('update:modelValue', next)
+  if (props.multiple) {
+    const arr = (next as SelectValue[]) ?? []
+    const opts = arr
+      .map((v) => flatOptions.value.find((o) => o.value === v))
+      .filter((o): o is SelectOption => o != null)
+    emit('change', next, opts)
+  } else {
+    const v = next as SelectValue | null
+    const opt = v == null ? null : (flatOptions.value.find((o) => o.value === v) ?? null)
+    emit('change', next, opt)
+  }
+}
+
 function selectOption(opt: SelectOption) {
-  emit('update:modelValue', opt.value)
-  emit('change', opt.value, opt)
-  closeDropdown()
+  if (isOptionBlocked(opt)) return
+  if (props.multiple) {
+    const current = selectedValues.value
+    const next = current.includes(opt.value)
+      ? current.filter((v) => v !== opt.value)
+      : [...current, opt.value]
+    emitChange(next)
+    if (props.searchable) {
+      nextTick(() => searchInputRef.value?.focus())
+    }
+  } else {
+    emitChange(opt.value)
+    closeDropdown()
+  }
+}
+
+function removeValue(value: SelectValue) {
+  if (props.disabled || !props.multiple) return
+  const next = selectedValues.value.filter((v) => v !== value)
+  emitChange(next)
+}
+
+function clearAll() {
+  if (props.disabled) return
+  if (props.multiple) emitChange([])
+  else emitChange(null)
 }
 
 // ── Keyboard navigation ───────────────────────────────────────────────────────
@@ -404,7 +730,10 @@ function handleNavKey(e: KeyboardEvent) {
       return
     }
     focusedIndex.value = focusedIndex.value > 0 ? focusedIndex.value - 1 : len - 1
-  } else if (e.key === 'Enter') {
+  } else if (e.key === 'Enter' || (e.key === ' ' && props.multiple)) {
+    // 多選下 Space 也視為 toggle，符合 ARIA listbox 慣例
+    // 單選下 Space 若 input 內輸入空白應交給 input 處理；只有非 searchable 時才接管
+    if (e.key === ' ' && props.searchable && isOpen.value) return
     e.preventDefault()
     if (!isOpen.value) {
       openDropdown()
@@ -412,8 +741,22 @@ function handleNavKey(e: KeyboardEvent) {
     }
     const target = navigableOptions.value[focusedIndex.value]
     if (target) selectOption(target)
-  } else if (e.key === 'Escape' || e.key === 'Tab') {
+  } else if (e.key === 'Escape') {
     closeDropdown()
+  } else if (e.key === 'Tab') {
+    closeDropdown()
+  } else if (
+    e.key === 'Backspace' &&
+    props.multiple &&
+    props.searchable &&
+    isOpen.value &&
+    searchQuery.value === '' &&
+    selectedValues.value.length > 0
+  ) {
+    // 搜尋框為空時 Backspace 移除最後一個 chip（常見 UX）
+    e.preventDefault()
+    const last = selectedValues.value[selectedValues.value.length - 1]
+    if (last !== undefined) removeValue(last)
   }
 }
 
@@ -426,10 +769,17 @@ function onOutsideClick(e: MouseEvent) {
   closeDropdown()
 }
 
-onMounted(() => document.addEventListener('mousedown', onOutsideClick))
+onMounted(() => {
+  document.addEventListener('mousedown', onOutsideClick)
+  // ResizeObserver 由上方 watchEffect 在 chipsContainerEl ref 解析後負責掛上；
+  // 此處只需觸發初次 measure，把 visibleChipCount 從 null 算到實際值
+  nextTick(measureChips)
+})
+
 onUnmounted(() => {
   document.removeEventListener('mousedown', onOutsideClick)
   detachPositionListeners()
+  detachChipsObserver()
 })
 
 // Reset focused index when filtered options change

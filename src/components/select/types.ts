@@ -1,6 +1,9 @@
+export type SelectValue = string | number
+export type SelectModelValue = SelectValue | SelectValue[] | null
+
 export interface SelectOption {
   /** 選項值 */
-  value: string | number
+  value: SelectValue
   /** 顯示文字 */
   label: string
   /** 是否停用此選項 */
@@ -29,8 +32,14 @@ export interface SelectExpose {
 export interface SelectProps {
   /** input 元素 id，用於關聯外部 <label> */
   id?: string
-  /** v-model 綁定值 */
-  modelValue?: string | number | null
+  /**
+   * v-model 綁定值。
+   * - 單選：`SelectValue | null`
+   * - 多選（multiple = true）：請傳 `SelectValue[]`
+   *
+   * 注意：型別為 union 放寬，TS 不會在編譯期檢查與 multiple 一致性，請自行為 ref 標註正確型別。
+   */
+  modelValue?: SelectModelValue
   /** 選項列表，支援 SelectOption 或 SelectOptionGroup */
   options?: readonly SelectItem[]
   /** 元件尺寸 */
@@ -69,4 +78,19 @@ export interface SelectProps {
    * @default 'auto'
    */
   placement?: 'bottom' | 'top' | 'auto'
+  /**
+   * 是否多選；啟用後 modelValue 應為陣列。
+   * @default false
+   */
+  multiple?: boolean
+  /** 多選最多可選數量；達上限後其餘未選選項以 disabled 樣式呈現並阻擋點擊 */
+  maxSelected?: number
+  /**
+   * 多選 trigger 顯示格式
+   * - 'chips'：以 chip 列出已選 label（預設），固定高度時超出以 +N 截斷
+   * - 'count'：顯示「已選 N 項」
+   * - 'comma'：以 ", " 串接 label
+   * @default 'chips'
+   */
+  multipleDisplay?: 'chips' | 'count' | 'comma'
 }

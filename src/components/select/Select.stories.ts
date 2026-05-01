@@ -116,6 +116,22 @@ const meta = {
       control: 'boolean',
       table: { category: 'Appearance', defaultValue: { summary: 'false' } },
     },
+    multiple: {
+      description: '是否多選；啟用後 modelValue 應為陣列',
+      control: 'boolean',
+      table: { category: 'Multiple', defaultValue: { summary: 'false' } },
+    },
+    maxSelected: {
+      description: '多選最多可選數量',
+      control: 'number',
+      table: { category: 'Multiple' },
+    },
+    multipleDisplay: {
+      description: '多選 trigger 顯示格式',
+      control: 'select',
+      options: ['chips', 'count', 'comma'],
+      table: { category: 'Multiple', defaultValue: { summary: 'chips' } },
+    },
   },
   args: {
     modelValue: null,
@@ -283,6 +299,95 @@ export const InteractionKeyboard: Story = {
     // ArrowDown 移動焦點，Enter 選取
     await userEvent.keyboard('{ArrowDown}')
     await userEvent.keyboard('{Enter}')
+    await expect(listbox).not.toBeVisible()
+  },
+}
+
+export const Multiple: Story = {
+  args: {
+    multiple: true,
+    modelValue: [],
+    placeholder: '請選擇多個...',
+  },
+}
+
+export const MultipleSearchable: Story = {
+  args: {
+    multiple: true,
+    searchable: true,
+    modelValue: [],
+    placeholder: '搜尋並複選...',
+  },
+}
+
+export const MultipleWithMaxSelected: Story = {
+  args: {
+    multiple: true,
+    maxSelected: 3,
+    modelValue: [],
+    placeholder: '最多選 3 個',
+  },
+}
+
+export const MultipleDisplayCount: Story = {
+  args: {
+    multiple: true,
+    multipleDisplay: 'count',
+    modelValue: ['tw', 'jp', 'kr'],
+  },
+}
+
+export const MultipleDisplayComma: Story = {
+  args: {
+    multiple: true,
+    multipleDisplay: 'comma',
+    modelValue: ['tw', 'jp'],
+  },
+}
+
+export const MultipleWithGroups: Story = {
+  args: {
+    multiple: true,
+    options: groupedOptions,
+    modelValue: [],
+    placeholder: '從群組中複選',
+  },
+}
+
+export const InteractionMultiple: Story = {
+  args: {
+    multiple: true,
+    modelValue: [],
+  },
+  render: () => {
+    const [args, updateArgs] = useArgs()
+    return {
+      components: { Select },
+      setup() {
+        return { args, updateArgs }
+      },
+      template:
+        '<Select v-bind="args" @update:modelValue="updateArgs({ modelValue: $event })" style="width: 240px" />',
+    }
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    const body = within(document.body)
+    const trigger = canvas.getByRole('combobox')
+
+    await userEvent.click(trigger)
+    const listbox = body.getByRole('listbox')
+    await expect(listbox).toBeVisible()
+    await expect(listbox).toHaveAttribute('aria-multiselectable', 'true')
+
+    // 連選兩個選項，dropdown 應保持開啟
+    await userEvent.click(body.getByRole('option', { name: '台灣' }))
+    await expect(listbox).toBeVisible()
+    await userEvent.click(body.getByRole('option', { name: '日本' }))
+    await expect(listbox).toBeVisible()
+
+    // Escape 關閉
+    await userEvent.keyboard('{Escape}')
     await expect(listbox).not.toBeVisible()
   },
 }
