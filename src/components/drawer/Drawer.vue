@@ -256,6 +256,7 @@ watch(
   bottom: 0;
   left: 0;
   height: 100%;
+  max-width: 100dvw;
   box-shadow: var(--rui-shadow-drawer-left);
 }
 
@@ -264,6 +265,7 @@ watch(
   bottom: 0;
   right: 0;
   height: 100%;
+  max-width: 100dvw;
   box-shadow: var(--rui-shadow-drawer-right);
 }
 
@@ -272,6 +274,7 @@ watch(
   left: 0;
   right: 0;
   width: 100%;
+  max-height: 100dvh;
   box-shadow: var(--rui-shadow-drawer-top);
 }
 
@@ -280,6 +283,7 @@ watch(
   left: 0;
   right: 0;
   width: 100%;
+  max-height: 100dvh;
   box-shadow: var(--rui-shadow-drawer-bottom);
 }
 
