@@ -16,6 +16,8 @@ export const ICON_NAMES = [
   'close',
   'dice',
   'dice-20',
+  'double-triangle-down',
+  'double-triangle-up',
   'download',
   'edit',
   'external-link',
