@@ -31,6 +31,8 @@ export const ICON_NAMES = [
   'hurt',
   'info',
   'list',
+  'login',
+  'logout',
   'minus',
   'plus',
   'profile',
