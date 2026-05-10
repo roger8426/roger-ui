@@ -1,4 +1,5 @@
 import { onBeforeUnmount, ref } from 'vue'
+import { isClient } from '../utils/isClient'
 
 const FOCUSABLE_SELECTOR = [
   'a[href]',
@@ -49,6 +50,7 @@ export function useFocusTrap() {
   }
 
   function enable(el: HTMLElement) {
+    if (!isClient) return
     disable()
     containerRef.value = el
     enabled = true
@@ -57,12 +59,12 @@ export function useFocusTrap() {
 
   function disable() {
     enabled = false
-    document.removeEventListener('keydown', handleKeyDown)
+    if (isClient) document.removeEventListener('keydown', handleKeyDown)
     containerRef.value = null
   }
 
   function focusFirst() {
-    if (!containerRef.value) return
+    if (!isClient || !containerRef.value) return
     const focusable = getVisible(containerRef.value)
     focusable[0]?.focus()
   }

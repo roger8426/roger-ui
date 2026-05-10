@@ -1,9 +1,11 @@
 import { onBeforeUnmount } from 'vue'
+import { isClient } from '../utils/isClient'
 
 export function useRestoreFocus() {
   let savedEl: HTMLElement | null = null
 
   function save() {
+    if (!isClient) return
     savedEl = document.activeElement instanceof HTMLElement ? document.activeElement : null
   }
 
