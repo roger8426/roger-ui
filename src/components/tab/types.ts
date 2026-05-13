@@ -33,15 +33,15 @@ export interface TabProps {
   disabled?: boolean
 }
 
+export interface TabIds {
+  tabId: string
+  panelId: string
+}
+
 export interface TabsContext {
-  tablistEl: HTMLElement | null
   activeValue: string | undefined
-  select: (value: string) => void
   disabled: boolean
-  activationMode: TabActivationMode
-  activeColor: string | undefined
-  inactiveColor: string | undefined
-  type: TabType
+  getIds: (value: string) => TabIds
 }
 
 export const TABS_CONTEXT_KEY: InjectionKey<TabsContext> = Symbol('tabs')
