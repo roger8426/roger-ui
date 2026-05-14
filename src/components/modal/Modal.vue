@@ -292,6 +292,10 @@ watch(
   padding: 1.25rem;
   font-size: 0.9375rem;
   line-height: 1.6;
+  scrollbar-width: none;
+}
+.rui-modal-body::-webkit-scrollbar {
+  display: none;
 }
 
 /* Footer */
