@@ -27,7 +27,6 @@ export const ICON_NAMES = [
   'grid',
   'hamburger',
   'heal',
-  'heptagram',
   'hurt',
   'info',
   'list',
