@@ -7,7 +7,7 @@
     >
       <textarea
         ref="textareaRef"
-        class="min-w-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50 disabled:cursor-not-allowed"
+        class="rui-textarea-no-scrollbar min-w-0 min-h-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50 disabled:cursor-not-allowed"
         :class="[sizeTextAreaClasses, resizeClass]"
         :style="textareaStyle"
         :rows="rows"
@@ -192,3 +192,12 @@ defineExpose<TextAreaExpose>({
   focus: () => textareaRef.value?.focus(),
 })
 </script>
+
+<style scoped>
+.rui-textarea-no-scrollbar {
+  scrollbar-width: none;
+}
+.rui-textarea-no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>
