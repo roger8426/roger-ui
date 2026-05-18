@@ -30,7 +30,11 @@ export interface SelectExpose {
 }
 
 export interface SelectProps {
-  /** input 元素 id，用於關聯外部 <label> */
+  /**
+   * 用於關聯外部 `<label for>` 的 id。
+   * 內部由一個隱藏的原生 input 承載此 id（combobox 本身是 div，非 labelable
+   * form field），點 label 時焦點會轉發到 Select 控制項。
+   */
   id?: string
   /**
    * v-model 綁定值。

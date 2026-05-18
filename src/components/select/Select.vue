@@ -2,7 +2,7 @@
   <div ref="rootEl" class="relative inline-flex flex-col gap-0.5" :style="wrapperVars">
     <!-- Trigger -->
     <div
-      :id="id"
+      ref="triggerEl"
       role="combobox"
       :aria-expanded="isOpen"
       :aria-haspopup="'listbox'"
@@ -265,6 +265,20 @@
       </ul>
     </Teleport>
 
+    <!-- 隱藏 proxy input：承載 :id 供外部 <label for> 關聯。
+         div[role=combobox] 不是 labelable form field，會觸發 Chrome 的
+         label-for warning 且 autofill heuristic 失效；改由此原生 input 當 anchor，
+         點 label 聚焦它時轉發焦點到 combobox trigger。 -->
+    <input
+      :id="id"
+      class="sr-only"
+      tabindex="-1"
+      aria-hidden="true"
+      readonly
+      :value="proxyValue"
+      @focus="onProxyFocus"
+    />
+
     <!-- Error message -->
     <span v-if="errorActive && errorMsg" :id="errorId" class="text-xs text-(--rui-color-error)">
       {{ errorMsg }}
@@ -323,6 +337,7 @@ const emit = defineEmits<{
 }>()
 
 const rootEl = useTemplateRef<HTMLElement>('rootEl')
+const triggerEl = useTemplateRef<HTMLElement>('triggerEl')
 const listboxEl = useTemplateRef<HTMLElement>('listboxEl')
 const searchInputRef = useTemplateRef<HTMLInputElement>('searchInputRef')
 const chipsContainerEl = useTemplateRef<HTMLElement>('chipsContainerEl')
@@ -387,6 +402,17 @@ const selectedLabel = computed(() => {
   }
   return null
 })
+
+/** 隱藏 proxy input 的值：給瀏覽器 autofill heuristic 一個有意義的當前選取文字 */
+const proxyValue = computed(() => {
+  if (props.multiple) return selectedOptions.value.map((o) => o.label).join(', ')
+  return selectedLabel.value ?? ''
+})
+
+/** 點 <label for> → 瀏覽器聚焦 proxy input → 轉發焦點到 combobox trigger */
+function onProxyFocus() {
+  triggerEl.value?.focus()
+}
 
 const isMaxedOut = computed(() => {
   if (!props.multiple || props.maxSelected == null) return false
@@ -794,7 +820,7 @@ defineExpose<SelectExpose>({
     if (props.searchable && isOpen.value) {
       searchInputRef.value?.focus()
     } else {
-      rootEl.value?.focus()
+      triggerEl.value?.focus()
     }
   },
 })
