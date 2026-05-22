@@ -35,6 +35,7 @@ export const ICON_NAMES = [
   'minus',
   'plus',
   'profile',
+  'restore',
   'search',
   'star',
   'swipe-up',
