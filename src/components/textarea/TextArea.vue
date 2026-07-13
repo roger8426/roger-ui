@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex flex-col gap-0.5">
+  <div class="inline-flex flex-col gap-0.5" :class="rootClass" :style="rootStyle">
     <div
       class="flex flex-col rounded-md border transition-colors"
       :class="[sizeWrapperClasses, wrapperStateClasses]"
@@ -7,6 +7,7 @@
     >
       <textarea
         ref="textareaRef"
+        v-bind="forwardedAttrs"
         class="rui-textarea-no-scrollbar min-w-0 min-h-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50 disabled:cursor-not-allowed"
         :class="[sizeTextAreaClasses, resizeClass]"
         :style="textareaStyle"
@@ -40,8 +41,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, useId, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onMounted, useAttrs, useId, useTemplateRef, watch } from 'vue'
 import type { TextAreaExpose, TextAreaProps } from './types'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<TextAreaProps>(), {
   modelValue: '',
@@ -67,11 +70,22 @@ const emit = defineEmits<{
 const textareaRef = useTemplateRef<HTMLTextAreaElement>('textareaRef')
 const errorId = `textarea-error-${useId()}`
 
+const attrs = useAttrs()
+
+// class/style 留在根元素，其餘 fallthrough attrs 轉發到內部 <textarea>
+const rootClass = computed(() => attrs.class)
+const rootStyle = computed(() => attrs.style)
+const forwardedAttrs = computed(() =>
+  Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style')),
+)
+
 // ─── 狀態 ─────────────────────────────────────────────────────────────────────
 
 const errorActive = computed(() => props.error || !!props.errorMsg)
 
-const textareaAriaLabel = computed(() => props.placeholder || '文字輸入區')
+const textareaAriaLabel = computed(
+  () => (attrs['aria-label'] as string | undefined) ?? (props.placeholder || '文字輸入區'),
+)
 
 const charCount = computed(() => props.modelValue.length)
 

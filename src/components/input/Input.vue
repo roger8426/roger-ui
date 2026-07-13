@@ -1,5 +1,5 @@
 <template>
-  <div class="inline-flex flex-col gap-0.5">
+  <div class="inline-flex flex-col gap-0.5" :class="rootClass" :style="rootStyle">
     <div
       class="inline-flex items-center rounded-md border transition-colors"
       :class="[sizeWrapperClasses, wrapperStateClasses]"
@@ -14,6 +14,7 @@
       </span>
       <input
         ref="inputRef"
+        v-bind="forwardedAttrs"
         class="min-w-0 flex-1 border-none bg-transparent outline-none placeholder:opacity-50 disabled:cursor-not-allowed"
         :class="sizeInputClasses"
         :style="inputColorStyle"
@@ -46,8 +47,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, useId, useTemplateRef } from 'vue'
+import { computed, useAttrs, useId, useTemplateRef } from 'vue'
 import type { InputExpose, InputProps } from './types'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(defineProps<InputProps>(), {
   modelValue: '',
@@ -71,6 +74,15 @@ const emit = defineEmits<{
 const inputRef = useTemplateRef<HTMLInputElement>('inputRef')
 const errorId = `${useId()}-error`
 
+const attrs = useAttrs()
+
+// class/style 留在根元素，其餘 fallthrough attrs 轉發到內部 <input>
+const rootClass = computed(() => attrs.class)
+const rootStyle = computed(() => attrs.style)
+const forwardedAttrs = computed(() =>
+  Object.fromEntries(Object.entries(attrs).filter(([key]) => key !== 'class' && key !== 'style')),
+)
+
 const wrapperVars = computed(
   (): Record<string, string> => ({
     '--input-active-border': props.borderColor ?? 'var(--rui-color-default)',
@@ -79,7 +91,9 @@ const wrapperVars = computed(
 
 const inputColorStyle = computed(() => (props.color ? { color: props.color } : undefined))
 
-const inputAriaLabel = computed(() => props.placeholder || '輸入欄位')
+const inputAriaLabel = computed(
+  () => (attrs['aria-label'] as string | undefined) ?? (props.placeholder || '輸入欄位'),
+)
 
 const errorActive = computed(() => props.error || !!props.errorMsg)
 
