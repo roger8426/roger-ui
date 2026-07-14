@@ -82,6 +82,7 @@
         role="dialog"
         :aria-label="controlAriaLabel"
         :style="panelStyle"
+        class="rounded-md shadow-md"
         :class="teleport ? '' : 'absolute left-0 top-full mt-1'"
       >
         <DatePickerCalendar
