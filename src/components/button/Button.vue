@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    class="inline-flex items-center justify-center py-2 font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
+    class="inline-flex items-center justify-center font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-(--btn-color)"
     :class="[sizeClasses, interactionClasses]"
     :style="colorStyle"
     :disabled="disabled || loading"
@@ -46,15 +46,14 @@ const interactionClasses = computed(() =>
 const sizeClasses = computed(
   () =>
     ({
-      sm: 'px-3 text-sm',
-      md: 'px-4 text-base',
-      lg: 'px-5 text-lg',
+      xs: 'px-2 py-1 text-xs',
+      sm: 'px-3 py-2 text-sm',
+      md: 'px-4 py-2 text-base',
+      lg: 'px-5 py-2 text-lg',
     })[props.size],
 )
 
-const borderRadius = computed(() =>
-  props.radius === 'full' ? '9999px' : `${props.radius}px`,
-)
+const borderRadius = computed(() => (props.radius === 'full' ? '9999px' : `${props.radius}px`))
 
 const colorStyle = computed(() => {
   if (props.outline) {

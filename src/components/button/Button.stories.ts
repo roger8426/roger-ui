@@ -21,7 +21,8 @@ const meta = {
       control: 'color',
     },
     textColor: {
-      description: '文字顏色（任意 CSS 色彩値；一般模式預設 --rui-color-default-foreground，outline 模式預設 --rui-color-default）',
+      description:
+        '文字顏色（任意 CSS 色彩値；一般模式預設 --rui-color-default-foreground，outline 模式預設 --rui-color-default）',
       control: 'color',
     },
     borderColor: {
@@ -31,10 +32,10 @@ const meta = {
     size: {
       description: '按鈕尺寸',
       control: 'select',
-      options: ['sm', 'md', 'lg'],
+      options: ['xs', 'sm', 'md', 'lg'],
     },
     radius: {
-      description: '圓角半徑（px 數值，或 \'full\' 表示完整圓形），預設 \'full\'',
+      description: "圓角半徑（px 數值，或 'full' 表示完整圓形），預設 'full'",
       control: 'text',
     },
     outline: {
@@ -115,6 +116,7 @@ export const Sizes: Story = {
       },
       template: `
         <div style="display:flex; align-items:center; gap:12px;">
+          <Button v-bind="args" size="xs">Extra small</Button>
           <Button v-bind="args" size="sm">Small</Button>
           <Button v-bind="args" size="md">Medium</Button>
           <Button v-bind="args" size="lg">Large</Button>

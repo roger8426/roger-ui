@@ -8,7 +8,7 @@ export interface ButtonProps {
   /** 邊框顏色（任意 CSS 色彩值，未設定則無邊框） */
   borderColor?: string
   /** 尺寸 */
-  size?: 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg'
   /** 圓角半徑（px 數值，或 'full' 表示完整圓形），預設 'full' */
   radius?: number | 'full'
   /** 是否為 outline 模式（透明背景、主色邊框與文字） */
